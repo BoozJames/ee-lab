@@ -7,59 +7,40 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+
 ## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Laravel is a web framework known for its elegant syntax, making development enjoyable. It simplifies common web tasks, making it accessible and powerful for large projects. With extensive documentation and Laracasts' video tutorials, learning Laravel is straightforward, whether through the Laravel Bootcamp or Laracasts' comprehensive library, covering Laravel, PHP, unit testing, and JavaScript.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## How to Setup   
+For setting up the Laravel Admin Dashboard, you need to follow these steps:     
 
-## Learning Laravel
+Clone the Laravel framework from GitHub.        
+Install dependencies using Composer: composer install.      
+Create a new .env file and add the following information:       
+`cp .env-example .env`    
+APP_NAME=Laravel Admin Dashboard    
+APP_ENV=local   
+APP_KEY=your_app_key    
+APP_DEBUG=true  
+APP_URL=http://localhost    
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+SYS_USERNAME=your_super_admin_username or employee code  
+SYS_PASSWORD=your_super_admin_password  
+SYS_EMAIL=your_super_admin_email    
+SYS_ROLE=0  
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+Replace your_app_key, your_super_admin_username, your_super_admin_password, your_super_admin_email with appropriate values.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Generate a new application key: `php artisan key:generate`.   
+Run migrations to create necessary database tables: `php artisan migrate`.  
+(Optional) You may also use the custom command of `php artisan refresh:db` which does the db:wipe, migrate, and db:seed   
 
-## Laravel Sponsors
+Serve the application: php artisan serve.  
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Now, you should have your Laravel Admin Dashboard set up with the provided environment variables in the .env file.
 
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
 ## License
 
