@@ -21,48 +21,50 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-// Route::get('users', [UserController::class, 'index'])->name('users.index');
-// Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');
-
-Route::resource('users', UserController::class);
-Route::resource('inventory', InventoryController::class);
-Route::resource('requests', RequestsController::class);
-
-// Placeholder routes for students
-Route::get('/student/dashboard', function () {
-    // Logic for student dashboard
-})->name('student.dashboard');
-
-Route::get('/student/campus', function () {
-    // Logic for student campus page
-})->name('student.campus');
-
-Route::get('/student/college', function () {
-    // Logic for student college page
-})->name('student.college');
-
-Route::get('/student/program', function () {
-    // Logic for student program page
-})->name('student.program');
-
-Route::get('/student/course', function () {
-    // Logic for student course page
-})->name('student.course');
-
-// Placeholder route for instructor
-Route::get('/instructor/dashboard', function () {
-    // Logic for instructor dashboard
-})->name('instructor.dashboard');
+Route::group(['middleware' => 'auth', 'verified'], function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
 
-Route::middleware('auth')->group(function () {
+    Route::resource('users', UserController::class);
+    Route::resource('inventory', InventoryController::class);
+    Route::resource('requests', RequestsController::class);
+
+    // Placeholder routes for students
+    Route::get('/student/dashboard', function () {
+        // Logic for student dashboard
+    })->name('student.dashboard');
+
+    Route::get('/student/campus', function () {
+        // Logic for student campus page
+    })->name('student.campus');
+
+    Route::get('/student/college', function () {
+        // Logic for student college page
+    })->name('student.college');
+
+    Route::get('/student/program', function () {
+        // Logic for student program page
+    })->name('student.program');
+
+    Route::get('/student/course', function () {
+        // Logic for student course page
+    })->name('student.course');
+
+    // Placeholder route for instructor
+    Route::get('/instructor/dashboard', function () {
+        // Logic for instructor dashboard
+    })->name('instructor.dashboard');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
+// Route::get('users', [UserController::class, 'index'])->name('users.index');
+// Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');
 
 require __DIR__ . '/auth.php';
