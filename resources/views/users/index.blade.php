@@ -27,7 +27,7 @@
 
                                 <form method="GET" action="{{ route('users.index') }}"
                                     class="flex flex-wrap items-center">
-                                    <select name="role" class="mr-2">
+                                    <select name="role" class="mr-2 rounded">
                                         <option value="">Select Filter</option>
                                         <option value="0">Super Admin</option>
                                         <option value="1">Admin</option>
