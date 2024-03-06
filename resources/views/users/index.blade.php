@@ -12,27 +12,40 @@
                     <nav class="flex flex-wrap mb-4">
                         <a href="#" class="mr-4 mb-2 py-2 px-4 bg-gray-300 rounded">Non-verified</a>
                         <a href="#" class="mr-4 mb-2 py-2 px-4 bg-gray-300 rounded">Archived</a>
+                        <a href="#" onclick="resetFilters()" class="mr-4 mb-2 py-2 px-4 bg-gray-300 rounded">
+                            Reset Filters
+                            {{-- <i class="fas fa-sync-alt ml-2"></i> --}}
+                        </a>
+                        <div class="ml-auto">
+                            <a href="{{ route('users.create') }}" class="mb-2 py-2 px-4 bg-gray-300 rounded">Create
+                                User</a>
+                        </div>
                     </nav>
-
                     <div class="min-w-full align-middle">
                         <div class="my-2 bg-white">
-                            <form method="GET" action="{{ route('users.index') }}"
-                                class="flex flex-wrap items-center">
-                                <div class="flex flex-wrap items-center">
+                            <div class="flex flex-wrap items-center justify-between">
+
+                                <form method="GET" action="{{ route('users.index') }}"
+                                    class="flex flex-wrap items-center">
                                     <select name="role" class="mr-2">
                                         <option value="">Select Filter</option>
-                                        <option value="admin">Admin</option>
-                                        <option value="user">User</option>
+                                        <option value="0">Super Admin</option>
+                                        <option value="1">Admin</option>
+                                        <option value="2">User</option>
                                     </select>
-                                    <!-- Add more filter inputs as needed -->
                                     <button type="submit" class="bg-gray-300 px-4 py-2 rounded">Filter</button>
-                                </div>
-                                <div class="flex flex-wrap items-center ml-auto">
-                                    <input type="text" name="search" placeholder="Search..."
-                                        class="mr-2 px-4 py-2 border rounded">
-                                    <button type="submit" class="bg-gray-300 px-4 py-2 rounded">Search</button>
-                                </div>
-                            </form>
+                                </form>
+
+                                <form method="GET" action="{{ route('users.index') }}"
+                                    class="flex flex-wrap items-center">
+                                    <div class="flex flex-wrap items-center ml-auto">
+                                        <input type="text" name="search" placeholder="Search..."
+                                            class="mr-2 px-4 py-2 border rounded">
+                                        <button type="submit" class="bg-gray-300 px-4 py-2 rounded">Search</button>
+                                    </div>
+                                </form>
+
+                            </div>
                         </div>
 
                         <table class="min-w-full divide-y divide-gray-200 border">
@@ -45,6 +58,10 @@
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
                                             class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Email</span>
+                                    </th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left">
+                                        <span
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Actions</span>
                                     </th>
                                 </tr>
                             </thead>
@@ -59,10 +76,10 @@
                                             {{ $user->email }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $user->role }}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $user->email_verified_at }}
+                                            <a href="{{ route('users.show', $user->id) }}"
+                                                class="text-blue-500 hover:text-blue-700 mr-2">Show</a>
+                                            <a href="{{ route('users.edit', $user->id) }}"
+                                                class="text-green-500 hover:text-green-700">Edit</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -79,3 +96,10 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    function resetFilters() {
+        // Replace "users.index" with the appropriate route to reset filters
+        window.location.href = "{{ route('users.index') }}";
+    }
+</script>
