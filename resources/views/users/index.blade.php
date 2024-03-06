@@ -10,8 +10,8 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="overflow-hidden overflow-x-auto p-6 bg-white border-b border-gray-200">
                     <nav class="flex flex-wrap mb-4">
-                        <a href="#" class="mr-4 mb-2 py-2 px-4 bg-gray-300 rounded">Non-verified</a>
-                        <a href="#" class="mr-4 mb-2 py-2 px-4 bg-gray-300 rounded">Archived</a>
+                        {{-- <a href="#" class="mr-4 mb-2 py-2 px-4 bg-gray-300 rounded">Non-verified</a> --}}
+                        {{-- <a href="#" class="mr-4 mb-2 py-2 px-4 bg-gray-300 rounded">Archived</a> --}}
                         <a href="#" onclick="resetFilters()" class="mr-4 mb-2 py-2 px-4 bg-gray-300 rounded">
                             Reset Filters
                             {{-- <i class="fas fa-sync-alt ml-2"></i> --}}
@@ -79,7 +79,14 @@
                                             <a href="{{ route('users.show', $user->id) }}"
                                                 class="text-blue-500 hover:text-blue-700 mr-2">Show</a>
                                             <a href="{{ route('users.edit', $user->id) }}"
-                                                class="text-green-500 hover:text-green-700">Edit</a>
+                                                class="text-green-500 hover:text-green-700 mr-2">Edit</a>
+                                            <form action="{{ route('users.destroy', $user->id) }}" method="POST"
+                                                class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                    class="text-red-500 hover:text-red-700">Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
