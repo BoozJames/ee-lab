@@ -21,13 +21,13 @@
                     <x-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory.index')">
                         {{ __('Inventory') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('student.dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Students') }}
                     </x-nav-link>
                     <x-nav-link :href="route('instructor.dashboard')" :active="request()->routeIs('instructor.dashboard')">
                         {{ __('Instructors') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link href="/" :active="request()->is('/')">
                         {{ __('Kiosk') }}
                     </x-nav-link>
                 </div>
@@ -133,15 +133,15 @@
             <x-responsive-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory.index')">
                 {{ __('Inventory') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            <x-responsive-nav-link :href="route('student.dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Students') }}
             </x-responsive-nav-link>
-            <x-nav-link :href="route('instructor.dashboard')" :active="request()->routeIs('instructor.dashboard')">
+            <x-responsive-nav-link :href="route('instructor.dashboard')" :active="request()->routeIs('instructor.dashboard')">
                 {{ __('Instructors') }}
-            </x-nav-link>
-            <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="/" :active="request()->is('/')">
                 {{ __('Kiosk') }}
-            </x-nav-link>
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->

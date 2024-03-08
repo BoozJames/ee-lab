@@ -16,12 +16,12 @@ class UserController extends Controller
     {
         $usersQuery = User::query();
 
-        if ($request->has('role')) {
+        if ($request->filled('role')) {
             $usersQuery->where('role', $request->role);
         }
 
-        if ($request->has('search')) {
-            $search = $request->search;
+        if ($request->filled('search')) {
+            $search = $request->input('search');
             $usersQuery->where(function ($query) use ($search) {
                 $query->where('name', 'like', "%$search%")
                     ->orWhere('email', 'like', "%$search%");
