@@ -35,7 +35,7 @@
                     </x-nav-link> --}}
 
                     {{-- Inventory Dropdown --}}
-                    <div class="hidden sm:flex sm:items-center sm:ml-6 pt-1">
+                    <div class="hidden sm:flex sm:items-center sm:ml-6 pt-[1px]">
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <button
@@ -54,16 +54,16 @@
                             </x-slot>
 
                             <x-slot name="content">
-                                <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
+                                <x-dropdown-link :href="route('items.index')" active="request()->routeIs('items.index')">
                                     {{ __('Items') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
+                                <x-dropdown-link :href="route('variants.index')" active="request()->routeIs('variants.index')">
                                     {{ __('Variants') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
+                                <x-dropdown-link :href="route('units.index')" active="request()->routeIs('units.index')">
                                     {{ __('Units') }}
                                 </x-dropdown-link>
-                                <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
+                                <x-dropdown-link :href="route('categories.index')" active="request()->routeIs('categories.index')">
                                     {{ __('Categories') }}
                                 </x-dropdown-link>
                             </x-slot>
@@ -71,7 +71,7 @@
                     </div>
                 </div>
                 {{-- Reports Dropdown --}}
-                <div class="hidden sm:flex sm:items-center sm:ml-6 pt-1">
+                <div class="hidden sm:flex sm:items-center sm:ml-6 pt-[2px]">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button
@@ -164,11 +164,23 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link href="/" :active="request()->is('/')">
+                {{ __('Kiosk') }}
+            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('requests.index')" :active="request()->routeIs('requests.index')">
                 {{ __('Requests') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('items.index')" :active="request()->routeIs('items.index')">
                 {{ __('Items') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('variants.index')" :active="request()->routeIs('variants.index')">
+                {{ __('Variants') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('units.index')" :active="request()->routeIs('units.index')">
+                {{ __('Units') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.index')">
+                {{ __('Categories') }}
             </x-responsive-nav-link>
             {{-- <x-responsive-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory.index')">
                 {{ __('Inventory') }}
@@ -179,8 +191,11 @@
             <x-responsive-nav-link :href="route('faculties.index')" :active="request()->routeIs('faculties.index')">
                 {{ __('Faculties') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link href="/" :active="request()->is('/')">
-                {{ __('Kiosk') }}
+            <x-responsive-nav-link :href="route('items.index')" :active="request()->routeIs('items.index')">
+                {{ __('Borrowing Form') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('items.index')" :active="request()->routeIs('items.index')">
+                {{ __('Maintenance For,') }}
             </x-responsive-nav-link>
         </div>
 
