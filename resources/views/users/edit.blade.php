@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <form method="POST" action="{{ route('users.update', $user->id) }}">
+                    <form method="POST" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="mb-4">
@@ -30,6 +30,12 @@
                                 <option value="1" {{ $user->role == 1 ? 'selected' : '' }}>Admin</option>
                                 <option value="2" {{ $user->role == 2 ? 'selected' : '' }}>User</option>
                             </select>
+                        </div>
+                        <div class="mb-4">
+                            <label for="profile_picture" class="block text-sm font-medium text-gray-700">Profile
+                                Picture</label>
+                            <input type="file" name="profile_picture" id="profile_picture"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                         </div>
                         <!-- Add more input fields as needed -->
                         <div class="flex items-center justify-end">

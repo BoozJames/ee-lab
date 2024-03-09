@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -49,9 +50,14 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'role' => 'required|string|max:255',
-            'password' => 'required|string|min:8', // Add password validation
-            // Add more validation rules as needed
+            'password' => 'required|string|min:8',
+            'profile_picture' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+
+        if ($request->hasFile('profile_picture')) {
+            $imagePath = $request->file('profile_picture')->store('public/profile_pictures');
+            $validatedData['profile_picture'] = $imagePath;
+        }
 
         $validatedData['password'] = Hash::make($request->password);
 
@@ -89,14 +95,27 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
             'role' => 'required|string|max:255',
-            // Add more validation rules as needed
+            'profile_picture' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $user = User::findOrFail($id);
+
+        if ($request->hasFile('profile_picture')) {
+            // Delete old profile picture if exists
+            if ($user->profile_picture) {
+                Storage::delete($user->profile_picture);
+            }
+
+            // Store new profile picture
+            $imagePath = $request->file('profile_picture')->store('public/profile_pictures');
+            $validatedData['profile_picture'] = $imagePath;
+        }
+
         $user->update($validatedData);
 
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.
