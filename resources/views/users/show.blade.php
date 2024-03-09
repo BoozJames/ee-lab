@@ -10,6 +10,12 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="mb-4">
+                        <label for="profile_picture" class="block text-sm font-medium text-gray-700">Profile
+                            Picture</label>
+                        <img src="{{ $user->profile_picture_url }}" alt="{{ $user->name }}"
+                            class="w-12 h-12 rounded-full">
+                    </div>
+                    <div class="mb-4">
                         <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
                         <div class="mt-1">{{ $user->name }}</div>
                     </div>
