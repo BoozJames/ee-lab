@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="/">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
@@ -18,25 +18,65 @@
                     <x-nav-link :href="route('requests.index')" :active="request()->routeIs('requests.index')">
                         {{ __('Requests') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory.index')">
+                    {{-- <x-nav-link :href="route('items.index')" :active="request()->routeIs('items.index')">
+                        {{ __('Items') }}
+                    </x-nav-link> --}}
+                    {{-- <x-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory.index')">
                         {{ __('Inventory') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('student.dashboard')" :active="request()->routeIs('dashboard')">
+                    </x-nav-link> --}}
+                    <x-nav-link :href="route('student.index')" :active="request()->routeIs('index')">
                         {{ __('Students') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('instructor.dashboard')" :active="request()->routeIs('instructor.dashboard')">
-                        {{ __('Instructors') }}
+                    <x-nav-link :href="route('faculties.index')" :active="request()->routeIs('faculties.index')">
+                        {{ __('Faculties') }}
                     </x-nav-link>
-                    <x-nav-link href="/" :active="request()->is('/')">
+                    {{-- <x-nav-link href="/" :active="request()->is('/')">
                         {{ __('Kiosk') }}
-                    </x-nav-link>
+                    </x-nav-link> --}}
+
+                    {{-- Inventory Dropdown --}}
+                    <div class="hidden sm:flex sm:items-center sm:ml-6 pt-1">
+                        <x-dropdown align="right" width="48">
+                            <x-slot name="trigger">
+                                <button
+                                    class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                    <div>Inventory</div>
+
+                                    <div class="ml-1">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </button>
+                            </x-slot>
+
+                            <x-slot name="content">
+                                <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
+                                    {{ __('Items') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
+                                    {{ __('Variants') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
+                                    {{ __('Units') }}
+                                </x-dropdown-link>
+                                <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
+                                    {{ __('Categories') }}
+                                </x-dropdown-link>
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
                 </div>
+                {{-- Reports Dropdown --}}
                 <div class="hidden sm:flex sm:items-center sm:ml-6 pt-1">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             <button
                                 class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                <div>Settings</div>
+                                <div>Reports</div>
 
                                 <div class="ml-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -51,13 +91,10 @@
 
                         <x-slot name="content">
                             <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
-                                {{ __('Kiosk') }}
+                                {{ __('Borrowing Form') }}
                             </x-dropdown-link>
                             <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
-                                {{ __('System') }}
-                            </x-dropdown-link>
-                            <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
-                                {{ __('Transactionals') }}
+                                {{ __('Maintenance Form') }}
                             </x-dropdown-link>
                         </x-slot>
                     </x-dropdown>
@@ -130,14 +167,17 @@
             <x-responsive-nav-link :href="route('requests.index')" :active="request()->routeIs('requests.index')">
                 {{ __('Requests') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory.index')">
-                {{ __('Inventory') }}
+            <x-responsive-nav-link :href="route('items.index')" :active="request()->routeIs('items.index')">
+                {{ __('Items') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('student.dashboard')" :active="request()->routeIs('dashboard')">
+            {{-- <x-responsive-nav-link :href="route('inventory.index')" :active="request()->routeIs('inventory.index')">
+                {{ __('Inventory') }}
+            </x-responsive-nav-link> --}}
+            <x-responsive-nav-link :href="route('student.index')" :active="request()->routeIs('index')">
                 {{ __('Students') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('instructor.dashboard')" :active="request()->routeIs('instructor.dashboard')">
-                {{ __('Instructors') }}
+            <x-responsive-nav-link :href="route('faculties.index')" :active="request()->routeIs('faculties.index')">
+                {{ __('Faculties') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link href="/" :active="request()->is('/')">
                 {{ __('Kiosk') }}
