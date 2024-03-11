@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::resource('items', ItemsController::class);
 
     // Placeholder routes for students
-    Route::get('/student/index', function () {
+    Route::get('/student', function () {
         // Logic for student list
     })->name('student.index');
 
@@ -56,7 +56,7 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     })->name('student.course');
 
     // Placeholder route for instructor
-    Route::get('/instructor/index', function () {
+    Route::get('/instructor', function () {
         // Logic for instructor list
     })->name('faculties.index');
 

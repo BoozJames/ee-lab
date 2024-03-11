@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Requests;
 use Illuminate\Http\Request;
 
 class RequestsController extends Controller
@@ -9,9 +10,24 @@ class RequestsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $requestQuery = Requests::query();
+
+        // if ($request->filled('role')) {
+        //     $requestQuery->where('role', $request->role);
+        // }
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $requestQuery->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%$search%")
+                    ->orWhere('description', 'like', "%$search%");
+            });
+        }
+        $requests = $requestQuery->paginate(5);
+
+        return view('requests.index', compact('requests'));
     }
 
     /**

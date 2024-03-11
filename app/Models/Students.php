@@ -15,7 +15,7 @@ class Students extends Model
         'middle_name',
         'last_name',
         'extra_name',
-        'college_id',
+        'colleges',
         'campus',
         'programs',
         'courses_array',
@@ -23,5 +23,6 @@ class Students extends Model
 
     protected $casts = [
         'courses_array' => 'array',
+        'colleges' => 'array',
     ];
 }
