@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RequestsController;
 use App\Http\Controllers\UserController;
+use App\Models\Items;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,11 +32,12 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::resource('users', UserController::class);
     Route::resource('inventory', InventoryController::class);
     Route::resource('requests', RequestsController::class);
+    Route::resource('items', ItemsController::class);
 
     // Placeholder routes for students
-    Route::get('/student/dashboard', function () {
-        // Logic for student dashboard
-    })->name('student.dashboard');
+    Route::get('/student/index', function () {
+        // Logic for student list
+    })->name('student.index');
 
     Route::get('/student/campus', function () {
         // Logic for student campus page
@@ -53,9 +56,13 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     })->name('student.course');
 
     // Placeholder route for instructor
-    Route::get('/instructor/dashboard', function () {
-        // Logic for instructor dashboard
-    })->name('instructor.dashboard');
+    Route::get('/instructor/index', function () {
+        // Logic for instructor list
+    })->name('faculties.index');
+
+    Route::resource('variants', ItemsController::class);
+    Route::resource('categories', ItemsController::class);
+    Route::resource('units', ItemsController::class);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

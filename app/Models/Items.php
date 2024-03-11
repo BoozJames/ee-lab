@@ -13,15 +13,15 @@ class Items extends Model
 
     protected $fillable = ['name', 'description', 'unit_id', 'category_id'];
 
-    public function unit()
-    {
-        return $this->belongsTo(Units::class);
-    }
+    // public function unit()
+    // {
+    //     return $this->belongsTo(Units::class);
+    // }
 
-    public function category()
-    {
-        return $this->belongsTo(Categories::class);
-    }
+    // public function category()
+    // {
+    //     return $this->belongsTo(Categories::class);
+    // }
 
     public function itemVariants()
     {
