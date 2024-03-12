@@ -55,7 +55,7 @@ class StudentsController extends Controller
             'campus' => 'nullable|string|max:255',
             'colleges' => 'nullable|string|max:255',
             'programs' => 'nullable|string|max:255',
-            // 'courses' => 'nullable|string',
+            'courses' => 'nullable|string',
         ]);
 
         // Create a new student instance with the validated data
@@ -104,7 +104,7 @@ class StudentsController extends Controller
             'campus' => 'nullable|string|max:255',
             'colleges' => 'nullable|string|max:255',
             'programs' => 'nullable|string|max:255',
-            // 'courses' => 'nullable|string',
+            'courses' => 'nullable|string',
         ]);
 
         $students = Students::findOrFail($id);

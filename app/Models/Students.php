@@ -23,7 +23,7 @@ class Students extends Model
     ];
 
     protected $casts = [
-        // 'courses' => 'array',
+        'courses' => 'array',
         // 'colleges' => 'array',
     ];
 }
