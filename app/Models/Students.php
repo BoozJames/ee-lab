@@ -11,18 +11,19 @@ class Students extends Model
 
     protected $fillable = [
         'srcode',
+        'rfid_code',
         'first_name',
         'middle_name',
         'last_name',
         'extra_name',
-        'colleges',
         'campus',
+        'colleges',
         'programs',
-        'courses_array',
+        'courses',
     ];
 
     protected $casts = [
-        'courses_array' => 'array',
-        'colleges' => 'array',
+        'courses' => 'array',
+        // 'colleges' => 'array',
     ];
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RequestsController;
+use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FacultiesController;
 use App\Models\Items;
@@ -34,32 +35,22 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::resource('inventory', InventoryController::class);
     Route::resource('requests', RequestsController::class);
     Route::resource('items', ItemsController::class);
-
-    // Placeholder routes for students
-    Route::get('/student', function () {
-        // Logic for student list
-    })->name('student.index');
-
-    Route::get('/student/campus', function () {
-        // Logic for student campus page
-    })->name('student.campus');
-
-    Route::get('/student/college', function () {
-        // Logic for student college page
-    })->name('student.college');
-
-    Route::get('/student/program', function () {
-        // Logic for student program page
-    })->name('student.program');
-
-    Route::get('/student/course', function () {
-        // Logic for student course page
-    })->name('student.course');
-
-    Route::resource('faculties', FacultiesController::class);
+    // Route::resource('students', StudentsController::class);
     Route::resource('variants', ItemsController::class);
     Route::resource('categories', ItemsController::class);
     Route::resource('units', ItemsController::class);
+    Route::resource('faculties', FacultiesController::class);
+
+
+    // Student Routes
+    Route::get('/students', [StudentsController::class, 'index'])->name('students.index');
+    Route::get('/students/create', [StudentsController::class, 'create'])->name('students.create');
+    Route::post('/students', [StudentsController::class, 'store'])->name('students.store');
+    Route::get('/students/{student}', [StudentsController::class, 'show'])->name('students.show');
+    Route::get('/students/{student}/edit', [StudentsController::class, 'edit'])->name('students.edit');
+    Route::put('/students/{student}', [StudentsController::class, 'update'])->name('students.update');
+    Route::delete('/students/{student}', [StudentsController::class, 'destroy'])->name('students.destroy');
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
