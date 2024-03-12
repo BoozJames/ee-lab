@@ -35,7 +35,11 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::resource('requests', RequestsController::class);
     Route::resource('items', ItemsController::class);
     // Route::resource('students', StudentsController::class);
+    Route::resource('variants', ItemsController::class);
+    Route::resource('categories', ItemsController::class);
+    Route::resource('units', ItemsController::class);
 
+    // Student Routes
     Route::get('/students', [StudentsController::class, 'index'])->name('students.index');
     Route::get('/students/create', [StudentsController::class, 'create'])->name('students.create');
     Route::post('/students', [StudentsController::class, 'store'])->name('students.store');
@@ -49,9 +53,7 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         // Logic for instructor list
     })->name('faculties.index');
 
-    Route::resource('variants', ItemsController::class);
-    Route::resource('categories', ItemsController::class);
-    Route::resource('units', ItemsController::class);
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
