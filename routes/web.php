@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RequestsController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FacultiesController;
 use App\Models\Items;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,8 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::resource('variants', ItemsController::class);
     Route::resource('categories', ItemsController::class);
     Route::resource('units', ItemsController::class);
+    Route::resource('faculties', FacultiesController::class);
+
 
     // Student Routes
     Route::get('/students', [StudentsController::class, 'index'])->name('students.index');
@@ -47,12 +50,6 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::get('/students/{student}/edit', [StudentsController::class, 'edit'])->name('students.edit');
     Route::put('/students/{student}', [StudentsController::class, 'update'])->name('students.update');
     Route::delete('/students/{student}', [StudentsController::class, 'destroy'])->name('students.destroy');
-
-    // Placeholder route for instructor
-    Route::get('/instructor', function () {
-        // Logic for instructor list
-    })->name('faculties.index');
-
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
