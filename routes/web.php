@@ -8,7 +8,6 @@ use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\FacultiesController;
 use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\UnitsController;
 use App\Models\Items;
 use Illuminate\Support\Facades\Route;
 
@@ -43,7 +42,6 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::resource('units', ItemsController::class);
     Route::resource('faculties', FacultiesController::class);
     Route::resource('categories', CategoriesController::class);
-    Route::resource('units', UnitsController::class);
 
 
     // Student Routes
