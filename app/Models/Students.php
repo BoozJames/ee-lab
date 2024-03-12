@@ -11,6 +11,7 @@ class Students extends Model
 
     protected $fillable = [
         'srcode',
+        'rfid_code',
         'first_name',
         'middle_name',
         'last_name',
