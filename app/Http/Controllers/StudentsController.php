@@ -51,10 +51,10 @@ class StudentsController extends Controller
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
             'extra_name' => 'nullable|string|max:255',
-            'colleges' => 'nullable|string|max:255',
             'campus' => 'nullable|string|max:255',
+            'colleges' => 'nullable|string|max:255',
             'programs' => 'nullable|string|max:255',
-            'courses' => 'nullable|string',
+            // 'courses' => 'nullable|string',
         ]);
 
         // Create a new student instance with the validated data
@@ -94,15 +94,15 @@ class StudentsController extends Controller
     public function update(Request $request, string $id)
     {
         $validatedData = $request->validate([
-            'srcode' => 'required|string|max:255' . $id,
+            'srcode' => 'required|string|max:10|unique:students,srcode,' . $id,
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
             'extra_name' => 'nullable|string|max:255',
-            'colleges' => 'nullable|string|max:255',
             'campus' => 'nullable|string|max:255',
+            'colleges' => 'nullable|string|max:255',
             'programs' => 'nullable|string|max:255',
-            'courses' => 'nullable|string',
+            // 'courses' => 'nullable|string',
         ]);
 
         $students = Students::findOrFail($id);

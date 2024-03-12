@@ -71,10 +71,10 @@
                                             {{ $student->campus }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $student->college }}
+                                            {{ $student->colleges }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $student->program }}
+                                            {{ $student->programs }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             <a href="{{ route('students.show', $student->id) }}"

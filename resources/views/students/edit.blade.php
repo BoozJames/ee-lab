@@ -14,6 +14,12 @@
                         @csrf
                         @method('PUT')
                         <div class="mb-4">
+                            <label for="srcode" class="block text-sm font-medium text-gray-700">SR Code</label>
+                            <input type="text" first name="srcode" id="srcode"
+                                value="{{ $students->srcode }}"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </div>
+                        <div class="mb-4">
                             <label for="first_name" class="block text-sm font-medium text-gray-700">First name</label>
                             <input type="text" first name="first_name" id="first_name"
                                 value="{{ $students->first_name }}"
@@ -45,11 +51,11 @@
                             <input type="text" name="programs" id="programs" value="{{ $students->programs }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                         </div>
-                        <div class="mb-4">
+                        {{-- <div class="mb-4">
                             <label for="courses" class="block text-sm font-medium text-gray-700">Courses</label>
                             <input type="text" name="courses" id="courses" value="{{ $students->courses }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        </div>
+                        </div> --}}
                         
                         <!-- Add more input fields as needed -->
                         <div class="flex items-center justify-end">
