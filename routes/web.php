@@ -4,6 +4,7 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RequestsController;
+use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\UserController;
 use App\Models\Items;
 use Illuminate\Support\Facades\Route;
@@ -33,27 +34,28 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::resource('inventory', InventoryController::class);
     Route::resource('requests', RequestsController::class);
     Route::resource('items', ItemsController::class);
+    Route::resource('students', StudentsController::class);
 
     // Placeholder routes for students
-    Route::get('/student', function () {
-        // Logic for student list
-    })->name('student.index');
+    // Route::get('/student', function () {
+    //     // Logic for student list
+    // })->name('student.index');
 
-    Route::get('/student/campus', function () {
-        // Logic for student campus page
-    })->name('student.campus');
+    // Route::get('/student/campus', function () {
+    //     // Logic for student campus page
+    // })->name('student.campus');
 
-    Route::get('/student/college', function () {
-        // Logic for student college page
-    })->name('student.college');
+    // Route::get('/student/college', function () {
+    //     // Logic for student college page
+    // })->name('student.college');
 
-    Route::get('/student/program', function () {
-        // Logic for student program page
-    })->name('student.program');
+    // Route::get('/student/program', function () {
+    //     // Logic for student program page
+    // })->name('student.program');
 
-    Route::get('/student/course', function () {
-        // Logic for student course page
-    })->name('student.course');
+    // Route::get('/student/course', function () {
+    //     // Logic for student course page
+    // })->name('student.course');
 
     // Placeholder route for instructor
     Route::get('/instructor', function () {

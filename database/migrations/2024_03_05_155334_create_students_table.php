@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('middle_name')->nullable();
             $table->string('last_name');
             $table->string('extra_name')->nullable();
-            $table->string('college_id')->nullable();
             $table->string('campus');
-            $table->string('programs');
-            $table->json('courses_array')->nullable();
+            $table->string('colleges')->nullable();
+            $table->string('programs')->nullable();
+            $table->json('courses')->nullable();
             $table->timestamps();
         });
     }

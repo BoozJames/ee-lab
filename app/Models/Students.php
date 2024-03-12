@@ -15,14 +15,14 @@ class Students extends Model
         'middle_name',
         'last_name',
         'extra_name',
-        'colleges',
         'campus',
+        'colleges',
         'programs',
-        'courses_array',
+        'courses',
     ];
 
     protected $casts = [
-        'courses_array' => 'array',
-        'colleges' => 'array',
+        // 'courses' => 'array',
+        // 'colleges' => 'array',
     ];
 }
