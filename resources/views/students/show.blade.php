@@ -34,6 +34,10 @@
                         <label for="programs" class="block text-sm font-medium text-gray-700">Programs</label>
                         <div class="mt-1">{{ $students->programs }}</div>
                     </div>
+                    <div class="mb-4">
+                        <label for="courses" class="block text-sm font-medium text-gray-700">Courses</label>
+                        <div class="mt-1">{{ $students->courses }}</div>
+                    </div>
                     <!-- Add more details as needed -->
                     <div class="flex items-center justify-end">
                         <a href="{{ route('students.edit', $students->id) }}"
