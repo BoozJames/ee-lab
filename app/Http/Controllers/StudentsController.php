@@ -46,7 +46,8 @@ class StudentsController extends Controller
     {
         // Validate the incoming request data
         $validatedData = $request->validate([
-            'srcode' => 'required|string|max:255',
+            'srcode' => 'required|string|max:10|unique:students,srcode',
+            'rfid_code' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',
@@ -95,6 +96,7 @@ class StudentsController extends Controller
     {
         $validatedData = $request->validate([
             'srcode' => 'required|string|max:10|unique:students,srcode,' . $id,
+            'rfid_code' => 'required|string|max:255',
             'first_name' => 'required|string|max:255',
             'middle_name' => 'nullable|string|max:255',
             'last_name' => 'required|string|max:255',

@@ -20,6 +20,12 @@
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                         </div>
                         <div class="mb-4">
+                            <label for="rfid_code" class="block text-sm font-medium text-gray-700">RFID Code</label>
+                            <input type="text" first name="rfid_code" id="rfid_code"
+                                value="{{ $students->rfid_code }}"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </div>
+                        <div class="mb-4">
                             <label for="first_name" class="block text-sm font-medium text-gray-700">First name</label>
                             <input type="text" first name="first_name" id="first_name"
                                 value="{{ $students->first_name }}"

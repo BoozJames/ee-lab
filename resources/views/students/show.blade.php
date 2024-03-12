@@ -10,6 +10,12 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="mb-4">
+                        <label for="name" class="block text-sm font-medium text-gray-700">SRCODE / RFID Code</label>
+                        <div class="mt-1">
+                            {{ $students->srcode }} / {{ $students->rfid_code }}
+                        </div>
+                    </div>
+                    <div class="mb-4">
                         <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
                         <div class="mt-1">
                             {{ $students->first_name }} {{ $students->middle_name }} {{ $students->last_name }}
@@ -21,11 +27,11 @@
                         <div class="mt-1">{{ $students->campus }}</div>
                     </div>
                     <div class="mb-4">
-                        <label for="campus" class="block text-sm font-medium text-gray-700">College</label>
-                        <div class="mt-1">{{ $students->college }}</div>
+                        <label for="college" class="block text-sm font-medium text-gray-700">College</label>
+                        <div class="mt-1">{{ $students->colleges }}</div>
                     </div>
                     <div class="mb-4">
-                        <label for="campus" class="block text-sm font-medium text-gray-700">Programs</label>
+                        <label for="programs" class="block text-sm font-medium text-gray-700">Programs</label>
                         <div class="mt-1">{{ $students->programs }}</div>
                     </div>
                     <!-- Add more details as needed -->
