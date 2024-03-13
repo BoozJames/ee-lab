@@ -16,8 +16,12 @@ return new class extends Migration
             $table->foreignId('item_id')->constrained()->onDelete('cascade');
             $table->string('item_variant_number');
             $table->string('brand');
-            $table->string('description')->nullable();
+            $table->string('variant_description')->nullable();
             $table->string('status')->nullable();
+            $table->unsignedBigInteger('units_id')->nullable();
+            $table->unsignedBigInteger('categories_id')->nullable();
+            $table->foreign('units_id')->references('id')->on('units')->onDelete('set null');
+            $table->foreign('categories_id')->references('id')->on('categories')->onDelete('set null');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -28,6 +32,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('item_variants');
+        Schema::table('item_variants', function (Blueprint $table) {
+            $table->dropForeign(['units_id']);
+            $table->dropForeign(['categories_id']);
+            $table->dropColumn(['units_id', 'categories_id']);
+        });
     }
 };
