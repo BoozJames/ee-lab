@@ -62,6 +62,8 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
 });
 
 
+Route::get('/create-request', [RequestsController::class, 'showCreateForm'])->name('create.request');
+Route::get('/track-request', [RequestsController::class, 'showTrackForm'])->name('track.request');
 
 // Route::get('users', [UserController::class, 'index'])->name('users.index');
 // Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');
