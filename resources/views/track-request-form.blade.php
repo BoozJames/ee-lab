@@ -1,7 +1,6 @@
     @include('kiosk-styles')
-    </head>
 
-    <body class="antialiased">
+    @section('content')
         <div class="background">
             <div
                 class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center selection:bg-red-500 selection:text-white">
@@ -22,8 +21,7 @@
                     <div class="flex justify-center">
                         <img src="images/bsu-neu-logo.png" style="width: 100px; height: 93px; margin-right: 10px;"
                             alt="">
-                        <img src="images/ee-logo.png" style="width: 100px; height: 93px; margin-left: 10px;"
-                            alt="">
+                        <img src="images/ee-logo.png" style="width: 100px; height: 93px; margin-left: 10px;" alt="">
                     </div>
 
                     <!-- Title and subtitle -->
@@ -67,6 +65,3 @@
                 </div>
             </div>
         </div>
-    </body>
-
-    </html>
