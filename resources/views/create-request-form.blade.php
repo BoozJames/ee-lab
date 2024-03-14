@@ -19,7 +19,7 @@
                     </div>
                 @endif
 
-                <div class="mt-3">
+                <div class="m-3">
                     <div class="container flex">
 
                         <div class="row">
