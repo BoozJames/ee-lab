@@ -841,6 +841,10 @@
             height: 100%;
             width: 100%;
         }
+
+        .dark-background {
+            background-color: #F5F5F5;
+        }
     </style>
 
 </head>
