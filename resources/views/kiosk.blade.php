@@ -53,7 +53,7 @@
                                         </svg>
                                     </div>
                                     <div class="ml-4">
-                                        <h2 class="text-xl font-semibold text-gray-900">Create a Request</h2>
+                                        <h2 class="text-xl font-semibold text-gray-900">Borrow</h2>
                                         <p class="mt-1 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
                                             Choose a trainer or items when creating a request
                                         </p>
@@ -74,9 +74,32 @@
                                         </svg>
                                     </div>
                                     <div class="ml-4">
-                                        <h2 class="text-xl font-semibold text-gray-900">Track a Request</h2>
+                                        <h2 class="text-xl font-semibold text-gray-900">Track</h2>
                                         <p class="mt-1 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
                                             Look for the status of your request using the kiosk or check it online
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+
+                            <a href="{{ route('track.request') }}"
+                                class="scale-100 p-6 bg-white dark:bg-white-800/50 dark:bg-gradient-to-bl from-red-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
+                                <div class="flex items-center">
+                                    <div
+                                        class="h-16 w-16 bg-red-50 dark:bg-red-800/20 flex items-center justify-center rounded-full">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-card-list w-7 h-7 stroke-red-500"
+                                            viewBox="0 0 16 16">
+                                            <path
+                                                d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z" />
+                                            <path
+                                                d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0M4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0" />
+                                        </svg>
+                                    </div>
+                                    <div class="ml-4">
+                                        <h2 class="text-xl font-semibold text-gray-900">Logs</h2>
+                                        <p class="mt-1 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
+                                            See the list of borrowed items
                                         </p>
                                     </div>
                                 </div>
