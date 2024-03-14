@@ -33,23 +33,31 @@
 
                     <div class="mt-16">
                         <div class="grid grid-cols-1 md:grid-cols-1 gap-6 lg:gap-8">
-                            <form action="{{ route('track.request') }}" method="GET" class="w-full">
-                                <h2 class="text-xl font-semibold text-gray-900">Track a Request</h2>
 
-                                <div
-                                    class="scale-100 p-6 bg-white dark:bg-white-800/50 dark:bg-gradient-to-bl from-red-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-
-                                    <div class="flex flex-col ml-4 w-full">
-
-                                        <input type="text" name="request_id" placeholder="Enter Request ID"
-                                            class="w-96 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" />
+                            <h2>Log list</h2>
+                            <ol class="list-group list-group-numbered">
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Subheading</div>
+                                        Cras justo odio
                                     </div>
-                                    <div class="flex justify-center mt-4">
-                                        <button type="submit"
-                                            class="px-6 py-3 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">Track</button>
+                                    <span class="badge bg-primary rounded-pill">14</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Subheading</div>
+                                        Cras justo odio
                                     </div>
-                                </div>
-                            </form>
+                                    <span class="badge bg-primary rounded-pill">14</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">Subheading</div>
+                                        Cras justo odio
+                                    </div>
+                                    <span class="badge bg-primary rounded-pill">14</span>
+                                </li>
+                            </ol>
                         </div>
                     </div>
 

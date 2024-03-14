@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>CODEE-Lab</title>
+    <title>EE-Lab</title>
     <link rel="apple-touch-icon" sizes="180x180" href="/images/bsu-neu-logo.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/images/bsu-neu-logo.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/images/bsu-neu-logo.png">
@@ -13,6 +13,10 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
     <!-- Styles -->
     <style>
@@ -56,7 +60,7 @@
             text-decoration: underline dotted
         }
 
-        h1,
+        /* h1,
         h2,
         h3,
         h4,
@@ -64,7 +68,7 @@
         h6 {
             font-size: inherit;
             font-weight: inherit
-        }
+        } */
 
         a {
             color: inherit;
@@ -129,14 +133,14 @@
             text-transform: none
         }
 
-        [type=button],
+        /* [type=button],
         [type=reset],
         [type=submit],
         button {
             -webkit-appearance: button;
             background-color: transparent;
             background-image: none
-        }
+        } */
 
         :-moz-focusring {
             outline: auto
@@ -839,4 +843,26 @@
             height: 100%;
             width: 100%;
         }
+
+        .dark-background {
+            background-color: #F5F5F5;
+        }
     </style>
+
+</head>
+
+<body class="antialiased">
+
+    @yield('content')
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+
+
+</body>
+
+</html>
