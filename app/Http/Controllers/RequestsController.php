@@ -87,4 +87,9 @@ class RequestsController extends Controller
     {
         return view('track-request-form');
     }
+
+    public function showLogList()
+    {
+        return view('log-list-form');
+    }
 }
