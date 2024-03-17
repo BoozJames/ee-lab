@@ -34,9 +34,9 @@
                             </p>
                         </div>
                         <div>
-                            <label class="block text-sm font-medium text-gray-700">Item Number:</label>
+                            <label class="block text-sm font-medium text-gray-700">Equipment Label:</label>
                             <p class="mt-1 text-sm text-gray-900">
-                                {{ $variant->item_variant_number }} 
+                                {{ $variant->equipment_label }} 
                             </p>
                         </div>
                             <div class="flex items-center justify-end">
@@ -52,6 +52,12 @@
                     </div>
                     
                     <div class="grid grid-cols-5 gap-4 mt-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Serial Number:</label>
+                            <p class="mt-1 text-sm text-gray-900">
+                            {{ $variant->serial_number }} 
+                            </p>
+                        </div>
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Category:</label>
                             <p class="mt-1 text-sm text-gray-900">
@@ -71,6 +77,21 @@
                             </p>
                         </div>
                     </div>
+                    <div class="grid grid-cols-5 gap-4 mt-5">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Last Calibration Date:</label>
+                            <p class="mt-1 text-sm text-gray-900">
+                                {{ $variant->last_calibration_date ? \Carbon\Carbon::parse($variant->last_calibration_date)->format('m-d-Y') : '-' }}
+                            </p>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Image:</label>
+                            <p class="mt-1 text-sm text-gray-900">
+                                <img src="{{ $variant->image }}" alt="item_image" style="max-width: 100px; max-height: 100px;">
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

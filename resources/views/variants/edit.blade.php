@@ -29,6 +29,26 @@
                             </select>
                         </div>
                         <div class="mb-4">
+                            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                            <input type="text" name="variant_description" id="variant_description" value="{{$variant->variant_description}}"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </div>
+                        <div class="mb-4">
+                            <label for="brand" class="block text-sm font-medium text-gray-700">Brand</label>
+                            <input type="text" name="brand" id="brand" value="{{$variant->brand}}"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </div>
+                        <div class="mb-4">
+                            <label for="equipment_label" class="block text-sm font-medium text-gray-700">Equipment Label</label>
+                            <input type="text" name="equipment_label" id="equipment_label" value="{{$variant->equipment_label}}"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </div>
+                        <div class="mb-4">
+                            <label for="serial_number" class="block text-sm font-medium text-gray-700">Serial Number</label>
+                            <input type="text" name="serial_number" id="serial_number" value="{{$variant->serial_number}}"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </div>
+                        <div class="mb-4">
                             <label for="category_id" class="block text-sm font-medium text-gray-700">Category</label>
                             <select 
                                 name="category_id"
@@ -43,22 +63,6 @@
                                         value="{{ $category->id }}">{{ $category->name }}</option>
                                 @endforeach
                             </select>
-                        </div>
-                        <div class="mb-4">
-                            <label for="description" class="block text-sm font-medium text-gray-700">Item Number</label>
-                            <input type="text" name="item_variant_number" id="item_variant_number" value="{{$variant->item_variant_number}}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                            <input type="text" name="variant_description" id="variant_description" value="{{$variant->variant_description}}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        </div>
-                        <div class="mb-4">
-                            <label for="description" class="block text-sm font-medium text-gray-700">Brand</label>
-                            <input type="text" name="brand" id="brand" value="{{$variant->brand}}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                         </div>
 
                         <div class="mb-4">
@@ -77,7 +81,11 @@
                                 @endforeach
                             </select>
                         </div>
-
+                        <div class="mb-4">
+                            <label for="last_calibration_date" class="block text-sm font-medium text-gray-700">Last Calibration Date</label>
+                            <input type="date" name="last_calibration_date" id="last_calibration_date" value="{{ $variant->last_calibration_date ? \Carbon\Carbon::parse($variant->last_calibration_date)->format('Y-m-d') : '' }}"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </div>
                         <div class="mb-4">
                             <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                             <select 
@@ -88,6 +96,11 @@
                             >
                                 <option value=""></option>
                                 <option 
+                                    {{ $variant->status == 'Newly Acquired' ? 'selected' : '' }}  
+                                    value="Newly Acquired">
+                                    Newly Acquired
+                                </option>
+                                <option 
                                     {{ $variant->status == 'Functional' ? 'selected' : '' }}  
                                     value="Functional">
                                     Functional
@@ -96,6 +109,21 @@
                                     {{ $variant->status == 'Non-Functional' ? 'selected' : '' }}  
                                     value="Non-Functional">
                                     Non-Functional
+                                </option>
+                                <option 
+                                    {{ $variant->status == 'For Condemn' ? 'selected' : '' }}  
+                                    value="For Condemn">
+                                    For Condemn
+                                </option>
+                                <option 
+                                    {{ $variant->status == 'Defective' ? 'selected' : '' }}  
+                                    value="Defective">
+                                    Defective
+                                </option>
+                                <option 
+                                    {{ $variant->status == 'Obsolete' ? 'selected' : '' }}  
+                                    value="Obsolete">
+                                    Obsolete
                                 </option>
                             </select>
                         </div>

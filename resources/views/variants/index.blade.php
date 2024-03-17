@@ -62,11 +62,15 @@
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Item Number</span>
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Brand</span>
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Brand</span>
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Equipment Label</span>
+                                    </th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left">
+                                        <span
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Serial Number</span>
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
@@ -75,6 +79,10 @@
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
                                             class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Unit</span>
+                                    </th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left">
+                                        <span
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Last Calibration Date</span>
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
@@ -99,19 +107,26 @@
                                             {{ $variant->variant_description}}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $variant->item_variant_number}}
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             {{ $variant->brand}}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $variant->status}}
+                                            {{ $variant->equipment_label}}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                            {{ $variant->serial_number}}
+                                        </td>
+                                
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                            {{ $variant->category->name ?? '-' }} <!-- Display category name, or '-' if not available -->
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             {{ $variant->unit->name ?? '-' }} <!-- Display unit name, or '-' if not available -->
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $variant->category->name ?? '-' }} <!-- Display category name, or '-' if not available -->
+                                            {{ $variant->last_calibration_date ? \Carbon\Carbon::parse($variant->last_calibration_date)->format('m-d-Y') : '-' }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                            {{ $variant->status}}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             <a href="{{ route('variants.show', $variant->id) }}"

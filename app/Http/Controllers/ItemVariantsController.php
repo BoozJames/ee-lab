@@ -51,15 +51,16 @@ class ItemVariantsController extends Controller
     {
         $validatedData = $request->validate([
             'item_id' => 'required',
-            'item_variant_number' => 'required|string|max:20',
             'brand' => 'required|string|max:50',
             'variant_description' => 'required|string|max:255',
             'status' => 'required',
             'unit_id' => 'required',
             'category_id' => 'required',
+            'equipment_label' => 'string|max:255',
+            'serial_number' => 'string|max:255',
+            'last_calibration_date' => 'nullable|date', 
             // Add more validation rules as needed
         ]);
-
 
         $variant = ItemVariants::create($validatedData);
 
@@ -98,12 +99,14 @@ class ItemVariantsController extends Controller
     {
         $validatedData = $request->validate([
             'item_id' => 'required',
-            'item_variant_number' => 'required|string|max:20',
             'brand' => 'required|string|max:50',
             'variant_description' => 'required|string|max:255',
             'status' => 'required',
             'unit_id' => 'required',
             'category_id' => 'required',
+            'equipment_label' => 'string|max:255',
+            'serial_number' => 'string|max:255',
+            'last_calibration_date' => 'nullable|date', 
             // Add more validation rules as needed
         ]);
 

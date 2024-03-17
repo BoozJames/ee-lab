@@ -27,6 +27,26 @@
                             </select>
                         </div>
                         <div class="mb-4">
+                            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                            <input type="text" name="variant_description" id="variant_description"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </div>
+                        <div class="mb-4">
+                            <label for="brand" class="block text-sm font-medium text-gray-700">Brand</label>
+                            <input type="text" name="brand" id="brand"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </div>
+                        <div class="mb-4">
+                            <label for="equipment_label" class="block text-sm font-medium text-gray-700">Equipment Label</label>
+                            <input type="text" name="equipment_label" id="equipment_label"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </div>
+                        <div class="mb-4">
+                            <label for="serial_number" class="block text-sm font-medium text-gray-700">Serial Number</label>
+                            <input type="text" name="serial_number" id="serial_number"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </div>
+                        <div class="mb-4">
                             <label for="category_id" class="block text-sm font-medium text-gray-700">Category</label>
                             <select 
                                 name="category_id"
@@ -42,27 +62,10 @@
                             </select>
                         </div>
                         <div class="mb-4">
-                            <label for="description" class="block text-sm font-medium text-gray-700">Item Number</label>
-                            <input type="text" name="item_variant_number" id="item_variant_number"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
-                            <input type="text" name="variant_description" id="variant_description"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        </div>
-                        <div class="mb-4">
-                            <label for="description" class="block text-sm font-medium text-gray-700">Brand</label>
-                            <input type="text" name="brand" id="brand"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                        </div>
-
-                        <div class="mb-4">
                             <label for="unit_id" class="block text-sm font-medium text-gray-700">Unit</label>
                             <select 
                                 name="unit_id"
-                                id="units_id" 
+                                id="unit_id" 
                                 required
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             >
@@ -73,7 +76,11 @@
                                 @endforeach
                             </select>
                         </div>
-
+                        <div class="mb-4">
+                            <label for="last_calibration_date" class="block text-sm font-medium text-gray-700">Last Calibration Daate</label>
+                            <input type="date" name="last_calibration_date" id="last_calibration_date"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        </div>
                         <div class="mb-4">
                             <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                             <select 
@@ -83,8 +90,12 @@
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                             >
                                 <option value=""></option>
+                                <option value="Newly Acquired">Newly Acquired</option>
                                 <option value="Functional">Functional</option>
                                 <option value="Non-Functional">Non-Functional</option>
+                                <option value="For Condemn">For Condemn</option>
+                                <option value="Defective">Defective</option>
+                                <option value="Obsolete">Obsolete</option>
                             </select>
                         </div>
                         

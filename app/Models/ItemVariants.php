@@ -11,7 +11,7 @@ class ItemVariants extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['item_id', 'item_variant_number', 'brand', 'variant_description', 'status', 'unit_id', 'category_id'];
+    protected $fillable = ['item_id', 'brand', 'variant_description', 'status', 'unit_id', 'category_id', 'equipment_label', 'serial_number', 'last_calibration_date' ];
 
     public function item()
     {
