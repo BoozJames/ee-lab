@@ -10,9 +10,24 @@ class ItemsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $itemQuery = Items::query();
+
+        // if ($request->filled('role')) {
+        //     $itemQuery->where('role', $request->role);
+        // }
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $itemQuery->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%$search%")
+                    ->orWhere('description', 'like', "%$search%");
+            });
+        }
+        $items = $itemQuery->paginate(5);
+
+        return view('items.index', compact('items'));
     }
 
     /**
@@ -20,7 +35,7 @@ class ItemsController extends Controller
      */
     public function create()
     {
-        //
+        return view('items.create');
     }
 
     /**
@@ -28,8 +43,18 @@ class ItemsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required',
+            // Add more validation rules as needed
+        ]);
+
+
+        $items = Items::create($validatedData);
+
+        return redirect()->route('items.index')->with('success', 'Itemscreated successfully.');
     }
+
 
     /**
      * Display the specified resource.
@@ -58,8 +83,11 @@ class ItemsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Items $items)
+    public function destroy(string $id)
     {
-        //
+        $item = Items::findOrFail($id);
+        $item->delete();
+
+        return redirect()->route('items.index')->with('success', 'Item deleted successfully.');
     }
 }

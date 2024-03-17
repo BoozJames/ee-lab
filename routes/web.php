@@ -1,9 +1,15 @@
 <?php
 
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RequestsController;
+use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\FacultiesController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\UnitsController;
+use App\Models\Items;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('kiosk');
 });
 
 Route::group(['middleware' => 'auth', 'verified'], function () {
@@ -30,32 +36,25 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::resource('users', UserController::class);
     Route::resource('inventory', InventoryController::class);
     Route::resource('requests', RequestsController::class);
+    Route::resource('items', ItemsController::class);
+    // Route::resource('students', StudentsController::class);
+    Route::resource('variants', ItemsController::class);
+    Route::resource('categories', ItemsController::class);
+    Route::resource('units', ItemsController::class);
+    Route::resource('faculties', FacultiesController::class);
+    Route::resource('categories', CategoriesController::class);
+    Route::resource('units', UnitsController::class);
 
-    // Placeholder routes for students
-    Route::get('/student/dashboard', function () {
-        // Logic for student dashboard
-    })->name('student.dashboard');
 
-    Route::get('/student/campus', function () {
-        // Logic for student campus page
-    })->name('student.campus');
+    // Student Routes
+    Route::get('/students', [StudentsController::class, 'index'])->name('students.index');
+    Route::get('/students/create', [StudentsController::class, 'create'])->name('students.create');
+    Route::post('/students', [StudentsController::class, 'store'])->name('students.store');
+    Route::get('/students/{student}', [StudentsController::class, 'show'])->name('students.show');
+    Route::get('/students/{student}/edit', [StudentsController::class, 'edit'])->name('students.edit');
+    Route::put('/students/{student}', [StudentsController::class, 'update'])->name('students.update');
+    Route::delete('/students/{student}', [StudentsController::class, 'destroy'])->name('students.destroy');
 
-    Route::get('/student/college', function () {
-        // Logic for student college page
-    })->name('student.college');
-
-    Route::get('/student/program', function () {
-        // Logic for student program page
-    })->name('student.program');
-
-    Route::get('/student/course', function () {
-        // Logic for student course page
-    })->name('student.course');
-
-    // Placeholder route for instructor
-    Route::get('/instructor/dashboard', function () {
-        // Logic for instructor dashboard
-    })->name('instructor.dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -63,6 +62,9 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
 });
 
 
+Route::get('/create-request', [RequestsController::class, 'showCreateForm'])->name('create.request');
+Route::get('/track-request', [RequestsController::class, 'showTrackForm'])->name('track.request');
+Route::get('/log-list-request', [RequestsController::class, 'showLogList'])->name('log.list.request');
 
 // Route::get('users', [UserController::class, 'index'])->name('users.index');
 // Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');

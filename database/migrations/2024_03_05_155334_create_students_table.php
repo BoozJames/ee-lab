@@ -14,14 +14,15 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('srcode')->unique();
+            $table->string('rfid_code')->unique()->nullable();
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name');
             $table->string('extra_name')->nullable();
-            $table->foreignId('college_id')->constrained()->onDelete('cascade');
             $table->string('campus');
-            $table->string('programs');
-            $table->json('courses_array')->nullable();
+            $table->string('colleges')->nullable();
+            $table->string('programs')->nullable();
+            $table->json('courses')->nullable();
             $table->timestamps();
         });
     }
