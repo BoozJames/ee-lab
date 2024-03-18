@@ -21,8 +21,9 @@ class RequestsController extends Controller
         if ($request->filled('search')) {
             $search = $request->input('search');
             $requestQuery->where(function ($query) use ($search) {
-                $query->where('name', 'like', "%$search%")
-                    ->orWhere('description', 'like', "%$search%");
+                $query->where('reference_number', 'like', "%$search%")
+                    ->orWhere('items', 'like', "%$search%")
+                    ->orWhere('requestors', 'like', "%$search%");
             });
         }
         $requests = $requestQuery->paginate(5);
