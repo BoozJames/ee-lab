@@ -50,6 +50,21 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                {{-- Display the output from the tracking request --}}
+                                @isset($request)
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h2>Request Details</h2>
+                                            <p>Reference Number: {{ $request->reference_number }}</p>
+                                            <p>Items: {{ implode(', ', $request->items) }}</p>
+                                            <p>Requestors: {{ implode(', ', $request->requestors) }}</p>
+                                            <p>Created At: {{ $request->created_at }}</p>
+                                            <p>Updated At: {{ $request->updated_at }}</p>
+                                        </div>
+                                    </div>
+                                @endisset
+
                             </form>
                         </div>
                     </div>
