@@ -41,8 +41,9 @@
 
                                     <div class="flex flex-col ml-4 w-full">
 
-                                        <input type="text" name="request_id" placeholder="Enter Request ID"
+                                        <input type="text" name="request_id" placeholder="Enter Request ID" autofocus
                                             class="w-96 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" />
+
                                     </div>
                                     <div class="flex justify-center mt-4">
                                         <button type="submit"
