@@ -89,7 +89,10 @@ class RequestsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $requests = Requests::findOrFail($id);
+        $requests->delete();
+
+        return redirect()->route('requests.index')->with('success', 'User deleted successfully.');
     }
 
     public function showCreateForm()
