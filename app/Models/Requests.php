@@ -10,6 +10,7 @@ class Requests extends Model
     use HasFactory;
 
     protected $fillable = [
+        'reference_number',
         'items',
         'requestors',
     ];

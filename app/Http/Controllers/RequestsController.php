@@ -35,7 +35,7 @@ class RequestsController extends Controller
      */
     public function create()
     {
-        //
+        return view('requests.create');
     }
 
     /**
@@ -43,7 +43,19 @@ class RequestsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Validate request data
+        $validatedData = $request->validate([
+            'reference_number' => 'required|string',
+            'items' => 'required|array',
+            'requestors' => 'required|array',
+            // Add more validation rules as needed
+        ]);
+
+        // Create request
+        Requests::create($validatedData);
+
+        // Redirect with success message
+        return redirect()->route('requests.create')->with('success', 'Request created successfully!');
     }
 
     /**
@@ -51,7 +63,9 @@ class RequestsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $requests = Requests::findOrFail($id);
+
+        return view('requests.show', compact('requests'));
     }
 
     /**
@@ -83,13 +97,34 @@ class RequestsController extends Controller
         return view('create-request-form');
     }
 
+    public function showLogList()
+    {
+        return view('log-list-form');
+    }
+
+    /**
+     * Show the form for tracking a request.
+     */
     public function showTrackForm()
     {
         return view('track-request-form');
     }
 
-    public function showLogList()
+    /**
+     * Track a request by its reference number.
+     */
+    public function trackRequest(Request $request)
     {
-        return view('log-list-form');
+        $referenceNumber = $request->input('reference_number');
+
+        $request = Requests::where('reference_number', $referenceNumber)->first();
+
+        if ($request) {
+            // Request found, display details
+            return view('track-request-details', compact('request'));
+        } else {
+            // Request not found
+            return back()->with('error', 'Request not found.');
+        }
     }
 }
