@@ -77,4 +77,19 @@ class RequestsController extends Controller
     {
         //
     }
+
+    public function showCreateForm()
+    {
+        return view('create-request-form');
+    }
+
+    public function showTrackForm()
+    {
+        return view('track-request-form');
+    }
+
+    public function showLogList()
+    {
+        return view('log-list-form');
+    }
 }
