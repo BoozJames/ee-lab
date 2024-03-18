@@ -63,25 +63,41 @@ class RequestsController extends Controller
      */
     public function show(string $id)
     {
-        $requests = Requests::findOrFail($id);
+        $request = Requests::findOrFail($id);
 
-        return view('requests.show', compact('requests'));
+        return view('requests.show', compact('request'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $request = Requests::findOrFail($id);
+        return view('requests.edit', compact('request'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        // Validate request data
+        $validatedData = $request->validate([
+            'reference_number' => 'required|string',
+            'items' => 'required|array',
+            'requestors' => 'required|array',
+            // Add more validation rules as needed
+        ]);
+
+        // Find the request by ID
+        $request = Requests::findOrFail($id);
+
+        // Update request with validated data
+        $request->update($validatedData);
+
+        // Redirect with success message
+        return redirect()->route('requests.index')->with('success', 'Request updated successfully!');
     }
 
     /**
