@@ -69,6 +69,7 @@
                 quantityInput.addEventListener('input', function () {
                     arrayQty[arrayItemIds.indexOf(itemId)] = this.value;
                 });
+                quantityInput.required = true;
                 selectedItemsList.appendChild(quantityInput);
                 // Add item ID and initialize quantity in arrays
                 arrayItemIds.push(itemId);
