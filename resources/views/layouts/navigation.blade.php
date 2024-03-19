@@ -66,6 +66,9 @@
                                 <x-dropdown-link :href="route('categories.index')" active="request()->routeIs('categories.index')">
                                     {{ __('Categories') }}
                                 </x-dropdown-link>
+                                <x-dropdown-link :href="route('trainers.index')" active="request()->routeIs('trainers.index')">
+                                    {{ __('Trainers') }}
+                                </x-dropdown-link>
                             </x-slot>
                         </x-dropdown>
                     </div>
