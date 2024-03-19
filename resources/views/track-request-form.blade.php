@@ -33,23 +33,38 @@
 
                     <div class="mt-16">
                         <div class="grid grid-cols-1 md:grid-cols-1 gap-6 lg:gap-8">
-                            <form action="{{ route('track.request') }}" method="GET" class="w-full">
-                                <h2 class="text-xl font-semibold text-gray-900">Track a Request</h2>
+                            <form action="{{ route('track.request') }}" method="GET">
 
-                                <div
-                                    class="scale-100 p-6 bg-white dark:bg-white-800/50 dark:bg-gradient-to-bl from-red-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-2xl shadow-gray-500/20 dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250 focus:outline focus:outline-2 focus:outline-red-500">
-
-                                    <div class="flex flex-col ml-4 w-full">
-
-                                        <input type="text" name="request_id" placeholder="Enter Request ID" autofocus
-                                            class="w-96 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" />
-
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h2 class="text-xl font-semibold text-gray-900">Track a Request</h2>
                                     </div>
-                                    <div class="flex justify-center mt-4">
-                                        <button type="submit"
-                                            class="px-6 py-3 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">Track</button>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label for="refnumber" class="form-label">Reference Number</label>
+                                            <input placeholder="Enter Request ID" type="text" name="request_id"
+                                                class="form-control" id="refnumber" autofocus>
+                                        </div>
+                                        <div class="d-grid gap-2">
+                                            <button type="submit" class="btn btn-danger btn-lg">Submit</button>
+                                        </div>
                                     </div>
                                 </div>
+
+                                {{-- Display the output from the tracking request --}}
+                                @isset($request)
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h2>Request Details</h2>
+                                            <p>Reference Number: {{ $request->reference_number }}</p>
+                                            <p>Items: {{ implode(', ', $request->items) }}</p>
+                                            <p>Requestors: {{ implode(', ', $request->requestors) }}</p>
+                                            <p>Created At: {{ $request->created_at }}</p>
+                                            <p>Updated At: {{ $request->updated_at }}</p>
+                                        </div>
+                                    </div>
+                                @endisset
+
                             </form>
                         </div>
                     </div>
@@ -60,7 +75,7 @@
                         </div>
 
                         <div class="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
-                            <a href="/">Go back</a>
+                            <a href="/" class="btn btn-danger">Go back</a>
                         </div>
                     </div>
                 </div>
