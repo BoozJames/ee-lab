@@ -33,15 +33,15 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         return view('dashboard');
     })->name('dashboard');
 
+    Route::group(['prefix' => 'items'], function () {
+        require __DIR__.'/items.php';
+    });
 
     Route::resource('users', UserController::class);
     Route::resource('inventory', InventoryController::class);
     Route::resource('requests', RequestsController::class);
-    Route::resource('items', ItemsController::class);
     // Route::resource('students', StudentsController::class);
     Route::resource('variants', ItemVariantsController::class);
-    Route::resource('categories', ItemsController::class);
-    Route::resource('units', ItemsController::class);
     Route::resource('faculties', FacultiesController::class);
     Route::resource('categories', CategoriesController::class);
     Route::resource('units', UnitsController::class);
@@ -63,9 +63,11 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
 });
 
 
+
 Route::get('/create-request', [RequestsController::class, 'showCreateForm'])->name('create.request');
 Route::get('/track-request', [RequestsController::class, 'showTrackForm'])->name('track.request');
 Route::get('/log-list-request', [RequestsController::class, 'showLogList'])->name('log.list.request');
+Route::get('/track-request/details', [RequestsController::class, 'trackRequest'])->name('track.request.details');
 
 // Route::get('users', [UserController::class, 'index'])->name('users.index');
 // Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');
