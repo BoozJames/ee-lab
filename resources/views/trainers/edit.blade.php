@@ -12,12 +12,10 @@
                     <form id="trainerForm" action="{{ route('trainers.update', $trainer->id) }}" method="POST">
                         @csrf
                         @method('PUT')
-
                         <div class="mb-4">
                             <label for="trainer_name" class="block text-sm font-medium text-gray-700">Trainer Name</label>
                             <input type="text" name="trainer_name" id="trainer_name" value="{{ $trainer->trainer_name }}" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                         </div>
-
                         <div style="display: flex;">
                             <div style="flex: 1;">
                                 <h2><b>Items List</b></h2>
@@ -34,32 +32,17 @@
                             </div>
                             <div style="flex: 1;">
                                 <h2><b>Selected Items</b></h2>
-                                <!-- <div id="selectedItemsList">                                  
+                                <div id="selectedItemsList">                                  
                                     @foreach ($trainer->array_item_ids as $index => $itemId)
                                         <div>
-                                            <input type="checkbox" name="selected_items[]" value="{{ $itemId }}" id="selected_item_{{ $itemId }}" checked>
-                                            <label for="selected_item_{{ $itemId }}">{{ $items->firstWhere('id', $itemId)->name }}</label>
-                                            <input
-                                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                                type="number" name="array_qty[]" value="{{ $trainer->array_qty[$index] }}" id="quantity_{{ $itemId }}" >
-                                            <input type="hidden" name="existing_item_ids[]" value="{{ $itemId }}">
-                                            <input type="hidden" name="existing_item_quantities[]" value="{{ $trainer->array_qty[$index] }}">
+                                        <input type="checkbox" name="selected_items[]" value="{{ $itemId }}" id="selected_item_{{ $itemId }}" checked>
+                                        <label for="selected_item_{{ $itemId }}">{{ $items->firstWhere('id', $itemId)->name }}</label>
+                                        <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" type="number" name="quantities[{{ $itemId }}]" value="{{ $trainer->array_qty[$index] }}" id="quantity_{{ $itemId }}" required >
                                         </div>
                                     @endforeach
-                                </div> -->
-                                <div id="selectedItemsList">
-                                <!-- Selected items will be dynamically added here -->
-                                @foreach ($trainer->array_item_ids as $index => $itemId)
-                                    <input type="checkbox" name="selected_items[]" value="{{ $itemId }}" id="selected_item_{{ $itemId }}" checked>
-                                    <label for="selected_item_{{ $itemId }}">{{ $items->firstWhere('id', $itemId)->name }}</label>
-                                    <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" type="number" name="quantities[{{ $itemId }}]" value="{{ $trainer->array_qty[$index] }}" id="quantity_{{ $itemId }}" >
-                                @endforeach
-                            </div>
+                                </div>
                             </div>
                         </div>
-
-                            
-
                         <button type="submit" class="mt-7 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Update Trainer</button>
                     </form>
                 </div>
@@ -93,6 +76,7 @@
                 quantityInput.addEventListener('input', function () {
                     arrayQty[arrayItemIds.indexOf(itemId)] = this.value;
                 });
+                quantityInput.required = true;
                 selectedItemsList.appendChild(quantityInput);
                 // Add item ID and initialize quantity in arrays
                 arrayItemIds.push(itemId);
@@ -136,7 +120,6 @@
                 }
             });
 
-
             // Set hidden input fields for array_item_ids and array_qty
             const arrayItemIdsInput = document.createElement('input');
             arrayItemIdsInput.type = 'hidden';
@@ -166,6 +149,4 @@
             });
         });
     });
-
-    
 </script>
