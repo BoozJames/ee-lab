@@ -38,9 +38,15 @@
 
             <div class="flex justify-center py-3 sticky-top">
                 <div class="d-flex align-items-center">
-                    <button type="button" class="btn btn-danger btn-lg position-relative d-flex mx-3">
+                    <button type="button" class="btn btn-danger btn-lg position-relative d-flex mx-3" onclick="goBack()">
                         Cancel
                     </button>
+
+                    <script>
+                        function goBack() {
+                            window.location.href = "{{ redirect()->back()->getTargetUrl() }}";
+                        }
+                    </script>
                     {{-- <img src="images/bsu-neu-logo.png" style="width: 100px; height: 93px; margin-right: 10px;" alt="">
                     <img src="images/ee-logo.png" style="width: 100px; height: 93px; margin-left: 10px;" alt=""> --}}
                     <button type="button" class="btn btn-secondary btn-lg position-relative d-flex mx-3">
