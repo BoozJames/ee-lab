@@ -13,10 +13,12 @@ class Requests extends Model
         'reference_number',
         'items',
         'requestors',
+        'item_variants',
     ];
 
     protected $casts = [
         'items' => 'array',
         'requestors' => 'array',
+        'item_variants' => 'array',
     ];
 }

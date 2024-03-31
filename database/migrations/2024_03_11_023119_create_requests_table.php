@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('reference_number');
             $table->string('items');
             $table->string('requestors');
+            $table->string('item_variants')->nullable();
             $table->timestamps();
         });
     }
