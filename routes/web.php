@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     })->name('dashboard');
 
     Route::group(['prefix' => 'items'], function () {
-        require __DIR__.'/items.php';
+        require __DIR__ . '/items.php';
     });
 
     Route::resource('users', UserController::class);
@@ -47,6 +47,11 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::resource('categories', CategoriesController::class);
     Route::resource('units', UnitsController::class);
     Route::resource('trainers', TrainerController::class);
+
+    // Cart
+    Route::post('/cart/add', 'CartController@addToCart')->name('cart.add');
+    Route::post('/cart/checkout', 'CartController@checkout')->name('cart.checkout');
+    Route::delete('/cart/remove/{index}', 'CartController@removeFromCart')->name('cart.remove');
 
     // Student Routes
     Route::get('/students', [StudentsController::class, 'index'])->name('students.index');
