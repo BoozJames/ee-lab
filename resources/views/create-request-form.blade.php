@@ -28,39 +28,37 @@
                         </form>
                     </div> --}}
 
-                    <button type="button" class="btn btn-secondary position-relative d-flex mx-1" onclick="goBack()">
+                    <button type="button" class="btn btn-secondary position-relative d-flex mx-1 my-1"
+                        onclick="cancelAndRemoveCart()">
                         Cancel
                     </button>
-
                     <button type="button" class="btn btn-success position-relative d-flex mx-1" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
+                        data-bs-target="#cartModal">
                         Cart
                         <span
                             class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-light text-dark">
-                            6
+                            {{ Cart::count() }}
                         </span>
                     </button>
 
                 </div>
             </nav>
 
-
-            {{-- <div class="flex justify-center py-3 sticky-top">
-                <div class="d-flex align-items-center">
-                    <button type="button" class="btn btn-danger btn-lg position-relative d-flex mx-3" onclick="goBack()">
-                        Cancel
-                    </button>
-
-                    <button type="button" class="btn btn-secondary btn-lg position-relative d-flex mx-3">
-                        Cart
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            6
-                        </span>
-                    </button>
-                </div>
-            </div> --}}
-
             <div class="container" style="padding-top: 3rem; margin-top: 3rem;">
+                <div class="row">
+                    @if (session()->has('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if (session()->has('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                </div>
                 <div class="row row-cols-1 row-cols-md-4">
                     @foreach ($items as $item)
                         <div class="col mb-4">
@@ -72,24 +70,30 @@
                                 <div class="card-body">
                                     <img src="{{ Storage::url($item->image) }}" class="card-img-top p-3" alt="">
                                 </div>
-                                <div class="card-footer">
-                                    <div class="d-grid gap-2">
-                                        <a href="#" class="btn btn-danger">Add to Request</a>
+                                <!-- Send a POST request to addToCart endpoint -->
+                                <form action="{{ route('cart.add') }}" method="POST">
+                                    @csrf
+                                    <div class="card-footer">
+                                        <input type="hidden" name="id" value="{{ $item->id }}">
+                                        <div class="d-grid gap-2">
+                                            <button type="submit" class="btn btn-danger">Add to Request</button>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     @endforeach
+
                 </div>
             </div>
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <!-- Cart Modal -->
+        <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header border-bottom-0">
-                        <h5 class="modal-title" id="exampleModalLabel">
+                        <h5 class="modal-title" id="cartModalLabel">
                             Your Cart
                         </h5>
                     </div>
@@ -104,19 +108,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="w-25">
-                                        <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/vans.png"
-                                            class="img-fluid img-thumbnail" alt="Sheep">
-                                    </td>
-                                    <td>Product</td>
-                                    <td>2</td>
-                                    <td>
-                                        <a href="#" class="btn btn-danger btn-sm">
-                                            Remove
-                                        </a>
-                                    </td>
-                                </tr>
+                                @foreach (Cart::content() as $cartItem)
+                                    <tr>
+                                        <td class="w-25">
+                                            {{-- <img src="{{ $cartItem->options->image }}" class="img-fluid img-thumbnail"
+                                                alt="{{ $cartItem->name }}"> --}}
+                                        </td>
+                                        <td>{{ $cartItem->name }}</td>
+                                        <td>{{ $cartItem->qty }}</td>
+                                        <td>
+                                            <form action="{{ route('cart.remove', $cartItem->rowId) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -129,7 +137,27 @@
         </div>
 
         <script>
-            function goBack() {
-                window.location.href = "{{ redirect()->back()->getTargetUrl() }}";
+            function cancelAndRemoveCart() {
+                // Send AJAX request to remove the cart
+                fetch('/cart/destroy', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // If successful, redirect back
+                            // window.location.href = "{{ redirect()->back()->getTargetUrl() }}";
+                            // If successful, redirect to root URL
+                            window.location.href = "/";
+                        } else {
+                            console.error('Failed to remove cart');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
             }
         </script>
