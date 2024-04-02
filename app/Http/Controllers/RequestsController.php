@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Items;
 use App\Models\Requests;
 use Illuminate\Http\Request;
 
@@ -46,7 +47,7 @@ class RequestsController extends Controller
     {
         // Validate request data
         $validatedData = $request->validate([
-            'reference_number' => 'required|string',
+            // 'reference_number' => 'required|string',
             'items' => 'required|array',
             'requestors' => 'required|array',
             // Add more validation rules as needed
@@ -56,7 +57,7 @@ class RequestsController extends Controller
         Requests::create($validatedData);
 
         // Redirect with success message
-        return redirect()->route('requests.create')->with('success', 'Request created successfully!');
+        return redirect()->route('requests.index')->with('success', 'Request created successfully!');
     }
 
     /**
@@ -88,6 +89,7 @@ class RequestsController extends Controller
             'reference_number' => 'required|string',
             'items' => 'required|array',
             'requestors' => 'required|array',
+            'item_variants' => 'array',
             // Add more validation rules as needed
         ]);
 
@@ -114,9 +116,26 @@ class RequestsController extends Controller
 
     public function showCreateForm()
     {
-        return view('create-request-form');
-    }
+        // Retrieve all items
+        $items = Items::with('itemVariants')->get();
 
+        // Retrieve item variants from the request
+        $requestItemVariants = Requests::pluck('item_variants')->flatten()->unique()->toArray();
+
+        // Filter out items whose variants are already in the request
+        $items = $items->reject(function ($item) use ($requestItemVariants) {
+            foreach ($item->itemVariants as $variant) {
+                if (in_array($variant->id, $requestItemVariants)) {
+                    return true; // Exclude this item
+                }
+            }
+            return false; // Include this item
+        });
+
+        // Pass the filtered items to the view
+        return view('create-request-form', compact('items'));
+    }
+    
     public function showLogList()
     {
         return view('log-list-form');
