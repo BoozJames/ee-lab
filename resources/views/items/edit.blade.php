@@ -26,10 +26,10 @@
                         </div>
                         <div class="mb-4">
                             <label for="description" class="block text-sm font-medium text-gray-700">Image</label>
-                            <img src="{{ $item->image }}" alt="item_image" style="max-width: 300px;">
+                            <img src="{{ Storage::url($item->image) }}" alt="item_image" style="max-width: 100px; max-height: 100px;">
                         </div>
                         <div class="mb-4">
-                            <label for="image" class="block text-sm font-medium text-gray-700">Image</label>
+                            <label for="image" class="block text-sm font-medium text-gray-700">Change Image</label>
                             <input type="file" name="image" id="image"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                         </div>
