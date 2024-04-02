@@ -74,8 +74,8 @@
                                 @foreach ($items as $item)
                                     <tr class="bg-white">
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            <img src="{{ $item->image }}" alt="item_image" style="max-width: 100px; max-height: 100px;">
-                                        </td>
+                                            <img src="{{ Storage::url($item->image) }}" alt="item_image" style="max-width: 100px; max-height: 100px;">
+                                        </td>   
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             {{ $item->name }}
                                         </td>
