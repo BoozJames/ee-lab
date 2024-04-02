@@ -60,12 +60,11 @@
                 </div>
             </div> --}}
 
-            <div class="my-6 container flex mt-5">
-
-                <div class="row my-3">
+            <div class="container" style="padding-top: 3rem; margin-top: 3rem;">
+                <div class="row row-cols-1 row-cols-md-4">
                     @foreach ($items as $item)
-                        <div class="col-sm-3">
-                            <div class="card m-2" style="width: 18rem;">
+                        <div class="col mb-4">
+                            <div class="card d-flex flex-column h-100">
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                     <p class="card-text">{{ $item->name }}</p>
                                     <span class="badge bg-secondary">Available: {{ $item->itemVariants->count() }}</span>
@@ -75,9 +74,7 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="d-grid gap-2">
-                                        <a href="#" class="btn btn-danger">Add to Request
-                                            {{-- <span class="badge bg-secondary">1</span> --}}
-                                        </a>
+                                        <a href="#" class="btn btn-danger">Add to Request</a>
                                     </div>
                                 </div>
                             </div>
