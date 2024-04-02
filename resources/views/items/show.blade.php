@@ -27,7 +27,7 @@
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Image:</label>
-                            <img src="{{ $item->image }}" alt="item_image" style="max-width: 300px;">
+                            <img src="{{ Storage::url($item->image) }}" alt="item_image" style="max-width: 100px; max-height: 100px;">
                         </div>
                     
                         <div class="flex items-center justify-end">
