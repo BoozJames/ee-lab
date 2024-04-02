@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\ProfileController;
@@ -49,9 +50,9 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::resource('trainers', TrainerController::class);
 
     // Cart
-    Route::post('/cart/add', 'CartController@addToCart')->name('cart.add');
-    Route::post('/cart/checkout', 'CartController@checkout')->name('cart.checkout');
-    Route::delete('/cart/remove/{index}', 'CartController@removeFromCart')->name('cart.remove');
+    Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+    Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+    Route::delete('/cart/remove/{index}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
     // Student Routes
     Route::get('/students', [StudentsController::class, 'index'])->name('students.index');
