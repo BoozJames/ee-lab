@@ -71,7 +71,7 @@
                                     <span class="badge bg-secondary">Available: {{ $item->itemVariants->count() }}</span>
                                 </div>
                                 <div class="card-body">
-                                    <img src="{{ asset($item->image_path) }}" class="card-img-top p-3" alt="">
+                                    <img src="{{ Storage::url($item->image) }}" class="card-img-top p-3" alt="">
                                 </div>
                                 <div class="card-footer">
                                     <div class="d-grid gap-2">
