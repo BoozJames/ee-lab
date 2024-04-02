@@ -49,11 +49,6 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::resource('units', UnitsController::class);
     Route::resource('trainers', TrainerController::class);
 
-    // Cart
-    Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-    Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
-    Route::delete('/cart/remove/{index}', [CartController::class, 'removeFromCart'])->name('cart.remove');
-
     // Student Routes
     Route::get('/students', [StudentsController::class, 'index'])->name('students.index');
     Route::get('/students/create', [StudentsController::class, 'create'])->name('students.create');
@@ -78,5 +73,11 @@ Route::get('/track-request/details', [RequestsController::class, 'trackRequest']
 
 // Route::get('users', [UserController::class, 'index'])->name('users.index');
 // Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');
+
+
+// Cart
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+Route::delete('/cart/remove/{index}', [CartController::class, 'removeFromCart'])->name('cart.remove');
 
 require __DIR__ . '/auth.php';
