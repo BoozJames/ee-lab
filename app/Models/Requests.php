@@ -21,4 +21,13 @@ class Requests extends Model
         'requestors' => 'array',
         'item_variants' => 'array',
     ];
+
+    protected static function booted()
+    {
+        static::creating(function ($request) {
+            $monthYear = date('mY');
+            $lastRequestId = static::orderBy('id', 'desc')->value('id');
+            $request->reference_number = $monthYear . '-' . str_pad($lastRequestId + 1, 4, '0', STR_PAD_LEFT);
+        });
+    }
 }

@@ -15,6 +15,6 @@ class Items extends Model
 
     public function itemVariants()
     {
-        return $this->hasMany(ItemVariants::class);
+        return $this->hasMany(ItemVariants::class, 'item_id');
     }
 }
