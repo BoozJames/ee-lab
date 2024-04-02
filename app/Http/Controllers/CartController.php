@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Items;
 use Illuminate\Http\Request;
 use App\Models\Requests;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Storage;
 
 class CartController extends Controller
 {
@@ -14,46 +17,50 @@ class CartController extends Controller
     {
         // Validate request data
         $validatedData = $request->validate([
-            'reference_number' => 'required|string',
-            'items' => 'required|array',
-            'requestors' => 'required|array',
-            'item_variants' => 'array', // Add validation for item variants
+            'id' => 'required|exists:items,id',
             // Add more validation rules as needed
         ]);
 
-        // Store the cart data in session or database, depending on your application logic
-        // For example, you can store the cart data in session
-        $cart = session()->get('cart', []);
+        // Fetch the item from the database
+        $item = Items::findOrFail($request->input('id'));
 
-        // Append the new item to the cart
-        $cart[] = $validatedData;
+        // Add the item to the cart with image attribute
+        Cart::add([
+            'id' => $item->id,
+            'name' => $item->name,
+            'price' => 0,
+            'weight' => 0,
+            'qty' => 1,
+            'image' => Storage::url($item->image), // Get the image URL from storage
+            // 'attributes' => [], // You can add additional attributes if needed
+        ]);
 
-        // Store the updated cart in session
-        session()->put('cart', $cart);
-
-        // Redirect back or to a specific route
-        return redirect()->back()->with('success', 'Item added to cart successfully!');
+        return redirect()->back()->with('success', 'Item added to cart successfully.');
     }
 
     /**
      * Remove an item from the cart.
      */
-    public function removeFromCart($index)
+    public function removeFromCart($rowId)
     {
-        // Retrieve cart data from session
-        $cart = session()->get('cart', []);
+        // Remove the item from the cart using its row ID
+        Cart::remove($rowId);
 
-        // Remove the item from the cart at the specified index
-        unset($cart[$index]);
+        return redirect()->back()->with('success', 'Product removed from cart successfully.');
+    }
 
-        // Reindex the array to maintain sequential keys
-        $cart = array_values($cart);
+    public function destroyCart()
+    {
+        try {
+            // Destroy the cart
+            Cart::destroy();
 
-        // Store the updated cart in session
-        session()->put('cart', $cart);
-
-        // Redirect back or to a specific route
-        return redirect()->back()->with('success', 'Item removed from cart successfully!');
+            // Return success response
+            return response()->json(['message' => 'Cart successfully destroyed'], 200);
+        } catch (\Exception $e) {
+            // Return error response
+            return response()->json(['error' => 'Failed to destroy cart'], 500);
+        }
     }
 
     /**

@@ -79,5 +79,6 @@ Route::get('/track-request/details', [RequestsController::class, 'trackRequest']
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
 Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
 Route::delete('/cart/remove/{index}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::post('/cart/destroy', [CartController::class, 'destroyCart'])->name('cart.destroy');
 
 require __DIR__ . '/auth.php';
