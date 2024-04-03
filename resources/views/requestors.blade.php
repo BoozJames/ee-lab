@@ -33,29 +33,33 @@
             @endif
             <div class="row">
                 <div class="col-md-8 offset-md-2">
-                    <div class="card">
-                        <div class="card-header">Requestors</div>
 
-                        <div class="card-body">
-                            @if ($requestors->isEmpty())
-                                <p>No requestors found.</p>
-                            @else
-                                <ul class="list-group">
-                                    @foreach ($requestors as $requestor)
-                                        <li class="list-group-item">
-                                            <span class="badge badge-info">Requestor</span> {{ $requestor }}
-                                            <form action="{{ route('cart.addRequestor') }}" method="POST" class="d-inline">
-                                                @csrf
-                                                <input type="text" name="requestor" value="{{ $requestor }}">
-                                                <button type="submit" class="btn btn-primary btn-sm float-right">Add to
-                                                    Cart</button>
-                                            </form>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            @endif
+                    @if ($requestors->isEmpty())
+                        <div class="alert alert-info alert-dismissible fade show" role="alert">
+                            <p>No requestors found.</p>
                         </div>
-                    </div>
+                    @else
+                        <ul class="list-group">
+                            @foreach ($requestors as $requestor)
+                                <li class="list-group-item">
+                                    <form action="{{ route('cart.addRequestor') }}" method="POST" class="d-inline">
+                                        @csrf
+                                        <div class="input-group input-group-lg">
+                                            <span class="input-group-text" id="inputGroup-sizing-lg">Tap Student ID</span>
+                                            <input type="text" class="form-control" aria-label="Sizing example input"
+                                                aria-describedby="inputGroup-sizing-lg" name="requestor"
+                                                value="{{ $requestor }}" autofocus>
+                                        </div>
+                                        <div class="d-grid gap-2 my-2">
+                                            <button type="submit" class="btn btn-success btn-lg float-right">Add
+                                                requestor</button>
+                                        </div>
+                                    </form>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+
 
                     {{-- Items --}}
                     <div class="col-md-8 offset-md-2 mb-2 mt-2">
