@@ -63,8 +63,6 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Item added to cart successfully.');
     }
 
-
-
     /**
      * Remove an item from the cart.
      */
