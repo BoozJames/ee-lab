@@ -35,9 +35,21 @@
                     <button type="button" class="btn btn-success position-relative d-flex mx-1" data-bs-toggle="modal"
                         data-bs-target="#cartModal">
                         Cart
+                        @php
+                            $itemCount = 0;
+                        @endphp
+
+                        @foreach (Cart::content() as $cartItem)
+                            @unless ($cartItem->options->requestor)
+                                @php
+                                    $itemCount += $cartItem->qty;
+                                @endphp
+                            @endunless
+                        @endforeach
+
                         <span
                             class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-light text-dark">
-                            {{ Cart::count() }}
+                            {{ $itemCount }}
                         </span>
                     </button>
 
@@ -109,21 +121,23 @@
                             </thead>
                             <tbody>
                                 @foreach (Cart::content() as $cartItem)
-                                    <tr>
-                                        <td class="w-25">
-                                            {{-- <img src="{{ $cartItem->options->image }}" class="img-fluid img-thumbnail"
+                                    @unless ($cartItem->options->requestor)
+                                        <tr>
+                                            <td class="w-25">
+                                                {{-- <img src="{{ $cartItem->options->image }}" class="img-fluid img-thumbnail"
                                                 alt="{{ $cartItem->name }}"> --}}
-                                        </td>
-                                        <td>{{ $cartItem->name }}</td>
-                                        <td>{{ $cartItem->qty }}</td>
-                                        <td>
-                                            <form action="{{ route('cart.remove', $cartItem->rowId) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm">Remove</button>
-                                            </form>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                            <td>{{ $cartItem->name }}</td>
+                                            <td>{{ $cartItem->qty }}</td>
+                                            <td>
+                                                <form action="{{ route('cart.remove', $cartItem->rowId) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endunless
                                 @endforeach
                             </tbody>
                         </table>
