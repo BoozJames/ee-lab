@@ -144,7 +144,7 @@
                     </div>
                     <div class="modal-footer border-top-0 d-flex justify-content-between">
                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-secondary">Proceed</button>
+                        <a href="/cart/requestors" type="button" class="btn btn-secondary">Proceed</a>
                     </div>
                 </div>
             </div>
