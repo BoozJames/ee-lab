@@ -1,7 +1,23 @@
 @include('kiosk-styles')
 
 @section('content')
-    <div class="dark-background bg-dots-darker bg-center">
+
+    <nav class="navbar navbar-expand-lg osition fixed-top bg-danger">
+        <div class="container-fluid">
+            <a class="navbar-brand text-white" href="/">EE-Lab</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <button type="button" class="btn btn-secondary position-relative d-flex mx-1 my-1"
+                onclick="cancelAndRemoveCart()">
+                Cancel
+            </button>
+
+        </div>
+    </nav>
+
+    <div class="dark-background bg-dots-darker bg-center" style="height: 95vh;">
         <div class="container" style="padding-top: 3rem; margin-top: 3rem;">
             @if (session()->has('error'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -139,5 +155,29 @@
 
         </div>
     </div>
-    </div>
-    </div>
+
+    <script>
+        function cancelAndRemoveCart() {
+            // Send AJAX request to remove the cart
+            fetch('/cart/destroy', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // If successful, redirect back
+                        // window.location.href = "{{ redirect()->back()->getTargetUrl() }}";
+                        // If successful, redirect to root URL
+                        window.location.href = "/";
+                    } else {
+                        console.error('Failed to remove cart');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+    </script>
