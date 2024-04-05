@@ -120,55 +120,6 @@ class CartController extends Controller
         return view('requestors', compact('requestors'));
     }
 
-    // public function addRequestorToCart(Request $request)
-    // {
-    //     $requestor = $request->input('requestor');
-
-    //     // Add the requestor to the cart
-    //     Cart::add([
-    //         'id' => uniqid(), // Generate a unique ID for the requestor
-    //         'name' => $requestor,
-    //         'price' => 0, // Set price to 0 or adjust as needed
-    //         'qty' => 1, // Default quantity to 1
-    //         'weight' => 0, // Set weight to 0 or adjust as needed
-    //         'options' => [
-    //             'requestor' => true, // Flag to identify requestor in the cart
-    //         ],
-    //     ]);
-
-    //     return redirect()->back()->with('success', 'Requestor added to cart successfully.');
-    // }
-
-    // public function addRequestorToCart(Request $request)
-    // {
-    //     $rfidCode = $request->input('requestor');
-
-    //     // Check if the RFID code exists in the Students model
-    //     $student = Students::where('rfid_code', $rfidCode)->first();
-
-    //     if ($student) {
-    //         // Construct full name
-    //         $fullName = $student->first_name . ' ' . $student->middle_name . ' ' . $student->last_name . ' ' . $student->extra_name;
-
-    //         // Add the student to the cart
-    //         Cart::add([
-    //             'id' => uniqid(), // Generate a unique ID for the requestor
-    //             'name' => $fullName,
-    //             'price' => 0, // Set price to 0 or adjust as needed
-    //             'qty' => 1, // Default quantity to 1
-    //             'weight' => 0, // Set weight to 0 or adjust as needed
-    //             'options' => [
-    //                 'requestor' => true, // Flag to identify requestor in the cart
-    //                 'student_details' => $student->toArray(), // Store student details in options
-    //             ],
-    //         ]);
-
-    //         return redirect()->back()->with('success', 'Requestor added to cart successfully.');
-    //     } else {
-    //         return redirect()->back()->with('error', 'RFID code not found in the database.');
-    //     }
-    // }
-
     public function addRequestorToCart(Request $request)
     {
         $rfidCode = $request->input('requestor');
