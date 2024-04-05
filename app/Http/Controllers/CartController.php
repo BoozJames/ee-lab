@@ -120,6 +120,9 @@ class CartController extends Controller
         return view('requestors', compact('requestors'));
     }
 
+    /**
+     * Add the requestors with items in the cart if it exist in the Student model.
+     */
     public function addRequestorToCart(Request $request)
     {
         $rfidCode = $request->input('requestor');
