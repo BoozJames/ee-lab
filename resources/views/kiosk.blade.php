@@ -4,7 +4,7 @@
         <div class="background">
             <div
                 class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center selection:bg-red-500 selection:text-white">
-                @if (Route::has('login'))
+                {{-- @if (Route::has('login'))
                     <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
                         @auth
                             <a href="{{ url('/dashboard') }}"
@@ -14,13 +14,13 @@
                                 class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
                                 in</a>
 
-                            {{-- @if (Route::has('register'))
+                            @if (Route::has('register'))
                             <a href="{{ route('register') }}"
                                 class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-                        @endif --}}
+                        @endif
                         @endauth
                     </div>
-                @endif
+                @endif --}}
 
                 <div class="max-w-7xl mx-auto p-6 lg:p-8">
                     <div class="flex justify-center">
@@ -35,6 +35,19 @@
                         <h2 class="text-xxl font-semibold text-gray-900">The National Engineering University</h2>
                         <p class="text-xxxl text-gray-700">Automated Management System Kiosk</p>
                     </div>
+
+                    @if (session()->has('error'))
+                        <div id="errorAlert" class="alert alert-danger alert-dismissible fade show my-5" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if (session()->has('success'))
+                        <div id="successAlert" class="alert alert-success alert-dismissible fade show my-5" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
 
                     <div class="mt-16">
                         <div class="grid grid-cols-1 md:grid-cols-1 gap-6 lg:gap-8">
@@ -117,3 +130,16 @@
                 </div>
             </div>
         </div>
+
+
+        <script>
+            // Automatically close error alert after 5 seconds
+            setTimeout(function() {
+                $('#errorAlert').fadeOut('slow');
+            }, 5000);
+
+            // Automatically close success alert after 5 seconds
+            setTimeout(function() {
+                $('#successAlert').fadeOut('slow');
+            }, 5000);
+        </script>

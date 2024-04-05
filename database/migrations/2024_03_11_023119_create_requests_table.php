@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
             $table->string('reference_number');
-            $table->string('items');
-            $table->string('requestors');
+            $table->longText('items');
+            $table->longText('requestors');
+            $table->json('item_variants')->nullable();
             $table->timestamps();
         });
     }

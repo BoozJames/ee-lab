@@ -8,13 +8,20 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <!-- Display success message -->
+                {{-- @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                    </div>
+                @endif --}}
+
                 <div class="overflow-hidden overflow-x-auto p-6 bg-white border-b border-gray-200">
-                    <nav class="flex flex-wrap mb-4">
+                    {{-- <nav class="flex flex-wrap mb-4">
                         <div class="ml-auto">
                             <a href="{{ route('requests.create') }}" class="mb-2 py-2 px-4 bg-gray-300 rounded">Create
                                 request</a>
                         </div>
-                    </nav>
+                    </nav> --}}
                     <div class="min-w-full align-middle">
                         <div class="my-2 bg-white">
                             <div class="flex flex-wrap items-center justify-between">
@@ -60,10 +67,10 @@
                                             {{ $request->reference_number }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ implode(', ', $request->items) }}
+                                            {{ json_encode($request->items) }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ implode(', ', $request->requestors) }}
+                                            {{ json_encode($request->requestors) }}
                                         </td>
                                         <!-- Add more table cells for additional columns -->
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
