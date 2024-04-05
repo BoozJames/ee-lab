@@ -15,7 +15,11 @@
                 onclick="cancelAndRemoveCart()">
                 Cancel
             </button>
-
+            {{-- Checkout Button --}}
+            <form action="{{ route('cart.checkout') }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-success position-relative d-flex mx-1 my-1">Checkout</button>
+            </form>
         </div>
     </nav>
 
@@ -166,15 +170,6 @@
                             </div>
                         </div>
                     </form>
-
-                    {{-- Checkout Button --}}
-                    <div class="d-grid gap-2 my-2">
-                        <form action="{{ route('cart.checkout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-success btn-lg float-right">Checkout</button>
-                        </form>
-                    </div>
-
 
                 </div>
             </div>
