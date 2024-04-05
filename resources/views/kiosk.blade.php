@@ -36,6 +36,19 @@
                         <p class="text-xxxl text-gray-700">Automated Management System Kiosk</p>
                     </div>
 
+                    @if (session()->has('error'))
+                        <div id="errorAlert" class="alert alert-danger alert-dismissible fade show my-5" role="alert">
+                            {{ session('error') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+                    @if (session()->has('success'))
+                        <div id="successAlert" class="alert alert-success alert-dismissible fade show my-5" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    @endif
+
                     <div class="mt-16">
                         <div class="grid grid-cols-1 md:grid-cols-1 gap-6 lg:gap-8">
                             <a href="{{ route('create.request') }}"
@@ -117,3 +130,16 @@
                 </div>
             </div>
         </div>
+
+
+        <script>
+            // Automatically close error alert after 5 seconds
+            setTimeout(function() {
+                $('#errorAlert').fadeOut('slow');
+            }, 5000);
+
+            // Automatically close success alert after 5 seconds
+            setTimeout(function() {
+                $('#successAlert').fadeOut('slow');
+            }, 5000);
+        </script>

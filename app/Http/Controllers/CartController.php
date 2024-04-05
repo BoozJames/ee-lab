@@ -121,14 +121,14 @@ class CartController extends Controller
             // Log success message
             Log::info('Items checked out successfully');
 
-            // Return success response
-            return response()->json(['message' => 'Items checked out successfully'], 200);
+            // Redirect to '/' route with success message
+            return redirect('/')->with('success', 'Items checked out successfully');
         } catch (\Exception $e) {
             // Log error message
             Log::error('Failed to checkout items: ' . $e->getMessage());
 
-            // Return error response
-            return response()->json(['error' => 'Failed to checkout items'], 500);
+            // Redirect back to '/cart/requestors' route with error message
+            return redirect('/cart/requestors')->with('error', 'Failed to checkout items');
         }
     }
 

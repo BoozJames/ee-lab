@@ -67,10 +67,10 @@
                                             {{ $request->reference_number }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ implode(', ', $request->items) }}
+                                            {{ json_encode($request->items) }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ implode(', ', $request->requestors) }}
+                                            {{ json_encode($request->requestors) }}
                                         </td>
                                         <!-- Add more table cells for additional columns -->
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
