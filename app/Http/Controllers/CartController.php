@@ -75,6 +75,9 @@ class CartController extends Controller
         return redirect()->back()->with('success', 'Product removed from cart successfully.');
     }
 
+    /**
+     * Remove all the items in the cart.
+     */
     public function destroyCart()
     {
         try {
@@ -94,19 +97,6 @@ class CartController extends Controller
      */
     public function checkout()
     {
-        // Retrieve cart data from session or database
-        $cart = session()->get('cart', []);
-
-        // Create a new request for checkout
-        foreach ($cart as $cartItem) {
-            Requests::create($cartItem);
-        }
-
-        // Clear the cart after checkout
-        session()->forget('cart');
-
-        // Redirect with success message
-        return redirect()->route('requests.create')->with('success', 'Checkout successful!');
     }
 
     /**
