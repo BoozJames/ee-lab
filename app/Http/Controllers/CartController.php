@@ -84,9 +84,15 @@ class CartController extends Controller
             // Destroy the cart
             Cart::destroy();
 
+            // Log success message
+            Log::info('Cart successfully destroyed');
+
             // Return success response
             return response()->json(['message' => 'Cart successfully destroyed'], 200);
         } catch (\Exception $e) {
+            // Log error message
+            Log::error('Failed to destroy cart: ' . $e->getMessage());
+
             // Return error response
             return response()->json(['error' => 'Failed to destroy cart'], 500);
         }
@@ -117,21 +123,33 @@ class CartController extends Controller
     {
         $rfidCode = $request->input('requestor');
 
+        // Log the RFID code received from the request
+        Log::info('RFID code received from request: ' . $rfidCode);
+
         // Check if the RFID code exists in the Students model
         $student = Students::where('rfid_code', $rfidCode)->first();
 
         if ($student) {
+            // Log the student details if found
+            Log::info('Student found in the database: ' . json_encode($student));
+
             // Check if the RFID code is already in the cart
             $existingCartItem = Cart::content()->first(function ($cartItem) use ($rfidCode) {
                 return $cartItem->options->requestor && $cartItem->options->student_details['rfid_code'] === $rfidCode;
             });
 
             if ($existingCartItem) {
+                // Log that the RFID code is already in the request
+                Log::warning('RFID code is already in the request.');
+
                 return redirect()->back()->with('error', 'RFID code is already in the request.');
             }
 
             // Construct full name
             $fullName = $student->first_name . ' ' . $student->middle_name . ' ' . $student->last_name . ' ' . $student->extra_name;
+
+            // Log the full name constructed
+            Log::info('Full name constructed: ' . $fullName);
 
             // Add the student to the cart
             Cart::add([
@@ -146,8 +164,14 @@ class CartController extends Controller
                 ],
             ]);
 
+            // Log success message
+            Log::info('Requestor added to cart successfully.');
+
             return redirect()->back()->with('success', 'Requestor added to cart successfully.');
         } else {
+            // Log that RFID code not found in the database
+            Log::error('RFID code not found in the database: ' . $rfidCode);
+
             return redirect()->back()->with('error', 'RFID code not found in the database.');
         }
     }
