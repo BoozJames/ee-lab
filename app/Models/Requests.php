@@ -17,9 +17,8 @@ class Requests extends Model
     ];
 
     protected $casts = [
-        'items' => 'array',
-        'requestors' => 'array',
-        'item_variants' => 'array',
+        'items' => 'json',
+        'requestors' => 'json',
     ];
 
     protected static function booted()

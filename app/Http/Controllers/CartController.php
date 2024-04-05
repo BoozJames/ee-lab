@@ -103,6 +103,33 @@ class CartController extends Controller
      */
     public function checkout()
     {
+        try {
+            // Get items and requestors from the cart
+            $cartItems = Cart::content()->toArray();
+            $requestors = Cart::content()->pluck('options.student_details')->toArray();
+
+            // Create a new request
+            $request = new Requests();
+            $request->items = $cartItems;
+            $request->requestors = $requestors;
+            // Leave item_variants blank for now
+            $request->save();
+
+            // Destroy the cart after successful checkout
+            Cart::destroy();
+
+            // Log success message
+            Log::info('Items checked out successfully');
+
+            // Return success response
+            return response()->json(['message' => 'Items checked out successfully'], 200);
+        } catch (\Exception $e) {
+            // Log error message
+            Log::error('Failed to checkout items: ' . $e->getMessage());
+
+            // Return error response
+            return response()->json(['error' => 'Failed to checkout items'], 500);
+        }
     }
 
     /**
