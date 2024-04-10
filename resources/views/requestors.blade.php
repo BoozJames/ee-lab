@@ -69,9 +69,6 @@
                         </ul>
                     @endif
 
-                    <form action="{{ route('cart.checkout') }}" method="POST">
-                        @csrf
-
                         {{-- Items --}}
                         <div class="col-md-8 offset-md-2 mb-2 mt-2">
                             <div class="card">
@@ -169,8 +166,7 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
-
+                        
                 </div>
             </div>
 
