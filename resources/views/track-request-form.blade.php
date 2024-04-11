@@ -1,27 +1,37 @@
     @include('kiosk-styles')
 
     @section('content')
-        <div class="background">
-            <div
-                class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center selection:bg-red-500 selection:text-white">
+        <div class="dark-background bg-dots-darker bg-center">
 
-                <div class="max-w-7xl mx-auto p-6 lg:p-8">
-                    @component('components.public-logo-heading')
-                    @endcomponent
+            <nav class="navbar navbar-expand-lg osition fixed-top bg-danger">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav">
+                        </ul>
+                    </div>
+                    <a href="/" class="btn btn-secondary position-relative d-flex mx-1 my-1"> Go Back</a>
+                </div>
+            </nav>
 
+            <div class="dark-background bg-dots-darker bg-center" style="height: 95vh;">
+                <div class="container">
                     <div class="mt-16">
                         <div class="grid grid-cols-1 md:grid-cols-1 gap-6 lg:gap-8">
                             <form action="{{ route('track.request.details') }}" method="GET">
 
-                                <div class="card">
+                                <div class="card my-5">
                                     <div class="card-header">
-                                        <h2 class="text-xl font-semibold text-gray-900">Track a Request</h2>
+                                        <h2 class="text-xl font-semibold text-gray-900">Track your Request</h2>
                                     </div>
                                     <div class="card-body">
                                         <div class="mb-3">
                                             <label for="refnumber" class="form-label">Reference Number</label>
-                                            <input placeholder="Enter Request ID" type="text" name="reference_number"
-                                                class="form-control" id="refnumber" autofocus>
+                                            <input placeholder="Enter Reference Number" type="text"
+                                                name="reference_number" class="form-control" id="refnumber" autofocus>
                                         </div>
                                         <div class="d-grid gap-2">
                                             <button type="submit" class="btn btn-danger btn-lg">Submit</button>
@@ -36,7 +46,6 @@
                                             <h2>Request Details</h2>
                                             <p>Reference Number: {{ $request->reference_number }}</p>
                                             <p class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                                {{-- <pre>{{ json_encode($request->items, JSON_PRETTY_PRINT) }}</pre> --}}
                                                 @foreach ($request->items as $item)
                                                     @if (empty($item['options']))
                                                         <pre>{{ json_encode($item, JSON_PRETTY_PRINT) }}</pre>
@@ -55,16 +64,7 @@
                             </form>
                         </div>
                     </div>
-
-                    <div class="flex justify-center mt-16 px-0 sm:items-center sm:justify-between">
-                        <div class="text-center text-sm sm:text-left">
-                            &nbsp;
-                        </div>
-
-                        <div class="text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
-                            <a href="/" class="btn btn-danger">Go back</a>
-                        </div>
-                    </div>
                 </div>
             </div>
+
         </div>

@@ -135,10 +135,18 @@ class RequestsController extends Controller
         // Pass the filtered items to the view
         return view('create-request-form', compact('items'));
     }
-    
+
     public function showLogList()
     {
-        return view('log-list-form');
+        $requests = Requests::all();
+
+        if ($requests) {
+            // Request found, display details
+            return view('log-list-form', compact('requests'));
+        } else {
+            // Request not found
+            return back()->with('error', 'Request not found.');
+        }
     }
 
     /**
@@ -146,7 +154,15 @@ class RequestsController extends Controller
      */
     public function showTrackForm()
     {
-        return view('track-request-form');
+        $requests = Requests::all();
+
+        if ($requests) {
+            // Request found, display details
+            return view('track-request-form', compact('requests'));
+        } else {
+            // Request not found
+            return back()->with('error', 'Request not found.');
+        }
     }
 
     /**
@@ -160,7 +176,7 @@ class RequestsController extends Controller
 
         if ($request) {
             // Request found, display details
-            return view('track-request-details', compact('request'));
+            return view('track-request-form', compact('request'));
         } else {
             // Request not found
             return back()->with('error', 'Request not found.');
