@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ItemsController;
 use App\Http\Controllers\ProfileController;
@@ -9,6 +10,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FacultiesController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\UnitsController;
+use App\Http\Controllers\TrainerController;
+use App\Http\Controllers\ItemVariantsController;
+use App\Http\Controllers\PrintController;
 use App\Models\Items;
 use Illuminate\Support\Facades\Route;
 
@@ -32,19 +36,19 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
         return view('dashboard');
     })->name('dashboard');
 
+    Route::group(['prefix' => 'items'], function () {
+        require __DIR__ . '/items.php';
+    });
 
     Route::resource('users', UserController::class);
     Route::resource('inventory', InventoryController::class);
     Route::resource('requests', RequestsController::class);
-    Route::resource('items', ItemsController::class);
     // Route::resource('students', StudentsController::class);
-    Route::resource('variants', ItemsController::class);
-    Route::resource('categories', ItemsController::class);
-    Route::resource('units', ItemsController::class);
+    Route::resource('variants', ItemVariantsController::class);
     Route::resource('faculties', FacultiesController::class);
     Route::resource('categories', CategoriesController::class);
     Route::resource('units', UnitsController::class);
-
+    Route::resource('trainers', TrainerController::class);
 
     // Student Routes
     Route::get('/students', [StudentsController::class, 'index'])->name('students.index');
@@ -62,11 +66,24 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
 });
 
 
+
 Route::get('/create-request', [RequestsController::class, 'showCreateForm'])->name('create.request');
 Route::get('/track-request', [RequestsController::class, 'showTrackForm'])->name('track.request');
 Route::get('/log-list-request', [RequestsController::class, 'showLogList'])->name('log.list.request');
+Route::get('/track-request/details', [RequestsController::class, 'trackRequest'])->name('track.request.details');
 
 // Route::get('users', [UserController::class, 'index'])->name('users.index');
 // Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');
+
+
+// Cart
+Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+Route::delete('/cart/remove/{index}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+Route::post('/cart/destroy', [CartController::class, 'destroyCart'])->name('cart.destroy');
+Route::get('/cart/requestors', [CartController::class, 'showRequestors'])->name('cart.requestors');
+Route::post('/cart/add/requestor', [CartController::class, 'addRequestorToCart'])->name('cart.addRequestor');
+
+Route::get('/print-details', [PrintController::class, 'print'])->name('print');
 
 require __DIR__ . '/auth.php';

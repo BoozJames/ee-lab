@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
+            $table->string('reference_number');
+            $table->longText('items');
+            $table->longText('requestors');
+            $table->json('item_variants')->nullable();
             $table->timestamps();
         });
     }

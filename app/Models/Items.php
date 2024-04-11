@@ -11,20 +11,10 @@ class Items extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['name', 'description', 'unit_id', 'category_id'];
-
-    // public function unit()
-    // {
-    //     return $this->belongsTo(Units::class);
-    // }
-
-    // public function category()
-    // {
-    //     return $this->belongsTo(Categories::class);
-    // }
+    protected $fillable = ['name', 'description', 'unit_id', 'category_id', 'image'];
 
     public function itemVariants()
     {
-        return $this->hasMany(ItemVariants::class);
+        return $this->hasMany(ItemVariants::class, 'item_id');
     }
 }

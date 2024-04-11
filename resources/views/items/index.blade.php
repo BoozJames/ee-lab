@@ -53,6 +53,10 @@
                                 <tr>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Image</span>
+                                    </th>
+                                    <th class="px-6 py-3 bg-gray-50 text-left">
+                                        <span
                                             class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Name</span>
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
@@ -70,6 +74,9 @@
                                 @foreach ($items as $item)
                                     <tr class="bg-white">
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                            <img src="{{ Storage::url($item->image) }}" alt="item_image" style="max-width: 100px; max-height: 100px;">
+                                        </td>   
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             {{ $item->name }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
@@ -80,12 +87,11 @@
                                                 class="text-blue-500 hover:text-blue-700 mr-2">Show</a>
                                             <a href="{{ route('items.edit', $item->id) }}"
                                                 class="text-green-500 hover:text-green-700 mr-2">Edit</a>
-                                            <form action="{{ route('items.destroy', $item->id) }}" method="POST"
+                                            <form form action="{{ route('items.destroy', $item->id) }}" method="POST"
                                                 class="inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit"
-                                                    class="text-red-500 hover:text-red-700">Delete</button>
+                                                <button type="button" onclick="confirmDelete('{{ $item->id }}')" class="text-red-500 hover:text-red-700">Delete</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -105,6 +111,13 @@
 </x-app-layout>
 
 <script>
+    function confirmDelete(id) {
+        if (confirm('Are you sure you want to delete this item?')) {
+            // Proceed with the delete action
+            document.querySelector(`form[action="{{ route('items.destroy', ':id') }}"]`.replace(':id', id)).submit();
+        }
+    }
+
     function resetFilters() {
         // Replace "items.index" with the appropriate route to reset filters
         window.location.href = "{{ route('items.index') }}";

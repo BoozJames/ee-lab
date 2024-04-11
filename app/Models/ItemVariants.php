@@ -11,10 +11,20 @@ class ItemVariants extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['item_id', 'item_variant_number', 'brand', 'description', 'status'];
+    protected $fillable = ['item_id', 'brand', 'variant_description', 'status', 'unit_id', 'category_id', 'equipment_label', 'serial_number', 'last_calibration_date' ];
 
     public function item()
     {
-        return $this->belongsTo(Items::class);
+        return $this->belongsTo(Items::class, 'item_id');
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Units::class, 'unit_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Categories::class, 'category_id');
     }
 }
