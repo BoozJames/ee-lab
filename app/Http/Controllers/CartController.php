@@ -122,7 +122,8 @@ class CartController extends Controller
             Log::info('Items checked out successfully');
 
             // Redirect to '/' route with success message
-            return redirect('/')->with('success', 'Items checked out successfully');
+            return redirect()->route('print')->with('success', 'Items checked out successfully');
+            // return redirect('/')->with('success', 'Items checked out successfully');
         } catch (\Exception $e) {
             // Log error message
             Log::error('Failed to checkout items: ' . $e->getMessage());

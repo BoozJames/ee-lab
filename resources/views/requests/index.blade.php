@@ -67,10 +67,15 @@
                                             {{ $request->reference_number }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ json_encode($request->items) }}
+                                            {{-- <pre>{{ json_encode($request->items, JSON_PRETTY_PRINT) }}</pre> --}}
+                                            @foreach ($request->items as $item)
+                                                @if (empty($item['options']))
+                                                    <pre>{{ json_encode($item, JSON_PRETTY_PRINT) }}</pre>
+                                                @endif
+                                            @endforeach
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ json_encode($request->requestors) }}
+                                            <pre>{{ json_encode($request->requestors, JSON_PRETTY_PRINT) }}</pre>
                                         </td>
                                         <!-- Add more table cells for additional columns -->
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">

@@ -12,6 +12,7 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\UnitsController;
 use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\ItemVariantsController;
+use App\Http\Controllers\PrintController;
 use App\Models\Items;
 use Illuminate\Support\Facades\Route;
 
@@ -82,5 +83,7 @@ Route::delete('/cart/remove/{index}', [CartController::class, 'removeFromCart'])
 Route::post('/cart/destroy', [CartController::class, 'destroyCart'])->name('cart.destroy');
 Route::get('/cart/requestors', [CartController::class, 'showRequestors'])->name('cart.requestors');
 Route::post('/cart/add/requestor', [CartController::class, 'addRequestorToCart'])->name('cart.addRequestor');
+
+Route::get('/print-details', [PrintController::class, 'print'])->name('print');
 
 require __DIR__ . '/auth.php';
