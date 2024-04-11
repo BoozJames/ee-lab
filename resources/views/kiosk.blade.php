@@ -94,15 +94,3 @@
             </div>
         </div>
 
-
-        <script>
-            // Automatically close error alert after 5 seconds
-            setTimeout(function() {
-                $('#errorAlert').fadeOut('slow');
-            }, 5000);
-
-            // Automatically close success alert after 5 seconds
-            setTimeout(function() {
-                $('#successAlert').fadeOut('slow');
-            }, 5000);
-        </script>
