@@ -58,18 +58,8 @@
 
             <div class="container" style="padding-top: 3rem; margin-top: 3rem;">
                 <div class="row">
-                    @if (session()->has('error'))
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            {{ session('error') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
-                    @if (session()->has('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    @endif
+                    @component('components.alert-message')
+                    @endcomponent
                 </div>
                 <div class="row row-cols-1 row-cols-md-4">
                     @foreach ($items as $item)

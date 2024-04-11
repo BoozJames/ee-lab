@@ -25,18 +25,8 @@
 
     <div class="dark-background bg-dots-darker bg-center" style="height: 95vh;">
         <div class="container" style="padding-top: 3rem; margin-top: 3rem;">
-            @if (session()->has('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    {{ session('error') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
-            @if (session()->has('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ session('success') }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            @endif
+            @component('components.alert-message')
+            @endcomponent
             <div class="row">
                 <div class="col-md-8 offset-md-2">
                     @if ($requestors->isEmpty())
@@ -69,104 +59,103 @@
                         </ul>
                     @endif
 
-                        {{-- Items --}}
-                        <div class="col-md-8 offset-md-2 mb-2 mt-2">
-                            <div class="card">
-                                <div class="card-header">Items in Cart:</div>
-                                <div class="card-body">
-                                    <table class="table table-image">
-                                        <!-- Items Table Header -->
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Item ID</th>
-                                                <th scope="col">Item Name</th>
-                                                <th scope="col">Quantity</th>
-                                                <th scope="col">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <!-- Items Table Body -->
-                                        <tbody>
-                                            @foreach (Cart::content() as $cartItem)
-                                                @unless ($cartItem->options->requestor)
-                                                    <tr>
-                                                        <td>{{ $cartItem->id }}</td>
-                                                        <td>{{ $cartItem->name }}</td>
-                                                        <td>{{ $cartItem->qty }}</td>
-                                                        <td>
-                                                            <!-- Remove Item Form -->
-                                                            <form action="{{ route('cart.remove', $cartItem->rowId) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit"
-                                                                    class="btn btn-danger btn-sm">Remove</button>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                @endunless
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                    {{-- Items --}}
+                    <div class="col-md-8 offset-md-2 mb-2 mt-2">
+                        <div class="card">
+                            <div class="card-header">Items in Cart:</div>
+                            <div class="card-body">
+                                <table class="table table-image">
+                                    <!-- Items Table Header -->
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Item ID</th>
+                                            <th scope="col">Item Name</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <!-- Items Table Body -->
+                                    <tbody>
+                                        @foreach (Cart::content() as $cartItem)
+                                            @unless ($cartItem->options->requestor)
+                                                <tr>
+                                                    <td>{{ $cartItem->id }}</td>
+                                                    <td>{{ $cartItem->name }}</td>
+                                                    <td>{{ $cartItem->qty }}</td>
+                                                    <td>
+                                                        <!-- Remove Item Form -->
+                                                        <form action="{{ route('cart.remove', $cartItem->rowId) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endunless
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
+                    </div>
 
-                        {{-- Requestors --}}
-                        <div class="col-md-8 offset-md-2 mb-2">
-                            <div class="card">
-                                <div class="card-header">Requestors in Cart:</div>
-                                <div class="card-body">
-                                    <table class="table align-middle">
-                                        <!-- Requestors Table Header -->
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Requestor ID</th>
-                                                <th scope="col">Student Details</th>
-                                                <th scope="col">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <!-- Requestors Table Body -->
-                                        <tbody>
-                                            @foreach (Cart::content() as $cartItem)
-                                                @if ($cartItem->options->requestor)
-                                                    <tr>
-                                                        <td>{{ $cartItem->id }}</td>
-                                                        <td>
-                                                            <!-- Display Student Details -->
-                                                            @if (isset($cartItem->options['student_details']))
-                                                                <p><strong>SR Code:</strong>
-                                                                    {{ $cartItem->options['student_details']['srcode'] }}
-                                                                </p>
-                                                                <p><strong>Full Name:</strong> {{ $cartItem->name }}</p>
-                                                                <p><strong>Campus:</strong>
-                                                                    {{ $cartItem->options['student_details']['campus'] }}
-                                                                </p>
-                                                                <p><strong>Course:</strong>
-                                                                    {{ $cartItem->options['student_details']['courses'] }}
-                                                                </p>
-                                                            @else
-                                                                N/A
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            <!-- Remove Requestor Form -->
-                                                            <form action="{{ route('cart.remove', $cartItem->rowId) }}"
-                                                                method="POST">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit"
-                                                                    class="btn btn-danger btn-sm">Remove</button>
-                                                            </form>
-                                                        </td>
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+                    {{-- Requestors --}}
+                    <div class="col-md-8 offset-md-2 mb-2">
+                        <div class="card">
+                            <div class="card-header">Requestors in Cart:</div>
+                            <div class="card-body">
+                                <table class="table align-middle">
+                                    <!-- Requestors Table Header -->
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Requestor ID</th>
+                                            <th scope="col">Student Details</th>
+                                            <th scope="col">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <!-- Requestors Table Body -->
+                                    <tbody>
+                                        @foreach (Cart::content() as $cartItem)
+                                            @if ($cartItem->options->requestor)
+                                                <tr>
+                                                    <td>{{ $cartItem->id }}</td>
+                                                    <td>
+                                                        <!-- Display Student Details -->
+                                                        @if (isset($cartItem->options['student_details']))
+                                                            <p><strong>SR Code:</strong>
+                                                                {{ $cartItem->options['student_details']['srcode'] }}
+                                                            </p>
+                                                            <p><strong>Full Name:</strong> {{ $cartItem->name }}</p>
+                                                            <p><strong>Campus:</strong>
+                                                                {{ $cartItem->options['student_details']['campus'] }}
+                                                            </p>
+                                                            <p><strong>Course:</strong>
+                                                                {{ $cartItem->options['student_details']['courses'] }}
+                                                            </p>
+                                                        @else
+                                                            N/A
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <!-- Remove Requestor Form -->
+                                                        <form action="{{ route('cart.remove', $cartItem->rowId) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="btn btn-danger btn-sm">Remove</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        
+                    </div>
+
                 </div>
             </div>
 
