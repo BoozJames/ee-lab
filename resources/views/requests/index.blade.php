@@ -70,12 +70,21 @@
                                             {{-- <pre>{{ json_encode($request->items, JSON_PRETTY_PRINT) }}</pre> --}}
                                             @foreach ($request->items as $item)
                                                 @if (empty($item['options']))
-                                                    <pre>{{ json_encode($item, JSON_PRETTY_PRINT) }}</pre>
+                                                    {{-- <pre>{{ json_encode($item, JSON_PRETTY_PRINT) }}</pre> --}}
+                                                    <p>{{ $item['name'] }} | {{ $item['qty'] }}</p>
                                                 @endif
                                             @endforeach
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            <pre>{{ json_encode($request->requestors, JSON_PRETTY_PRINT) }}</pre>
+                                            {{-- <pre>{{ json_encode($request->requestors, JSON_PRETTY_PRINT) }}</pre> --}}
+                                            {{-- <p>{{ $item['first_name'] }} {{ $item['middle_name'] }} {{ $item['last_name'] }}</p> --}}
+                                            @if (!empty($request->requestors[2]))
+                                                <p>{{ $request->requestors[2]['first_name'] }}
+                                                    {{ $request->requestors[2]['middle_name'] }}
+                                                    {{ $request->requestors[2]['last_name'] }}</p>
+                                            @else
+                                                <p>No requestor information available.</p>
+                                            @endif
                                         </td>
                                         <!-- Add more table cells for additional columns -->
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
