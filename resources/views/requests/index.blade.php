@@ -75,9 +75,8 @@
                                                 @endif
                                             @endforeach
                                         </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{-- <pre>{{ json_encode($request->requestors, JSON_PRETTY_PRINT) }}</pre> --}}
-                                            {{-- <p>{{ $item['first_name'] }} {{ $item['middle_name'] }} {{ $item['last_name'] }}</p> --}}
+                                        {{-- <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                            <pre>{{ json_encode($request->requestors, JSON_PRETTY_PRINT) }}</pre>
                                             @if (!empty($request->requestors[2]))
                                                 <p>{{ $request->requestors[2]['first_name'] }}
                                                     {{ $request->requestors[2]['middle_name'] }}
@@ -85,6 +84,21 @@
                                             @else
                                                 <p>No requestor information available.</p>
                                             @endif
+                                        </td> --}}
+
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                            @foreach ($request->requestors as $requestor)
+                                                @if (!empty($requestor))
+                                                    <p>{{ $requestor['first_name'] }}
+                                                        @if (!empty($requestor['middle_name']))
+                                                            {{ $requestor['middle_name'] }}
+                                                        @endif
+                                                        {{ $requestor['last_name'] }}
+                                                    </p>
+                                                {{-- @else
+                                                    <p>No requestor information available.</p> --}}
+                                                @endif
+                                            @endforeach
                                         </td>
                                         <!-- Add more table cells for additional columns -->
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
