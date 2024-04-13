@@ -69,7 +69,7 @@
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             {{-- <pre>{{ json_encode($request->items, JSON_PRETTY_PRINT) }}</pre> --}}
                                             @foreach ($request->items as $item)
-                                                @if (empty($item['options']))
+                                                @if (is_array($item) && empty($item['options']))
                                                     {{-- <pre>{{ json_encode($item, JSON_PRETTY_PRINT) }}</pre> --}}
                                                     <p>{{ $item['name'] }} | {{ $item['qty'] }}</p>
                                                 @endif
@@ -88,7 +88,7 @@
 
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             @foreach ($request->requestors as $requestor)
-                                                @if (!empty($requestor))
+                                                @if (is_array($requestor) && !empty($requestor))
                                                     <p>{{ $requestor['first_name'] }}
                                                         @if (!empty($requestor['middle_name']))
                                                             {{ $requestor['middle_name'] }}
