@@ -91,3 +91,6 @@
             </div>
 
         </div>
+
+        @component('components.timeout-modal')
+        @endcomponent
