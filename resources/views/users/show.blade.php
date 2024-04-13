@@ -12,7 +12,7 @@
                     <div class="mb-4">
                         <label for="profile_picture" class="block text-sm font-medium text-gray-700">Profile
                             Picture</label>
-                        <img src="{{ $user->profile_picture_url }}" alt="{{ $user->name }}"
+                        <img src="{{ Storage::url($user->profile_picture) }}" alt="{{ $user->name }}"
                             class="w-12 h-12 rounded-full">
                     </div>
                     <div class="mb-4">
