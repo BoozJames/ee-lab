@@ -17,7 +17,9 @@
                         <p class="font-semibold">Items:</p>
                         <ul>
                             @foreach ($request->items as $item)
-                                <li>{{ $item }}</li>
+                                @if (empty($item['options']))
+                                    <li>{{ $item['name'] }} | {{ $item['qty'] }}</li>
+                                @endif
                             @endforeach
                         </ul>
                     </div>
@@ -25,7 +27,14 @@
                         <p class="font-semibold">Requestors:</p>
                         <ul>
                             @foreach ($request->requestors as $requestor)
-                                <li>{{ $requestor }}</li>
+                                @if (!empty($requestor))
+                                    <li>{{ $requestor['first_name'] }}
+                                        @if (!empty($requestor['middle_name']))
+                                            {{ $requestor['middle_name'] }}
+                                        @endif
+                                        {{ $requestor['last_name'] }}
+                                    </li>
+                                @endif
                             @endforeach
                         </ul>
                     </div>
