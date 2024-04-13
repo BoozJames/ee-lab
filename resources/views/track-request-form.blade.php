@@ -42,21 +42,44 @@
                                 {{-- Display the output from the tracking request --}}
                                 @isset($request)
                                     <div class="card">
-                                        <div class="card-body">
+                                        <div class="card-header">
                                             <h2>Request Details</h2>
                                             <p>Reference Number: {{ $request->reference_number }}</p>
-                                            <p class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                                @foreach ($request->items as $item)
-                                                    @if (empty($item['options']))
-                                                        <pre>{{ json_encode($item, JSON_PRETTY_PRINT) }}</pre>
-                                                    @endif
-                                                @endforeach
-                                            </p>
-                                            <p class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                                <pre>{{ json_encode($request->requestors, JSON_PRETTY_PRINT) }}</pre>
-                                            </p>
-                                            <p>Created At: {{ $request->created_at }}</p>
-                                            <p>Updated At: {{ $request->updated_at }}</p>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <h3>Items:</h3>
+                                                    <p class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                                        @foreach ($request->items as $item)
+                                                            @if (empty($item['options']))
+                                                                {{-- <pre>{{ json_encode($item, JSON_PRETTY_PRINT) }}</pre> --}}
+                                                                <p>{{ $item['name'] }} | {{ $item['qty'] }}</p>
+                                                            @endif
+                                                        @endforeach
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h3>Requestors:</h3>
+                                                    <p class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                                        @foreach ($request->requestors as $requestor)
+                                                            @if (!empty($requestor))
+                                                                <p>{{ $requestor['first_name'] }}
+                                                                    @if (!empty($requestor['middle_name']))
+                                                                        {{ $requestor['middle_name'] }}
+                                                                    @endif
+                                                                    {{ $requestor['last_name'] }}
+                                                                </p>
+                                                                {{-- @else
+                                                            <p>No requestor information available.</p> --}}
+                                                            @endif
+                                                        @endforeach
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <p>Date Requested: {{ $request->created_at }}</p>
                                         </div>
                                     </div>
                                 @endisset
@@ -68,3 +91,6 @@
             </div>
 
         </div>
+
+        @component('components.timeout-modal')
+        @endcomponent
