@@ -47,7 +47,7 @@ class ItemsController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
     
         if ($request->hasFile('image')) {
