@@ -56,8 +56,7 @@
                                                         <p
                                                             class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                                             @foreach ($request->items as $item)
-                                                                @if (empty($item['options']))
-                                                                    {{-- <pre>{{ json_encode($item, JSON_PRETTY_PRINT) }}</pre> --}}
+                                                                @if (is_array($item) && empty($item['options']))
                                                                     <p>{{ $item['name'] }} | {{ $item['qty'] }}</p>
                                                                 @endif
                                                             @endforeach
@@ -68,7 +67,7 @@
                                                         <p
                                                             class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                                             @foreach ($request->requestors as $requestor)
-                                                                @if (!empty($requestor))
+                                                                @if (is_array($requestor) && !empty($requestor))
                                                                     <p>{{ $requestor['first_name'] }}
                                                                         @if (!empty($requestor['middle_name']))
                                                                             {{ $requestor['middle_name'] }}

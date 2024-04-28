@@ -17,7 +17,7 @@
                         <p class="font-semibold">Items:</p>
                         <ul>
                             @foreach ($request->items as $item)
-                                @if (empty($item['options']))
+                                @if (is_array($item) && empty($item['options']))
                                     <li>{{ $item['name'] }} | {{ $item['qty'] }}</li>
                                 @endif
                             @endforeach
@@ -27,7 +27,7 @@
                         <p class="font-semibold">Requestors:</p>
                         <ul>
                             @foreach ($request->requestors as $requestor)
-                                @if (!empty($requestor))
+                                @if (is_array($requestor) && !empty($requestor))
                                     <li>{{ $requestor['first_name'] }}
                                         @if (!empty($requestor['middle_name']))
                                             {{ $requestor['middle_name'] }}
