@@ -13,6 +13,7 @@ use App\Http\Controllers\UnitsController;
 use App\Http\Controllers\TrainerController;
 use App\Http\Controllers\ItemVariantsController;
 use App\Http\Controllers\PrintController;
+use App\Http\Controllers\MaintenanceController ;
 use App\Models\Items;
 use Illuminate\Support\Facades\Route;
 
@@ -49,7 +50,10 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::resource('categories', CategoriesController::class);
     Route::resource('units', UnitsController::class);
     Route::resource('trainers', TrainerController::class);
-
+    Route::resource('maintenance', MaintenanceController::class);
+    Route::get('/maintenance/generate-pdf', [MaintenanceController::class, 'generatePDF'])->name('maintenance.generatePDF');
+    Route::get('/maintenance/get-item-variants/{id}', [MaintenanceController::class, 'getvariant'])->name('maintenance.getvariant');
+    
     // Student Routes
     Route::get('/students', [StudentsController::class, 'index'])->name('students.index');
     Route::get('/students/create', [StudentsController::class, 'create'])->name('students.create');
