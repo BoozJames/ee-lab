@@ -49,7 +49,7 @@
                                             <span class="input-group-text" id="inputGroup-sizing-lg">Tap Student ID</span>
                                             <input type="text" class="form-control" aria-label="Sizing example input"
                                                 aria-describedby="inputGroup-sizing-lg" name="requestor"
-                                                value="{{ $requestor }}" autofocus autocomplete="off">
+                                                value="{{ $requestor }}" autofocus autocomplete="on">
                                         </div>
                                         <div class="d-grid gap-2 my-2">
                                             {{-- <button type="submit" class="btn btn-success btn-lg float-right">Add
@@ -172,70 +172,6 @@
     @endcomponent
 
     <iframe id="print-frame" style="display: none;"></iframe>
-
-    {{-- <script>
-        function printContent() {
-            // Clone the content to be printed
-            var printContent = document.getElementById('print-content').cloneNode(true);
-    
-            // Find and remove the "Actions" column and buttons from the cloned content
-            var actionCells = printContent.querySelectorAll('td:last-child');
-            actionCells.forEach(function(cell) {
-                cell.parentNode.removeChild(cell);
-            });
-    
-            // Create a print window and write the modified content
-            var printFrame = document.getElementById('print-frame');
-            var printDocument = printFrame.contentWindow.document;
-    
-            // Write content to print to the iframe
-            printDocument.open();
-            printDocument.write('<html><head><title>Print Page</title>');
-            printDocument.write('<style>@page { size: A8; }</style>'); // Set print size to A8
-            printDocument.write('</head><body>');
-            printDocument.write(printContent.innerHTML);
-            printDocument.write('</body></html>');
-            printDocument.close();
-    
-            // Print the content
-            printFrame.contentWindow.print();
-        }
-    </script> --}}
-
-    {{-- <script>
-        function printContent() {
-            // Clone the content to be printed
-            var printContent = document.getElementById('print-content').cloneNode(true);
-    
-            // Find and remove the "Actions" column and buttons from the cloned content
-            var actionCells = printContent.querySelectorAll('td:last-child');
-            actionCells.forEach(function(cell) {
-                cell.parentNode.removeChild(cell);
-            });
-    
-            // Find and remove the "Actions" column header (th) from the cloned content
-            var actionHeader = printContent.querySelector('th:last-child');
-            if (actionHeader) {
-                actionHeader.parentNode.removeChild(actionHeader);
-            }
-    
-            // Create a print window and write the modified content
-            var printFrame = document.getElementById('print-frame');
-            var printDocument = printFrame.contentWindow.document;
-    
-            // Write content to print to the iframe
-            printDocument.open();
-            printDocument.write('<html><head><title>Print Page</title>');
-            printDocument.write('<style>@page { size: A8; }</style>'); // Set print size to A8
-            printDocument.write('</head><body>');
-            printDocument.write(printContent.innerHTML);
-            printDocument.write('</body></html>');
-            printDocument.close();
-    
-            // Print the content
-            printFrame.contentWindow.print();
-        }
-    </script> --}}
 
     <script>
         function printContent() {
