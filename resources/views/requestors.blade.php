@@ -62,6 +62,15 @@
                     @endif
                     <div id="print-content">
 
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-8 offset-md-2 my-2">
+                                    <strong>
+                                        <p>Ref. No.: {{ $referenceNumber }}</p>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
                         {{-- Items --}}
                         <div class="col-md-8 offset-md-2 mb-2 mt-2">
                             <div class="card">

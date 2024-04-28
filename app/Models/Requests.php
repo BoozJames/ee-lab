@@ -26,7 +26,10 @@ class Requests extends Model
         static::creating(function ($request) {
             $monthYear = date('mY');
             $lastRequestId = static::orderBy('id', 'desc')->value('id');
-            $request->reference_number = $monthYear . '-' . str_pad($lastRequestId + 1, 4, '0', STR_PAD_LEFT);
+            $referenceNumber = $monthYear . '-' . str_pad($lastRequestId + 1, 4, '0', STR_PAD_LEFT);
+
+            // Set the reference number for the current request
+            $request->reference_number = $referenceNumber;
         });
     }
 }
