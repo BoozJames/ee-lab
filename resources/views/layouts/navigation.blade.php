@@ -96,7 +96,7 @@
                             <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
                                 {{ __('Borrowing Form') }}
                             </x-dropdown-link>
-                            <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
+                            <x-dropdown-link :href="route('maintenance.index')" active="request()->routeIs('users.index')">
                                 {{ __('Maintenance Form') }}
                             </x-dropdown-link>
                             <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
