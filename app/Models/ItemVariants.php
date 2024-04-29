@@ -13,6 +13,10 @@ class ItemVariants extends Model
 
     protected $fillable = ['item_id', 'brand', 'variant_description', 'status', 'unit_id', 'category_id', 'equipment_label', 'serial_number', 'last_calibration_date' ];
 
+    protected $casts = [
+        'last_calibration_date' => 'datetime',
+    ];
+
     public function item()
     {
         return $this->belongsTo(Items::class, 'item_id');

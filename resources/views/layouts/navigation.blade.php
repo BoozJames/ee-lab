@@ -99,6 +99,9 @@
                             <x-dropdown-link :href="route('maintenance.index')" active="request()->routeIs('users.index')">
                                 {{ __('Maintenance Form') }}
                             </x-dropdown-link>
+                            <x-dropdown-link :href="route('inventory.index')" active="request()->routeIs('users.index')">
+                                {{ __('Inventory Form') }}
+                            </x-dropdown-link>
                             {{-- <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
                                 {{ __('Request Logs') }}
                             </x-dropdown-link> --}}
