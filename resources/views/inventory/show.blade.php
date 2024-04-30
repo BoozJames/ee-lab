@@ -1,7 +1,4 @@
 <style>
-
-
-
   /* Custom checkbox checked state */
   .custom-checkbox input[type="checkbox"]:checked + .checkmark {
     background-color: #66c;
@@ -32,7 +29,6 @@
         page-break-before: always;
     }
 }
-
 </style>
 
 <x-app-layout>
@@ -85,114 +81,115 @@
                         
                         <br>
                         <table class="min-w-full border border-gray-300">
-    <thead>
-        <tr>
-            <th></th>
-            <th class="border border-gray-300 text-center">Equipment</th>
-            <th class="border border-gray-300 text-center">Brand</th>
-            <th class="border border-gray-300 text-center">Equipment Label</th>
-            <th class="border border-gray-300 text-center">Serial Number</th>
-            <th class="border border-gray-300 text-center">Previous<br>Inventory<br>Quantity</th>
-            <th class="border border-gray-300 text-center">New<br>Inventory<br>Quantity</th>
-            <th class="border border-gray-300 text-center">Inventory<br>Difference</th>
-            <th class="border border-gray-300 text-center">Status</th>
-            <th class="border border-gray-300 text-center">Last<br>Calibration Date</th>
-        </tr>
-    </thead>
-    <tbody class="border border-gray-300 tbody">
-        @php
-            $count = 1;
-            $rowspanValues = [];
-            $prevItemName = null;
-            $prevBrand = null;
-            $currentRowspan = 0;
-        @endphp
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th class="border border-gray-300 text-center">Equipment</th>
+                                    <th class="border border-gray-300 text-center">Brand</th>
+                                    <th class="border border-gray-300 text-center">Equipment Label</th>
+                                    <th class="border border-gray-300 text-center">Serial Number</th>
+                                    <th class="border border-gray-300 text-center">Previous<br>Inventory<br>Quantity</th>
+                                    <th class="border border-gray-300 text-center">New<br>Inventory<br>Quantity</th>
+                                    <th class="border border-gray-300 text-center">Inventory<br>Difference</th>
+                                    <th class="border border-gray-300 text-center">Status</th>
+                                    <th class="border border-gray-300 text-center">Last<br>Calibration Date</th>
+                                </tr>
+                            </thead>
+                            <tbody class="border border-gray-300 tbody">
+                                    @php
+                                    $count = 1;
+                                    $rowspanValues = [];
+                                    $prevItemName = null;
+                                    $prevBrand = null;
+                                    $currentRowspan = 0;
+                                @endphp
 
-        {{-- Calculate rowspan values --}}
-        @foreach($reportItems as $index => $item)
-            @if($index > 0 && $item->item_name === $prevItemName && $item->brand === $prevBrand)
-                @php
-                    $currentRowspan++;
-                @endphp
-            @else
-                @if($index > 0)
-                    @php
-                        // Store the rowspan value for the previous group
-                        $rowspanValues[] = $currentRowspan;
-                    @endphp
-                @endif
-                @php
-                    $prevItemName = $item->item_name;
-                    $prevBrand = $item->brand;
-                    $currentRowspan = 1;
-                @endphp
-            @endif
-        @endforeach
-        {{-- Add the rowspan value for the last group --}}
-        @php
-            $rowspanValues[] = $currentRowspan;
-        @endphp
+                                {{-- Calculate rowspan values --}}
+                                @foreach($reportItems as $index => $item)
+                                    @if($index > 0 && strtolower($item->item_name) === strtolower($prevItemName) && strtolower($item->brand) === strtolower($prevBrand))
+                                        @php
+                                            $currentRowspan++;
+                                        @endphp
+                                    @else
+                                        @if($index > 0)
+                                            @php
+                                                // Store the rowspan value for the previous group
+                                                $rowspanValues[] = $currentRowspan;
+                                            @endphp
+                                        @endif
+                                        @php
+                                            $prevItemName = $item->item_name;
+                                            $prevBrand = $item->brand;
+                                            $currentRowspan = 1;
+                                        @endphp
+                                    @endif
+                                @endforeach
+                                {{-- Add the rowspan value for the last group --}}
+                                @php
+                                    $rowspanValues[] = $currentRowspan;
+                                @endphp
 
-        {{-- Apply rowspan values to table rows --}}
-        @php
-            $rowIndex = 0;
-        @endphp
-        @foreach($reportItems as $index => $item)
-            @if($index == 0 || ($item->item_name !== $prevItemName || $item->brand !== $prevBrand))
-                @if($index > 0)
-                    </tr>
-                @endif
-                <tr>
-                    <td class="border border-gray-300 text-center">{{ $count }}</td>
-                    <td class="border border-gray-300 text-center">{{ $item->item_name }}</td>
-                    <td class="border border-gray-300 text-center" rowspan="{{ $rowspanValues[$rowIndex] }}">{{ $item->brand }}</td>
-                    <td class="border border-gray-300 text-center">{{ $item->equipment_label }}</td>
-                    <td class="border border-gray-300 text-center">{{ $item->serial_number }}</td>
-                    <td class="border border-gray-300 text-center" rowspan="{{ $rowspanValues[$rowIndex] }}">
-                        @if(isset($previousInventoryQuantities[$item->id]))
-                            {{ $previousInventoryQuantities[$item->id] }}
-                        @else
-                            N/A
-                        @endif
-                    </td>
-                    <td class="border border-gray-300 text-center" rowspan="{{ $rowspanValues[$rowIndex] }}"> {{ $rowspanValues[$rowIndex] }} </td>
+                                {{-- Apply rowspan values to table rows --}}
+                                @php
+                                    $rowIndex = 0;
+                                @endphp
+                                @foreach($reportItems as $index => $item)
+                                    @if($index == 0 || (strtolower($item->item_name) !== strtolower($prevItemName) || strtolower($item->brand) !== strtolower($prevBrand)))
+                                        @if($index > 0)
+                                            </tr>
+                                        @endif
+                                        <tr>
+                                            <td class="border border-gray-300 text-center">{{ $count }}</td>
+                                            <td class="border border-gray-300 text-center">{{ $item->item_name }}</td>
+                                            <td class="border border-gray-300 text-center" rowspan="{{ $rowspanValues[$rowIndex] }}">{{ $item->brand }}</td>
+                                            <td class="border border-gray-300 text-center">{{ $item->equipment_label }}</td>
+                                            <td class="border border-gray-300 text-center">{{ $item->serial_number }}</td>
+                                            <td class="border border-gray-300 text-center" rowspan="{{ $rowspanValues[$rowIndex] }}">
+                                                @if(isset($previousInventoryQuantities[$item->item_name][$item->brand]))
+                                                    {{ $previousInventoryQuantities[$item->item_name][$item->brand] }}
+                                                @else
+                                                N/A
+                                                    @php
+                                                        $previousInventoryQuantities[$item->item_name][$item->brand] = 0
+                                                    @endphp
+                                                @endif
+                                            </td>
+                                            <td class="border border-gray-300 text-center" rowspan="{{ $rowspanValues[$rowIndex] }}"> {{ $rowspanValues[$rowIndex] }} </td>
 
-                    <td class="border border-gray-300 text-center" rowspan="{{ $rowspanValues[$rowIndex] }}">
-                        @php
-                            $newInventoryQuantity = isset($previousInventoryQuantities[$item->id]) ? $previousInventoryQuantities[$item->id] - $rowspanValues[$rowIndex] : $rowspanValues[$rowIndex];
-                        @endphp
-                        {{ $newInventoryQuantity }}
-                    </td>
+                                            <td class="border border-gray-300 text-center" rowspan="{{ $rowspanValues[$rowIndex] }}">
+                                                @php
+                                                    $newInventoryQuantity = isset($previousInventoryQuantities[$item->id]) ? $previousInventoryQuantities[$item->item_name][$item->brand] - $rowspanValues[$rowIndex] : $rowspanValues[$rowIndex];
+                                                @endphp
+                                                {{ abs($newInventoryQuantity - $previousInventoryQuantities[$item->item_name][$item->brand]) }}
+                                            </td>
 
-                    <td class="border border-gray-300 text-center">{{ $item->status }}</td>
-                    <td class="border border-gray-300 text-center">{{ $item->last_calibration_date }}</td>
-                </tr>
-                @php
-                    $prevItemName = $item->item_name;
-                    $prevBrand = $item->brand;
-                    $rowIndex++;
-                @endphp
-            @else
-                </tr>
-                <tr>
-                    <td class="border border-gray-300 text-center">{{ $count }}</td>
-                    <td class="border border-gray-300 text-center">{{ $item->item_name }}</td>
-                    <td class="border border-gray-300 text-center">{{ $item->equipment_label }}</td>
-                    <td class="border border-gray-300 text-center">{{ $item->serial_number }}</td>
-                    <td class="border border-gray-300 text-center">{{ $item->status }}</td>
-                    <td class="border border-gray-300 text-center">{{ $item->last_calibration_date }}</td>
-                </tr>
-            @endif
-            @php
-                $count++;
-            @endphp
+                                            <td class="border border-gray-300 text-center">{{ $item->status }}</td>
+                                            <td class="border border-gray-300 text-center">{{ $item->last_calibration_date }}</td>
+                                        </tr>
+                                        @php
+                                            $prevItemName = $item->item_name;
+                                            $prevBrand = $item->brand;
+                                            $rowIndex++;
+                                        @endphp
+                                    @else
+                                        </tr>
+                                        <tr>
+                                            <td class="border border-gray-300 text-center">{{ $count }}</td>
+                                            <td class="border border-gray-300 text-center">{{ $item->item_name }}</td>
+                                            <td class="border border-gray-300 text-center">{{ $item->equipment_label }}</td>
+                                            <td class="border border-gray-300 text-center">{{ $item->serial_number }}</td>
+                                            <td class="border border-gray-300 text-center">{{ $item->status }}</td>
+                                            <td class="border border-gray-300 text-center">{{ $item->last_calibration_date }}</td>
+                                        </tr>
+                                    @endif
+                                    @php
+                                        $count++;
+                                    @endphp
 
-        @endforeach
-        </tr> <!-- Close the last row -->
-    </tbody>
-</table>
-
-
+                                @endforeach
+                                </tr> <!-- Close the last row -->
+                            </tbody>
+                        </table>
                     <br>
                     <div class="grid grid-cols-10 gap-0">
                         <div class="col-span-2 text-left">
@@ -222,11 +219,7 @@
                         <div class="col-span-1 text-left">
                         </div>
                     </div>
-
-
                 </div>
-                
-
                 </div>
             </div>
         </div>

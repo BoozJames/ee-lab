@@ -6,12 +6,13 @@ use Illuminate\Http\Request;
 use App\Models\ItemVariants;
 use App\Models\InventoryReport;
 use App\Models\InventoryReportItem;
+use Illuminate\Support\Facades\DB; // Add this line
 
 class InventoryReportController extends Controller
 {
     public function index()
     {
-        $inventory = InventoryReport::paginate(10);
+        $inventory = InventoryReport::orderBy('created_at', 'desc')->paginate(10);
         return view('inventory.index', compact('inventory'));
     }
 
@@ -56,7 +57,7 @@ class InventoryReportController extends Controller
         ]);
 
         // Fetch data from the ItemVariants table and associate it with the newly created InventoryReport
-        $itemVariants = ItemVariants::all();
+        $itemVariants = ItemVariants::where('status', '!=', 'Condemned')->get();
 
         // Create inventory report items
         foreach ($itemVariants as $itemVariant) {
@@ -81,26 +82,29 @@ class InventoryReportController extends Controller
     public function show($id)
     {
         $inventoryReport = InventoryReport::findOrFail($id);
-        $reportItems = $inventoryReport->items; // Assuming you have defined the relationship in your InventoryReport model
-
+        $reportItems = $inventoryReport->items;
+    
         // Get the previous report
         $previousReport = InventoryReport::where('created_at', '<', $inventoryReport->created_at)
             ->orderBy('created_at', 'desc')
             ->first();
-
+    
         $previousInventoryQuantities = [];
-
+    
         // Calculate previous inventory quantities
         if ($previousReport) {
-            $previousItems = $previousReport->items()->get();
-
+            $previousItems = $previousReport->items()->select('item_name', 'brand', DB::raw('COUNT(*) as total'))
+                ->groupBy('item_name', 'brand')
+                ->get();
+    
             foreach ($previousItems as $item) {
-                $previousInventoryQuantities[$item->id] = $item->previous_inventory_quantity; // Assuming 'previous_inventory_quantity' is the column name for previous inventory quantity
+                $previousInventoryQuantities[$item->item_name][$item->brand] = $item->total;
             }
         }
-
+    
         return view('inventory.show', compact('inventoryReport', 'reportItems', 'previousInventoryQuantities'));
     }
+    
 
     public function destroy($id)
     {
