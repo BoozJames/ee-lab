@@ -6,11 +6,6 @@
     }
 </style>
 
-<div id="loading-spinner" class="hidden fixed top-0 left-0 w-full h-full bg-gray-900 opacity-50 flex justify-center items-center">
-    <div class="loader ease-linear rounded-full border-8 border-t-8 border-gray-50 h-12 w-12"></div>
-    <p class="text-white ml-2">Loading...</p>
-</div>
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -54,6 +49,32 @@
                             <div class="w-1/4">
                                 <label for="noted_by" class="block text-sm font-medium text-gray-700">Noted By</label>
                                 <input required type="text" name="noted_by" id="noted_by" 
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </div>
+                        </div>
+
+                        <div class="flex mb-4">
+                            <div class="mr-4 w-1/4">
+                                <label for="prepared_by_designation" class="block text-sm font-medium text-gray-700">Prepared By Designation</label>
+                                <input required type="text" name="prepared_by_designation" id="prepared_by_designation"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </div>
+
+                            <div class="mr-4 w-1/4">
+                                <label for="verified_by_designation" class="block text-sm font-medium text-gray-700">Verified By Designation</label>
+                                <input required type="text" name="verified_by_designation" id="verified_by_designation"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </div>
+
+                            <div class="mr-4 w-1/4">
+                                <label for="checked_by_designation" class="block text-sm font-medium text-gray-700">Checked By Designation</label>
+                                <input required type="text" name="checked_by_designation" id="checked_by_designation"
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </div>
+                            
+                            <div class="w-1/4">
+                                <label for="noted_by_designation" class="block text-sm font-medium text-gray-700">Noted By Designation</label>
+                                <input required type="text" name="noted_by_designation" id="noted_by_designation" 
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                             </div>
                         </div>
@@ -114,29 +135,16 @@
                                         <span
                                             class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Last Calibration Date</span>
                                     </th>
-                                    <!-- <th class="px-6 py-3 bg-gray-50 text-left">
-                                        <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Actions</span>
-                                    </th> -->
                                 </tr>
                             </thead>
 
                             <tbody class="bg-white divide-y divide-gray-200 divide-solid">
                                 @foreach ($items as $variant)
-                                    <input type="hidden" name="item_id[]" value="{{ $variant->item->id }}">
-                                    <input type="hidden" name="item_name[]" value="{{ $variant->item->name }}">
-                                    <input type="hidden" name="variant_id[]" value="{{ $variant->id }}">
-                                    <input type="hidden" name="equipment_label[]" value="{{ $variant->equipment_label }}">
-                                    <input type="hidden" name="serial_number[]" value="{{ $variant->serial_number }}">
-                                    <input type="hidden" name="status[]" value="{{ $variant->status }}">
-                                    <input type="hidden" name="last_calibration_date[]" value="{{ $variant->last_calibration_date }}">
-                                    <input type="hidden" name="brand[]" value="{{ $variant->brand }}">
-                                    <input type="hidden" name="unit[]" value="{{ $variant->unit->name }}">
-                                    <input type="hidden" name="category[]" value="{{ $variant->category->name }}">
-                                    
                                     <tr class="bg-white">
-                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $variant->item->name }}
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                            <a href="/variants/{{ $variant->id }}/edit" style="color: blue;">
+                                                {{ $variant->item->name }}
+                                            </a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             {{ $variant->brand}}
@@ -147,46 +155,29 @@
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             {{ $variant->serial_number}}
                                         </td>
-                                        <!-- <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            
-                                        </td>
-                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                        </td> -->
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             {{ $variant->status}}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                        @if ($variant->last_calibration_date)
-                                            {{ $variant->last_calibration_date->format('m-d-Y') }}
-                                        @else
-                                            {{ '' }}
-                                        @endif
+                                            @if ($variant->last_calibration_date)
+                                                {{ $variant->last_calibration_date->format('m-d-Y') }}
+                                            @else
+                                                {{ '' }}
+                                            @endif
                                         </td>
-                                        
-                                        <!-- <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            <a href="{{ route('variants.show', $variant->id) }}"
-                                                class="text-blue-500 hover:text-blue-700 mr-2">Show</a>
-                                            <a href="{{ route('variants.edit', $variant->id) }}"
-                                                class="text-green-500 hover:text-green-700 mr-2">Edit</a>
-                                                <form action="{{ route('variants.destroy', $variant->id) }}" method="POST"
-                                                class="inline">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="button" onclick="confirmDelete('{{ $variant->id }}')" class="text-red-500 hover:text-red-700">Delete</button>
-                                            </form>
-                                        </td> -->
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        
-                       
+
+                        <div class="mt-2">
+                            {{ $items->links() }}
+                        </div>
+
                         <div class="flex items-center justify-end">
                             <button type="submit"
                                 id="create_btn"
-                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create</button>
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-3">Create</button>
                         </div>
                     </form>
                 </div>

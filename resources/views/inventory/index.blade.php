@@ -69,6 +69,9 @@
                             @foreach ($inventory as $report)    
                             <tr class="bg-white">
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                        {{ $report->created_at }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                         {{ $report->prepared_by }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
@@ -109,6 +112,10 @@
                             @endforeach
                             </tbody>
                         </table>
+
+                        <div class="mt-2">
+                            {{ $inventory->links() }}
+                        </div>
                     </div>
                 </div>
             </div>

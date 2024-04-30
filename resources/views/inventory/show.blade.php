@@ -1,17 +1,6 @@
 <style>
-  /* Custom checkbox styles */
-  .custom-checkbox {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #999;
-    border-radius: 3px;
-    cursor: pointer;
-  }
 
-  /* Hide the default checkbox */
-  .custom-checkbox input[type="checkbox"] {
-    display: none;
-  }
+
 
   /* Custom checkbox checked state */
   .custom-checkbox input[type="checkbox"]:checked + .checkmark {
@@ -24,6 +13,11 @@
     body * {
         visibility: hidden;
     }
+
+    tbody {
+        font-size: 12px;
+    }
+   
     #print-section, #print-section * {
         visibility: visible;
     }
@@ -31,6 +25,11 @@
         position: absolute;
         left: 0;
         top: 0;
+        width: 100%;
+    }
+
+    .repeat-section {
+        page-break-before: always;
     }
 }
 
@@ -51,13 +50,15 @@
                     <!-- <div class="flex justify-center items-center">
                     </div> -->
                 
-                    <button onclick="printContent()" class="bordered border-gray-300 bg-gray-300 mb-2">Print</button>
-                    <br>
+                    <button onclick="printContent()" class="bordered border-gray-300 bg-gray-300 p-2 mb-2">Print</button>
+                    <a href="/inventory"  class="float-right text-red-500 hover:text-red-700">Back</a>
+
                     <br>
                     
                     <div class="overflow-x-auto">
 
                     <div id="print-section" style="font-family: times;">
+                        <div class="repeat-section">
                         <div class="flex justify-center">
                             <div class="max-w-6xl w-full grid grid-cols-12 gap-0">
                                 <div class="col-span-1">
@@ -78,75 +79,145 @@
                         <hr class="w-full border-t-2 border-gray-800">
                         <div><b>Office of the Dean - College of Engineering</b></div>
 
-                        <div class="mt-2 text-center"><b>INVENTORY REPORT AS OF ______________</b></div>
+                        </div>
+                        <div class="mt-2 text-center uppercase"><b>INVENTORY REPORT AS OF {{ \Carbon\Carbon::parse($inventoryReport->created_at)->isoFormat('MMMM D, YYYY') }}</b></div>
                         <div class="mt-2 text-center"><b>SUPPLY ROOM</b></div>
                         
                         <br>
+                        <table class="min-w-full border border-gray-300">
+    <thead>
+        <tr>
+            <th></th>
+            <th class="border border-gray-300 text-center">Equipment</th>
+            <th class="border border-gray-300 text-center">Brand</th>
+            <th class="border border-gray-300 text-center">Equipment Label</th>
+            <th class="border border-gray-300 text-center">Serial Number</th>
+            <th class="border border-gray-300 text-center">Previous<br>Inventory<br>Quantity</th>
+            <th class="border border-gray-300 text-center">New<br>Inventory<br>Quantity</th>
+            <th class="border border-gray-300 text-center">Inventory<br>Difference</th>
+            <th class="border border-gray-300 text-center">Status</th>
+            <th class="border border-gray-300 text-center">Last<br>Calibration Date</th>
+        </tr>
+    </thead>
+    <tbody class="border border-gray-300 tbody">
+        @php
+            $count = 1;
+            $rowspanValues = [];
+            $prevItemName = null;
+            $prevBrand = null;
+            $currentRowspan = 0;
+        @endphp
+
+        {{-- Calculate rowspan values --}}
+        @foreach($reportItems as $index => $item)
+            @if($index > 0 && $item->item_name === $prevItemName && $item->brand === $prevBrand)
+                @php
+                    $currentRowspan++;
+                @endphp
+            @else
+                @if($index > 0)
+                    @php
+                        // Store the rowspan value for the previous group
+                        $rowspanValues[] = $currentRowspan;
+                    @endphp
+                @endif
+                @php
+                    $prevItemName = $item->item_name;
+                    $prevBrand = $item->brand;
+                    $currentRowspan = 1;
+                @endphp
+            @endif
+        @endforeach
+        {{-- Add the rowspan value for the last group --}}
+        @php
+            $rowspanValues[] = $currentRowspan;
+        @endphp
+
+        {{-- Apply rowspan values to table rows --}}
+        @php
+            $rowIndex = 0;
+        @endphp
+        @foreach($reportItems as $index => $item)
+            @if($index == 0 || ($item->item_name !== $prevItemName || $item->brand !== $prevBrand))
+                @if($index > 0)
+                    </tr>
+                @endif
+                <tr>
+                    <td class="border border-gray-300 text-center">{{ $count }}</td>
+                    <td class="border border-gray-300 text-center">{{ $item->item_name }}</td>
+                    <td class="border border-gray-300 text-center" rowspan="{{ $rowspanValues[$rowIndex] }}">{{ $item->brand }}</td>
+                    <td class="border border-gray-300 text-center">{{ $item->equipment_label }}</td>
+                    <td class="border border-gray-300 text-center">{{ $item->serial_number }}</td>
+                    <td class="border border-gray-300 text-center" rowspan="{{ $rowspanValues[$rowIndex] }}">
+                        @if(isset($previousInventoryQuantities[$item->id]))
+                            {{ $previousInventoryQuantities[$item->id] }}
+                        @else
+                            N/A
+                        @endif
+                    </td>
+                    <td class="border border-gray-300 text-center" rowspan="{{ $rowspanValues[$rowIndex] }}"> {{ $rowspanValues[$rowIndex] }} </td>
+
+                    <td class="border border-gray-300 text-center" rowspan="{{ $rowspanValues[$rowIndex] }}">
+                        @php
+                            $newInventoryQuantity = isset($previousInventoryQuantities[$item->id]) ? $previousInventoryQuantities[$item->id] - $rowspanValues[$rowIndex] : $rowspanValues[$rowIndex];
+                        @endphp
+                        {{ $newInventoryQuantity }}
+                    </td>
+
+                    <td class="border border-gray-300 text-center">{{ $item->status }}</td>
+                    <td class="border border-gray-300 text-center">{{ $item->last_calibration_date }}</td>
+                </tr>
+                @php
+                    $prevItemName = $item->item_name;
+                    $prevBrand = $item->brand;
+                    $rowIndex++;
+                @endphp
+            @else
+                </tr>
+                <tr>
+                    <td class="border border-gray-300 text-center">{{ $count }}</td>
+                    <td class="border border-gray-300 text-center">{{ $item->item_name }}</td>
+                    <td class="border border-gray-300 text-center">{{ $item->equipment_label }}</td>
+                    <td class="border border-gray-300 text-center">{{ $item->serial_number }}</td>
+                    <td class="border border-gray-300 text-center">{{ $item->status }}</td>
+                    <td class="border border-gray-300 text-center">{{ $item->last_calibration_date }}</td>
+                </tr>
+            @endif
+            @php
+                $count++;
+            @endphp
+
+        @endforeach
+        </tr> <!-- Close the last row -->
+    </tbody>
+</table>
 
 
-
-                    <table class="min-w-full border border-gray-300">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th class="border border-gray-300 text-center">Equipment</th>
-                            <th class="border border-gray-300 text-center">Brand</th>
-                            <th class="border border-gray-300 text-center">Equipment Label</th>
-                            <th class="border border-gray-300 text-center">Serial Number</th>
-                            <th class="border border-gray-300 text-center">Previous<br>Inventory<br>Quantity</th>
-                            <th class="border border-gray-300 text-center">New<br>Inventory<br>Quantity</th>
-                            <th class="border border-gray-300 text-center">Inventory<br>Difference</th>
-                            <th class="border border-gray-300 text-center">Status</th>
-                            <th class="border border-gray-300 text-center">
-                                Last
-                                <br>
-                                Calibration Date
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody class="border border-gray-300">
-                        @for ($i = 0; $i < 15; $i++)
-                            <tr>
-                                <td class="border border-gray-300">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                                <td class="border border-gray-300"></td>
-                                <td class="border border-gray-300"></td>
-                                <td class="border border-gray-300"></td>
-                                <td class="border border-gray-300"></td>
-                                <td class="border border-gray-300"></td>
-                                <td class="border border-gray-300"></td>
-                                <td class="border border-gray-300"></td>
-                                <td class="border border-gray-300"></td>
-                                <td class="border border-gray-300"></td>
-                            </tr>
-                        @endfor
-                            
-                        </tbody>
-                    </table>
                     <br>
                     <div class="grid grid-cols-10 gap-0">
                         <div class="col-span-2 text-left">
                         </div>
                         <div class="col-span-4 text-left">
                             <div>Prepared by:</div>
-                            <div class="mt-4"><b>Name of Techcnician</b></div>
-                            <div>Designation</div>
-                            <div>Date</div>
+                            <div class="mt-4"><b>{{ $inventoryReport->prepared_by}}</b></div>
+                            <div>{{ $inventoryReport->prepared_by_designation}}</div>
+                            <div>Date: {{ $inventoryReport->date_prepared_by}}</div>
 
                             <div class="mt-8">Checked by:</div>
-                            <div class="mt-4"><b>Name of Laboratory Coordinator</b></div>
-                            <div>Designation</div>
-                            <div>Date</div>
+                            <div class="mt-4"><b>{{ $inventoryReport->checked_by}}</b></div>
+                            <div>{{ $inventoryReport->checked_by_designation}}</div>
+                            <div>Date: {{ $inventoryReport->date_checked_by}}</div>
                         </div>
                         <div class="col-span-4 text-left">
-                        <div>Prepared by:</div>
-                            <div class="mt-4"><b>Name of Dept. Chair</b></div>
-                            <div>Designation</div>
-                            <div>Date</div>
+                            <div>Verified by:</div>
+                            <div class="mt-4"><b>{{ $inventoryReport->verified_by}}</b></div>
+                            <div>{{ $inventoryReport->verified_by_designation}}</div>
+                            <div>Date: {{ $inventoryReport->date_verified_by}}</div>
 
                             <div class="mt-8">Noted by:</div>
-                            <div class="mt-4"><b>Name of Dean</b></div>
-                            <div>Dean, CoE</div>
-                            <div>Date</div>
+                            <div class="mt-4"><b>{{ $inventoryReport->noted_by}}</b></div>
+                            <div>{{ $inventoryReport->noted_by_designation}}</div>
+                            <div>Date: {{ $inventoryReport->date_noted_by}}</div>
                         </div>
                         <div class="col-span-1 text-left">
                         </div>

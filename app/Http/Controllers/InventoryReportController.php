@@ -11,49 +11,32 @@ class InventoryReportController extends Controller
 {
     public function index()
     {
-        $inventory = InventoryReport::all();
+        $inventory = InventoryReport::paginate(10);
         return view('inventory.index', compact('inventory'));
     }
 
     public function create()
     {
-        $items = ItemVariants::query()->get();
+        $items = ItemVariants::where('status', '!=', 'Condemned')->paginate(20);
         return view('inventory.create', compact('items'));
     }
 
     public function store(Request $request)
     {
-        dd($request->all());
         // Validate the request data
         $validatedData = $request->validate([
             'prepared_by' => 'required',
             'verified_by' => 'required',
             'checked_by' => 'required',
             'noted_by' => 'required',
+            'prepared_by_designation' => 'required',
+            'verified_by_designation' => 'required',
+            'checked_by_designation' => 'required',
+            'noted_by_designation' => 'required',
             'date_prepared_by' => 'required|date',
             'date_verified_by' => 'required|date',
             'date_checked_by' => 'required|date',
             'date_noted_by' => 'required|date',
-            'item_id' => 'required|array',
-            'item_id.*' => 'required|exists:item_variants,id',
-            'item_name' => 'required|array',
-            'item_name.*' => 'required|string',
-            'variant_id' => 'required|array',
-            'variant_id.*' => 'required|exists:item_variants,id',
-            'brand' => 'required|array',
-            'brand.*' => 'required|string',
-            'unit' => 'required|array',
-            'unit.*' => 'required|string',
-            'category' => 'required|array',
-            'category.*' => 'required|string',
-            'equipment_label' => 'required|array',
-            'equipment_label.*' => 'required|string',
-            'serial_number' => 'required|array',
-            'serial_number.*' => 'nullable|string',
-            'status' => 'required|array',
-            'status.*' => 'required|string',
-            'last_calibration_date' => 'required|array',
-            'last_calibration_date.*' => 'nullable|date',
         ]);
 
         // Create the inventory report
@@ -62,30 +45,74 @@ class InventoryReportController extends Controller
             'verified_by' => $validatedData['verified_by'],
             'checked_by' => $validatedData['checked_by'],
             'noted_by' => $validatedData['noted_by'],
+            'prepared_by_designation' => $validatedData['prepared_by_designation'],
+            'verified_by_designation' => $validatedData['verified_by_designation'],
+            'checked_by_designation' => $validatedData['checked_by_designation'],
+            'noted_by_designation' => $validatedData['noted_by_designation'],
             'date_prepared_by' => $validatedData['date_prepared_by'],
             'date_verified_by' => $validatedData['date_verified_by'],
             'date_checked_by' => $validatedData['date_checked_by'],
             'date_noted_by' => $validatedData['date_noted_by'],
         ]);
 
+        // Fetch data from the ItemVariants table and associate it with the newly created InventoryReport
+        $itemVariants = ItemVariants::all();
+
         // Create inventory report items
-        foreach ($validatedData['item_id'] as $key => $itemId) {
+        foreach ($itemVariants as $itemVariant) {
             InventoryReportItem::create([
-                'id_reports_inventory' => $inventoryReport->id, // Assigning the ID of the associated InventoryReport
-                'item_id' => $itemId,
-                'item_name' => $validatedData['item_name'][$key],
-                'variant_id' => $validatedData['variant_id'][$key],
-                'brand' => $validatedData['brand'][$key],
-                'unit' => $validatedData['unit'][$key],
-                'category' => $validatedData['category'][$key],
-                'equipment_label' => $validatedData['equipment_label'][$key],
-                'serial_number' => $validatedData['serial_number'][$key],
-                'status' => $validatedData['status'][$key],
-                'last_calibration_date' => $validatedData['last_calibration_date'][$key],
+                'id_reports_inventory' => $inventoryReport->id,
+                'item_id' => $itemVariant->item_id,
+                'item_name' => $itemVariant->item->name,
+                'variant_id' => $itemVariant->id,
+                'brand' => $itemVariant->brand,
+                'unit' => $itemVariant->unit->name,
+                'category' => $itemVariant->category->name,
+                'equipment_label' => $itemVariant->equipment_label,
+                'serial_number' => $itemVariant->serial_number,
+                'status' => $itemVariant->status,
+                'last_calibration_date' => $itemVariant->last_calibration_date,
             ]);
         }
-        
 
         return redirect()->route('inventory.index')->with('success', 'Inventory report created successfully.');
     }
+
+    public function show($id)
+    {
+        $inventoryReport = InventoryReport::findOrFail($id);
+        $reportItems = $inventoryReport->items; // Assuming you have defined the relationship in your InventoryReport model
+
+        // Get the previous report
+        $previousReport = InventoryReport::where('created_at', '<', $inventoryReport->created_at)
+            ->orderBy('created_at', 'desc')
+            ->first();
+
+        $previousInventoryQuantities = [];
+
+        // Calculate previous inventory quantities
+        if ($previousReport) {
+            $previousItems = $previousReport->items()->get();
+
+            foreach ($previousItems as $item) {
+                $previousInventoryQuantities[$item->id] = $item->previous_inventory_quantity; // Assuming 'previous_inventory_quantity' is the column name for previous inventory quantity
+            }
+        }
+
+        return view('inventory.show', compact('inventoryReport', 'reportItems', 'previousInventoryQuantities'));
+    }
+
+    public function destroy($id)
+    {
+        // Find the inventory report by its ID
+        $inventoryReport = InventoryReport::findOrFail($id);
+        $inventoryReport->delete();
+
+        // Delete associated inventory report items
+        $inventoryReport->items()->delete();
+
+        // Redirect back with a success message
+        return redirect()->route('inventory.index')->with('success', 'Inventory report deleted successfully.');
+    }
 }
+
