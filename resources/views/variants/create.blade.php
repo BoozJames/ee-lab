@@ -94,6 +94,7 @@
                                 <option value="Functional">Functional</option>
                                 <option value="Non-Functional">Non-Functional</option>
                                 <option value="For Condemn">For Condemn</option>
+                                <option value="Condemned">Condemned</option>
                                 <option value="Defective">Defective</option>
                                 <option value="Obsolete">Obsolete</option>
                             </select>
