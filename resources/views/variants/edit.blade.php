@@ -116,6 +116,11 @@
                                     For Condemn
                                 </option>
                                 <option 
+                                    {{ $variant->status == 'Condemned' ? 'selected' : '' }}  
+                                    value="For Condemn">
+                                    Condemned
+                                </option>
+                                <option 
                                     {{ $variant->status == 'Defective' ? 'selected' : '' }}  
                                     value="Defective">
                                     Defective
