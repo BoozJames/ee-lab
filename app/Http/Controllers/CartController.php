@@ -138,10 +138,20 @@ class CartController extends Controller
      */
     public function showRequestors()
     {
+        // Generate the reference number
+        $referenceNumber = $this->generateReferenceNumber();
+
         // Get the requestors associated with items in the cart
         $requestors = Cart::content()->pluck('requestor')->unique();
 
-        return view('requestors', compact('requestors'));
+        return view('requestors', compact('requestors', 'referenceNumber'));
+    }
+
+    private function generateReferenceNumber()
+    {
+        $monthYear = date('mY');
+        $lastRequestId = Requests::orderBy('id', 'desc')->value('id');
+        return $monthYear . '-' . str_pad($lastRequestId + 1, 4, '0', STR_PAD_LEFT);
     }
 
     /**

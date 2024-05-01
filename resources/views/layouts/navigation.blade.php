@@ -93,15 +93,18 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
+                            {{-- <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
                                 {{ __('Borrowing Form') }}
-                            </x-dropdown-link>
-                            <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
+                            </x-dropdown-link> --}}
+                            <x-dropdown-link :href="route('maintenance.index')" active="request()->routeIs('users.index')">
                                 {{ __('Maintenance Form') }}
                             </x-dropdown-link>
-                            <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
-                                {{ __('Request Logs') }}
+                            <x-dropdown-link :href="route('inventory.index')" active="request()->routeIs('users.index')">
+                                {{ __('Inventory Form') }}
                             </x-dropdown-link>
+                            {{-- <x-dropdown-link :href="route('users.index')" active="request()->routeIs('users.index')">
+                                {{ __('Request Logs') }}
+                            </x-dropdown-link> --}}
                         </x-slot>
                     </x-dropdown>
                 </div>
@@ -197,9 +200,9 @@
             <x-responsive-nav-link :href="route('faculties.index')" :active="request()->routeIs('faculties.index')">
                 {{ __('Faculties') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('items.index')" :active="request()->routeIs('items.index')">
+            {{-- <x-responsive-nav-link :href="route('items.index')" :active="request()->routeIs('items.index')">
                 {{ __('Borrowing Form') }}
-            </x-responsive-nav-link>
+            </x-responsive-nav-link> --}}
             <x-responsive-nav-link :href="route('items.index')" :active="request()->routeIs('items.index')">
                 {{ __('Maintenance For,') }}
             </x-responsive-nav-link>
