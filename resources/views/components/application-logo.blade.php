@@ -3,7 +3,7 @@
 </svg> --}}
 
 
-<?xml version="1.0" standalone="no"?>
+{{-- <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 <svg version="1.0" xmlns="http://www.w3.org/2000/svg" width="40.000000pt" height="33.000000pt"
     viewBox="0 0 1479.000000 1388.000000" preserveAspectRatio="xMidYMid meet">
@@ -741,4 +741,8 @@ c-46 4 -101 13 -123 21 -44 16 -115 18 -158 5z m137 -45 c46 -47 24 -248 -29
 -39 -223 -46 -11 -26 -21 58 -27 138 -11 187 -9 187 8 0 8 -9 15 -19 15 -11 0
 -23 6 -28 12 -4 7 -6 112 -4 234 l2 221 -62 6 c-105 11 -149 9 -149 -8z" />
     </g>
-</svg>
+</svg> --}}
+
+<div class="flex flex-col justify-center">
+    <img src="{{ asset('images/bsu-neu-logo.png') }}" alt="" style="height: 40px; width: 43px;">
+</div>
