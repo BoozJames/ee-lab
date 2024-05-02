@@ -21,6 +21,11 @@
                     <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
                 </a>
             </div>
+            <div class="text-center mt-2">
+                <h1 class="text-xl font-bold text-[#eb1c24]">Batangas State University</h1>
+                <h3 class="text-m font-semibold">The National Engineering University</h3>
+                <p class="text-sm text-gray-600">Automated Management System Kiosk</p>
+            </div>
 
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
                 {{ $slot }}
