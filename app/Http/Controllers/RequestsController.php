@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Items;
+use App\Models\ItemVariants;
 use App\Models\Requests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class RequestsController extends Controller
 {
@@ -76,7 +78,27 @@ class RequestsController extends Controller
     public function edit($id)
     {
         $request = Requests::findOrFail($id);
-        return view('requests.edit', compact('request'));
+        // $itemIds = array_keys(array_filter($request->items, fn ($item) => empty($item['options']['requestor'])));
+
+        $itemIds = array_column(array_filter($request->items, fn ($item) => empty($item['options']['requestor'])), 'id');
+
+        Log::info($itemIds);
+        $itemVariants = ItemVariants::whereIn('item_id', $itemIds)->get();
+        // $itemVariants = ItemVariants::all();
+
+
+        Log::info('Request data:', [
+            'reference_number' => $request->reference_number,
+            'items' => $request->items,
+            'requestors' => $request->requestors,
+            'item_variants' => $request->item_variants,
+        ]);
+        Log::info('Item Variants', [
+            'item_variants' => $request->item_variants,
+
+        ]);
+
+        return view('requests.edit', compact('request', 'itemVariants'));
     }
 
     /**
@@ -89,18 +111,47 @@ class RequestsController extends Controller
             'reference_number' => 'required|string',
             'items' => 'required|array',
             'requestors' => 'required|array',
-            'item_variants' => 'array',
-            // Add more validation rules as needed
+            'item_variants' => 'array|nullable',
+            'completed' => 'sometimes|boolean',
+
         ]);
 
-        // Find the request by ID
-        $request = Requests::findOrFail($id);
+        try {
+            // Find the request by ID
+            $requestData = Requests::findOrFail($id);
 
-        // Update request with validated data
-        $request->update($validatedData);
+            // Update request with validated data
+            $requestData->reference_number = $validatedData['reference_number'];
+            $requestData->items = json_encode($validatedData['items']);
+            $requestData->requestors = json_encode($validatedData['requestors']);
+            $requestData->item_variants = json_encode($validatedData['item_variants']); // Save as JSON
+            $requestData->completed = $request->has('completed'); // Handle checkbox
 
-        // Redirect with success message
-        return redirect()->route('requests.index')->with('success', 'Request updated successfully!');
+            // Save the updated request data
+            $requestData->save();
+
+            // Log success
+            Log::info('Request updated successfully.', [
+                'request_id' => $id,
+                'reference_number' => $requestData->reference_number,
+                'items' => $requestData->items,
+                'requestors' => $requestData->requestors,
+                'item_variants' => $requestData->item_variants,
+                'completed' => $requestData->completed,
+            ]);
+
+            // Redirect with success message
+            return redirect()->route('requests.index')->with('success', 'Request updated successfully!');
+        } catch (\Exception $e) {
+            // Log error
+            Log::error('Failed to update request.', [
+                'request_id' => $id,
+                'error' => $e->getMessage(),
+            ]);
+
+            // Redirect back with error message
+            return back()->withInput()->withErrors(['error' => 'Failed to update request. Please try again.']);
+        }
     }
 
     /**

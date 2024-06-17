@@ -14,6 +14,7 @@ class Requests extends Model
         'items',
         'requestors',
         'item_variants',
+        'completed',
     ];
 
     protected $casts = [
