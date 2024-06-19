@@ -189,14 +189,15 @@ class RequestsController extends Controller
 
     public function showLogList()
     {
-        $requests = Requests::all();
+        // Fetch only the not completed request
+        $requests = Requests::where('completed', false)->get();
 
-        if ($requests) {
-            // Request found, display details
+        if ($requests->isNotEmpty()) {
+            // Requests found, display details
             return view('log-list-form', compact('requests'));
         } else {
-            // Request not found
-            return back()->with('error', 'Request not found.');
+            // No completed requests found
+            return back()->with('error', 'No completed requests found.');
         }
     }
 
