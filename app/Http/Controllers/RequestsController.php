@@ -17,10 +17,6 @@ class RequestsController extends Controller
     {
         $requestQuery = Requests::query();
 
-        // if ($request->filled('role')) {
-        //     $requestQuery->where('role', $request->role);
-        // }
-
         if ($request->filled('search')) {
             $search = $request->input('search');
             $requestQuery->where(function ($query) use ($search) {
@@ -29,6 +25,7 @@ class RequestsController extends Controller
                     ->orWhere('requestors', 'like', "%$search%");
             });
         }
+
         $requests = $requestQuery->paginate(5);
 
         return view('requests.index', compact('requests'));
@@ -84,8 +81,6 @@ class RequestsController extends Controller
 
         Log::info($itemIds);
         $itemVariants = ItemVariants::whereIn('item_id', $itemIds)->get();
-        // $itemVariants = ItemVariants::all();
-
 
         Log::info('Request data:', [
             'reference_number' => $request->reference_number,
