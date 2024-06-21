@@ -17,8 +17,8 @@
                             <label for="reference_number" class="block text-sm font-medium text-gray-700">Request
                                 Reference Number</label>
                             <input type="text" name="reference_number" id="reference_number"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                value="{{ $request->reference_number }}">
+                                class="bg-gray-200 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                value="{{ $request->reference_number }}" disabled>
                         </div>
                         <div class="mb-4">
                             <label for="items" class="block text-sm font-medium text-gray-700">Items</label>
