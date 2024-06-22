@@ -13,6 +13,7 @@
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
+
                         {{-- Request Reference Number --}}
                         <div class="mb-4">
                             <label for="reference_number" class="block text-sm font-medium text-gray-700">Request
@@ -21,6 +22,7 @@
                                 class="bg-gray-200 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 value="{{ $request->reference_number }}" disabled>
                         </div>
+
                         {{-- Items --}}
                         <div class="mb-4">
                             <label for="items" class="block text-sm font-medium text-gray-700">Items</label>
@@ -29,6 +31,7 @@
                                 value="{{ is_array($request->items) ? implode(', ', array_map(fn($item) => $item['name'], array_filter($request->items, fn($item) => empty($item['options']['requestor'])))) : $request->items }}"
                                 disabled>
                         </div>
+
                         {{-- Requestors --}}
                         <div class="mb-4">
                             <label for="requestors" class="block text-sm font-medium text-gray-700">Requestors</label>
@@ -37,6 +40,7 @@
                                 value="{{ is_array($request->requestors) ? implode(', ', array_map(fn($requestor) => $requestor['first_name'] . ' ' . $requestor['last_name'], array_filter($request->requestors))) : $request->requestors }}"
                                 disabled>
                         </div>
+
                         {{-- Item Variants --}}
                         <div class="mb-4">
                             <label for="item_variants" class="block text-sm font-medium text-gray-700">Item
@@ -51,12 +55,29 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        {{-- Saved Item Variants --}}
+                        <div class="mb-4">
+                            <label class="block text-sm font-medium text-gray-700">Saved Item Variants</label>
+                            <ul class="list-disc pl-5 mt-1 text-gray-900">
+                                @foreach ($savedItemVariants as $savedVariantId)
+                                    @php
+                                        $savedVariant = $itemVariants->firstWhere('item_id', $savedVariantId);
+                                    @endphp
+                                    @if ($savedVariant)
+                                        <li>{{ $savedVariant->brand }} - {{ $savedVariant->variant_description }}</li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        </div>
+
                         {{-- Completed --}}
                         <div class="mb-4">
                             <label for="completed" class="block text-sm font-medium text-gray-700">Completed</label>
                             <input type="checkbox" name="completed" id="completed" class="mt-1"
                                 {{ $request->completed ? 'checked' : '' }}>
                         </div>
+
                         <div class="flex items-center justify-end">
                             <button type="submit"
                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Update</button>

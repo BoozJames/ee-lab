@@ -74,27 +74,32 @@ class RequestsController extends Controller
      */
     public function edit($id)
     {
+        // Fetch the request by ID
         $request = Requests::findOrFail($id);
-        // $itemIds = array_keys(array_filter($request->items, fn ($item) => empty($item['options']['requestor'])));
 
+        // Filter the item IDs excluding requestor items
         $itemIds = array_column(array_filter($request->items, fn ($item) => empty($item['options']['requestor'])), 'id');
 
         Log::info($itemIds);
+
+        // Fetch item variants based on item IDs
         $itemVariants = ItemVariants::whereIn('item_id', $itemIds)->get();
         Log::info('Item Variants Available:', [$itemVariants]);
 
+        // Decode the saved item variants
+        $savedItemVariants = json_decode($request->item_variants, true);
+
         Log::info('Request data:', [
-            // 'reference_number' => $request->reference_number,
             'items' => $request->items,
-            // 'requestors' => $request->requestors,
             'item_variants' => $request->item_variants,
         ]);
+
         Log::info('Item Variants', [
             'item_variants' => $request->item_variants,
-
         ]);
 
-        return view('requests.edit', compact('request', 'itemVariants'));
+        // Pass the necessary data to the view
+        return view('requests.edit', compact('request', 'itemVariants', 'savedItemVariants'));
     }
 
     /**
