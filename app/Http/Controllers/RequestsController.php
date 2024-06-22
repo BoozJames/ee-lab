@@ -81,11 +81,12 @@ class RequestsController extends Controller
 
         Log::info($itemIds);
         $itemVariants = ItemVariants::whereIn('item_id', $itemIds)->get();
+        Log::info('Item Variants Available:', [$itemVariants]);
 
         Log::info('Request data:', [
-            'reference_number' => $request->reference_number,
+            // 'reference_number' => $request->reference_number,
             'items' => $request->items,
-            'requestors' => $request->requestors,
+            // 'requestors' => $request->requestors,
             'item_variants' => $request->item_variants,
         ]);
         Log::info('Item Variants', [
@@ -108,18 +109,21 @@ class RequestsController extends Controller
             'requestors' => 'required|array',
             'item_variants' => 'array|nullable',
             'completed' => 'sometimes|boolean',
-
         ]);
 
         try {
             // Find the request by ID
             $requestData = Requests::findOrFail($id);
 
+            // Extract item_id values from item_variants
+            $itemVariantIds = $validatedData['item_variants'] ?? [];
+            $itemVariantData = ItemVariants::whereIn('id', $itemVariantIds)->pluck('item_id')->toArray();
+
             // Update request with validated data
             $requestData->reference_number = $validatedData['reference_number'];
             $requestData->items = json_encode($validatedData['items']);
             $requestData->requestors = json_encode($validatedData['requestors']);
-            $requestData->item_variants = json_encode($validatedData['item_variants']); // Save as JSON
+            $requestData->item_variants = json_encode($itemVariantData); // Save item_id values as JSON
             $requestData->completed = $request->has('completed'); // Handle checkbox
 
             // Save the updated request data
