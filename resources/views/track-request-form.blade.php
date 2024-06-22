@@ -88,7 +88,7 @@
                                             </div>
                                         </div>
                                         <div class="card-footer">
-                                            <p>Date Requested: {{ $request->created_at }}</p>
+                                            <p>Date Requested: {{ date('F j, Y g:i A', strtotime($request->created_at)) }}</p>
                                         </div>
                                     </div>
                                 @endisset
