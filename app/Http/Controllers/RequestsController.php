@@ -102,29 +102,29 @@ class RequestsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validate request data
-        $validatedData = $request->validate([
-            'reference_number' => 'required|string',
-            'items' => 'required|array',
-            'requestors' => 'required|array',
-            'item_variants' => 'array|nullable',
-            'completed' => 'sometimes|boolean',
-        ]);
+        // Log the incoming request data
+        Log::info('Request data:', $request->all());
 
         try {
             // Find the request by ID
             $requestData = Requests::findOrFail($id);
+            Log::info('Found request:', $requestData->toArray());
 
             // Extract item_id values from item_variants
-            $itemVariantIds = $validatedData['item_variants'] ?? [];
-            $itemVariantData = ItemVariants::whereIn('id', $itemVariantIds)->pluck('item_id')->toArray();
+            $itemVariantIds = $request->input('item_variants', []);
+            Log::info('Item Variant IDs:', $itemVariantIds);
 
-            // Update request with validated data
-            $requestData->reference_number = $validatedData['reference_number'];
-            $requestData->items = json_encode($validatedData['items']);
-            $requestData->requestors = json_encode($validatedData['requestors']);
+            // Ensure item variants are not empty
+            if (!empty($itemVariantIds)) {
+                $itemVariantData = ItemVariants::whereIn('id', $itemVariantIds)->pluck('item_id')->toArray();
+            } else {
+                $itemVariantData = [];
+            }
+            Log::info('Item Variant Data (item_id):', $itemVariantData);
+
+            // Update request with item_variant data
             $requestData->item_variants = json_encode($itemVariantData); // Save item_id values as JSON
-            $requestData->completed = $request->has('completed'); // Handle checkbox
+            Log::info('Request data before save:', $requestData->toArray());
 
             // Save the updated request data
             $requestData->save();
@@ -132,11 +132,7 @@ class RequestsController extends Controller
             // Log success
             Log::info('Request updated successfully.', [
                 'request_id' => $id,
-                'reference_number' => $requestData->reference_number,
-                'items' => $requestData->items,
-                'requestors' => $requestData->requestors,
                 'item_variants' => $requestData->item_variants,
-                'completed' => $requestData->completed,
             ]);
 
             // Redirect with success message
