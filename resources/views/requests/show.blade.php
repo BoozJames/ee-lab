@@ -38,6 +38,22 @@
                             @endforeach
                         </ul>
                     </div>
+
+                    {{-- Saved Item Variants --}}
+                    <div class="mb-4">
+                        <p class="font-semibold">Item Variants:</p>
+                        <ul class="list-disc pl-5 mt-1 text-gray-900">
+                            @foreach ($savedItemVariants as $savedVariantId)
+                                @php
+                                    $savedVariant = $itemVariants->firstWhere('item_id', $savedVariantId);
+                                @endphp
+                                @if ($savedVariant)
+                                    <li>{{ $savedVariant->brand }} - {{ $savedVariant->variant_description }}</li>
+                                @endif
+                            @endforeach
+                        </ul>
+                    </div>
+
                     <div class="mb-4">
                         <p class="font-semibold">Created At:</p>
                         <p>{{ $request->created_at }}</p>

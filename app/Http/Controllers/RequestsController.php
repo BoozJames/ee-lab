@@ -65,8 +65,12 @@ class RequestsController extends Controller
     public function show(string $id)
     {
         $request = Requests::findOrFail($id);
+        $itemIds = array_column(array_filter($request->items, fn ($item) => empty($item['options']['requestor'])), 'id');
+        $itemVariants = ItemVariants::whereIn('item_id', $itemIds)->get();
+        Log::info('Item Variants Available:', [$itemVariants]);
+        $savedItemVariants = json_decode($request->item_variants, true);
 
-        return view('requests.show', compact('request'));
+        return view('requests.show', compact('request', 'itemVariants', 'savedItemVariants'));
     }
 
     /**
@@ -129,6 +133,9 @@ class RequestsController extends Controller
 
             // Update request with item_variant data
             $requestData->item_variants = json_encode($itemVariantData); // Save item_id values as JSON
+
+            // Update the 'completed' field
+            $requestData->completed = $request->has('completed');
             Log::info('Request data before save:', $requestData->toArray());
 
             // Save the updated request data
@@ -138,6 +145,7 @@ class RequestsController extends Controller
             Log::info('Request updated successfully.', [
                 'request_id' => $id,
                 'item_variants' => $requestData->item_variants,
+                'completed' => $requestData->completed,
             ]);
 
             // Redirect with success message
