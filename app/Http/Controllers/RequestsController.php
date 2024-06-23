@@ -175,23 +175,18 @@ class RequestsController extends Controller
 
     public function showCreateForm()
     {
-        // Retrieve all items
+        // Retrieve all items with their variants
         $items = Items::with('itemVariants')->get();
 
-        // Retrieve item variants from the request
-        $requestItemVariants = Requests::pluck('item_variants')->flatten()->unique()->toArray();
+        // Log the initial items count
+        Log::info('Total Items Retrieved:', [$items->count()]);
 
-        // Filter out items whose variants are already in the request
-        $items = $items->reject(function ($item) use ($requestItemVariants) {
-            foreach ($item->itemVariants as $variant) {
-                if (in_array($variant->id, $requestItemVariants)) {
-                    return true; // Exclude this item
-                }
-            }
-            return false; // Include this item
+        // Pass the items and their available counts to the view
+        $items->each(function ($item) {
+            $item->available_count = $item->availableItemVariantsCount();
+            Log::info('Item ID: ' . $item->id . ' - Available Count: ' . $item->available_count);
         });
 
-        // Pass the filtered items to the view
         return view('create-request-form', compact('items'));
     }
 
