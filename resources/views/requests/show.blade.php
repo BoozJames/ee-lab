@@ -42,16 +42,22 @@
                     {{-- Saved Item Variants --}}
                     <div class="mb-4">
                         <p class="font-semibold">Item Variants:</p>
-                        <ul class="list-disc pl-5 mt-1 text-gray-900">
-                            @foreach ($savedItemVariants as $savedVariantId)
-                                @php
-                                    $savedVariant = $itemVariants->firstWhere('item_id', $savedVariantId);
-                                @endphp
-                                @if ($savedVariant)
-                                    <li>{{ $savedVariant->brand }} - {{ $savedVariant->variant_description }}</li>
-                                @endif
-                            @endforeach
-                        </ul>
+                        @if (!empty($savedItemVariants) && !empty($itemVariants))
+                            <ul class="list-disc pl-5 mt-1 text-gray-900">
+                                @foreach ($savedItemVariants as $savedVariantId)
+                                    @php
+                                        $savedVariant = $itemVariants->firstWhere('item_id', $savedVariantId);
+                                    @endphp
+                                    @if ($savedVariant)
+                                        <li>{{ $savedVariant->brand }} - {{ $savedVariant->variant_description }}</li>
+                                    @else
+                                        <li class="text-red-500">Variant with ID {{ $savedVariantId }} not found.</li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-red-500">No item variants available.</p>
+                        @endif
                     </div>
 
                     <div class="mb-4">
