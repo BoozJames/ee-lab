@@ -2,9 +2,17 @@
 
     @section('content')
         <div class="background">
+
             <div
                 class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center selection:bg-red-500 selection:text-white">
-
+                <button id="fullscreen-button"
+                    class="absolute top-4 right-4 p-2 bg-gray-800 text-white rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 3H5a2 2 0 00-2 2v3m0 8v3a2 2 0 002 2h3m8-16h3a2 2 0 012 2v3m0 8v3a2 2 0 01-2 2h-3M3 10h18M3 14h18" />
+                    </svg>
+                </button>
                 <div class="max-w-7xl mx-auto p-6 lg:p-8">
                     @component('components.public-logo-heading')
                     @endcomponent
@@ -94,3 +102,14 @@
             </div>
         </div>
 
+        <script>
+            document.getElementById('fullscreen-button').addEventListener('click', function() {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen();
+                } else {
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    }
+                }
+            });
+        </script>

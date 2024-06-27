@@ -45,6 +45,15 @@
                                         <div class="card-header">
                                             <h2>Request Details</h2>
                                             <p>Reference Number: {{ $request->reference_number }}</p>
+                                            <p>Status:
+                                                @if ($request->completed === 1)
+                                                    <span
+                                                        class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Returned</span>
+                                                @else
+                                                    <span
+                                                        class="bg-red-100 text-red-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-red-900 dark:text-red-300">Borrowed</span>
+                                                @endif
+                                            </p>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
@@ -79,7 +88,7 @@
                                             </div>
                                         </div>
                                         <div class="card-footer">
-                                            <p>Date Requested: {{ $request->created_at }}</p>
+                                            <p>Date Requested: {{ date('F j, Y g:i A', strtotime($request->created_at)) }}</p>
                                         </div>
                                     </div>
                                 @endisset

@@ -14,11 +14,12 @@ class Requests extends Model
         'items',
         'requestors',
         'item_variants',
+        'completed',
     ];
 
     protected $casts = [
-        'items' => 'json',
-        'requestors' => 'json',
+        'items' => 'array',  // Cast items to array
+        'requestors' => 'array',  // Cast requestors to array
     ];
 
     protected static function booted()

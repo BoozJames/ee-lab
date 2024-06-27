@@ -8,20 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <!-- Display success message -->
-                {{-- @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{ session('success') }}
-                    </div>
-                @endif --}}
-
                 <div class="overflow-hidden overflow-x-auto p-6 bg-white border-b border-gray-200">
-                    {{-- <nav class="flex flex-wrap mb-4">
-                        <div class="ml-auto">
-                            <a href="{{ route('requests.create') }}" class="mb-2 py-2 px-4 bg-gray-300 rounded">Create
-                                request</a>
-                        </div>
-                    </nav> --}}
                     <div class="min-w-full align-middle">
                         <div class="my-2 bg-white">
                             <div class="flex flex-wrap items-center justify-between">
@@ -52,7 +39,10 @@
                                         <span
                                             class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Requestors</span>
                                     </th>
-                                    <!-- Add more table headers for additional columns -->
+                                    <th class="px-6 py-3 bg-gray-50 text-left">
+                                        <span
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Status</span>
+                                    </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
                                             class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Actions</span>
@@ -67,40 +57,33 @@
                                             {{ $request->reference_number }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{-- <pre>{{ json_encode($request->items, JSON_PRETTY_PRINT) }}</pre> --}}
-                                            @foreach ($request->items as $item)
-                                                @if (is_array($item) && empty($item['options']))
-                                                    {{-- <pre>{{ json_encode($item, JSON_PRETTY_PRINT) }}</pre> --}}
-                                                    <p>{{ $item['name'] }} | {{ $item['qty'] }}</p>
-                                                @endif
-                                            @endforeach
+                                            @if (is_array($request->items))
+                                                @foreach ($request->items as $item)
+                                                    @if (is_array($item) && empty($item['options']))
+                                                        <p>{{ $item['name'] }} | {{ $item['qty'] }}</p>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                <p>No items available.</p>
+                                            @endif
                                         </td>
-                                        {{-- <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            <pre>{{ json_encode($request->requestors, JSON_PRETTY_PRINT) }}</pre>
-                                            @if (!empty($request->requestors[2]))
-                                                <p>{{ $request->requestors[2]['first_name'] }}
-                                                    {{ $request->requestors[2]['middle_name'] }}
-                                                    {{ $request->requestors[2]['last_name'] }}</p>
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                            @if (is_array($request->requestors))
+                                                @foreach ($request->requestors as $requestor)
+                                                    @if (is_array($requestor) && !empty($requestor))
+                                                        <p>{{ $requestor['first_name'] }} @if (!empty($requestor['middle_name']))
+                                                                {{ $requestor['middle_name'] }}
+                                                            @endif {{ $requestor['last_name'] }}
+                                                        </p>
+                                                    @endif
+                                                @endforeach
                                             @else
                                                 <p>No requestor information available.</p>
                                             @endif
-                                        </td> --}}
-
-                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            @foreach ($request->requestors as $requestor)
-                                                @if (is_array($requestor) && !empty($requestor))
-                                                    <p>{{ $requestor['first_name'] }}
-                                                        @if (!empty($requestor['middle_name']))
-                                                            {{ $requestor['middle_name'] }}
-                                                        @endif
-                                                        {{ $requestor['last_name'] }}
-                                                    </p>
-                                                {{-- @else
-                                                    <p>No requestor information available.</p> --}}
-                                                @endif
-                                            @endforeach
                                         </td>
-                                        <!-- Add more table cells for additional columns -->
+                                        <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
+                                            <p>{{ $request->completed ? 'Returned' : 'Borrowed' }}</p>
+                                        </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             <a href="{{ route('requests.show', $request->id) }}"
                                                 class="text-blue-500 hover:text-blue-700 mr-2">Show</a>
@@ -129,9 +112,3 @@
         </div>
     </div>
 </x-app-layout>
-
-<script>
-    function resetFilters() {
-        window.location.href = "{{ route('requests.index') }}";
-    }
-</script>

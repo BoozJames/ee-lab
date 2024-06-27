@@ -67,7 +67,7 @@
                             <div class="card d-flex flex-column h-100">
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                     <p class="card-text">{{ $item->name }}</p>
-                                    <span class="badge bg-secondary">Available: {{ $item->itemVariants->count() }}</span>
+                                    <span class="badge bg-secondary">Available: {{ $item->available_count }}</span>
                                 </div>
                                 <div class="card-body">
                                     <img src="{{ Storage::url($item->image) }}" class="card-img-top p-3" alt="">
