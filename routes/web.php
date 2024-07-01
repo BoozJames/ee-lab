@@ -53,7 +53,7 @@ Route::group(['middleware' => 'auth', 'verified'], function () {
     Route::resource('trainers', TrainerController::class);
     Route::resource('maintenance', MaintenanceController::class);
     Route::get('/maintenance/generate-pdf', [MaintenanceController::class, 'generatePDF'])->name('maintenance.generatePDF');
-    Route::get('/maintenance/get-item-variants/{id}', [MaintenanceController::class, 'getvariant'])->name('maintenance.getvariant');
+    Route::get('/maintenance/get-item-variants/{id}', [InventoryReportController::class, 'getvariant'])->name('maintenance.getvariant');
     
     Route::resource('inventory', InventoryReportController::class);
     Route::get('/inventory/get-item-variants/{id}', [InventoryReportController::class, 'getvariant'])->name('maintenance.getvariant');

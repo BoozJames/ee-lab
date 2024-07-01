@@ -118,5 +118,11 @@ class InventoryReportController extends Controller
         // Redirect back with a success message
         return redirect()->route('inventory.index')->with('success', 'Inventory report deleted successfully.');
     }
+
+    public function getvariant($id)
+    {
+        $itemVariants = ItemVariants::where('category_id', $id)->get();
+        return response()->json($itemVariants);
+    }
 }
 
