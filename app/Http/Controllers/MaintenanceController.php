@@ -106,10 +106,4 @@ class MaintenanceController extends Controller
     
         return redirect()->route('maintenance.index')->with('success', 'Maintenance report deleted successfully.');
     }
-
-    public function getvariant($id)
-    {
-        $itemVariants = ItemVariants::where('category_id', $id)->get();
-        return response()->json($itemVariants);
-    }
 }
