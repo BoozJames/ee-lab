@@ -1,4 +1,3 @@
-
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -58,7 +57,7 @@
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Name
+                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Name</span>
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
                                         <span
@@ -82,7 +81,7 @@
                                             <a href="{{ route('units.edit', $unit->id) }}"
                                                 class="text-green-500 hover:text-green-700 mr-2">Edit</a>
                                             <form action="{{ route('units.destroy', $unit->id) }}" method="POST"
-                                                class="inline">
+                                                class="inline" id="delete-form-{{ $unit->id }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="button" onclick="confirmDelete('{{ $unit->id }}')" class="text-red-500 hover:text-red-700">Delete</button>
@@ -95,24 +94,47 @@
                     </div>
 
                     <div class="mt-2">
+                        {{ $units->links() }}
                     </div>
 
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
 
-<script>
-    function confirmDelete(id) {
-        if (confirm('Are you sure you want to delete this unit?')) {
-            // Proceed with the delete action
-            document.querySelector(`form[action="{{ route('units.destroy', ':id') }}"]`.replace(':id', id)).submit();
+    <script>
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you want to delete this unit?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the form associated with the unit ID
+                    document.getElementById(`delete-form-${id}`).submit();
+                }
+            });
         }
-    }
 
-    function resetFilters() {
-        // Replace "items.index" with the appropriate route to reset filters
-        window.location.href = "{{ route('units.index') }}";
-    }
-</script>
+        function resetFilters() {
+            // Replace "items.index" with the appropriate route to reset filters
+            window.location.href = "{{ route('units.index') }}";
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            @if(session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            @endif
+        });
+    </script>
+</x-app-layout>
