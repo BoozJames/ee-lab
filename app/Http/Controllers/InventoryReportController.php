@@ -35,9 +35,9 @@ class InventoryReportController extends Controller
             'checked_by_designation' => 'required',
             'noted_by_designation' => 'required',
             'date_prepared_by' => 'required|date',
-            'date_verified_by' => 'required|date',
-            'date_checked_by' => 'required|date',
-            'date_noted_by' => 'required|date',
+            'date_verified_by',
+            'date_checked_by',
+            'date_noted_by',
         ]);
 
         // Create the inventory report
@@ -51,9 +51,9 @@ class InventoryReportController extends Controller
             'checked_by_designation' => $validatedData['checked_by_designation'],
             'noted_by_designation' => $validatedData['noted_by_designation'],
             'date_prepared_by' => $validatedData['date_prepared_by'],
-            'date_verified_by' => $validatedData['date_verified_by'],
-            'date_checked_by' => $validatedData['date_checked_by'],
-            'date_noted_by' => $validatedData['date_noted_by'],
+            // 'date_verified_by' => $validatedData['date_verified_by'],
+            // 'date_checked_by' => $validatedData['date_checked_by'],
+            // 'date_noted_by' => $validatedData['date_noted_by'],
         ]);
 
         // Fetch data from the ItemVariants table and associate it with the newly created InventoryReport

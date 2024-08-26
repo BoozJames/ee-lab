@@ -22,7 +22,7 @@
                             <a href="{{ route('inventory.index') }}" class="mb-2 py-2 px-4 bg-gray-300 rounded">Back</a>
                         </div>
                     </nav>
-                    <form method="POST" action="{{ route('inventory.store') }}">
+                    <form id="inventory_form" method="POST" action="{{ route('inventory.store') }}">
                         @csrf
                         @method('POST')
 
@@ -89,51 +89,43 @@
 
                             <div class="mr-4 w-1/4">
                                 <label for="date_verified_by" class="block text-sm font-medium text-gray-700">Date Verified </label>
-                                <input required type="date" name="date_verified_by" id="date_verified_by"
+                                <input  type="date" name="date_verified_by" id="date_verified_by"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                             </div>
 
                             <div class="mr-4 w-1/4">
                                 <label for="date_checked_by" class="block text-sm font-medium text-gray-700">Date Checked </label>
-                                <input required type="date" name="date_checked_by" id="date_checked_by"
+                                <input type="date" name="date_checked_by" id="date_checked_by"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                             </div>
                             
                             <div class="w-1/4">
                                 <label for="date_noted_by" class="block text-sm font-medium text-gray-700">Date Noted </label>
-                                <input required type="date" name="date_noted_by" id="date_noted_by" 
+                                <input type="date" name="date_noted_by" id="date_noted_by" 
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                             </div>
                         </div>
 
-
                         <table class="min-w-full divide-y divide-gray-200 border">
                             <thead>
                                 <tr>
-                                    
                                     <th class="px-6 py-3 bg-gray-50 text-left">
-                                        <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Equipment</span>
+                                        <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Equipment</span>
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
-                                        <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Brand</span>
+                                        <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Brand</span>
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
-                                        <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Equipment Label</span>
+                                        <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Equipment Label</span>
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
-                                        <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Serial Number</span>
+                                        <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Serial Number</span>
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
-                                        <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Status</span>
+                                        <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Status</span>
                                     </th>
                                     <th class="px-6 py-3 bg-gray-50 text-left">
-                                        <span
-                                            class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Last Calibration Date</span>
+                                        <span class="text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Last Calibration Date</span>
                                     </th>
                                 </tr>
                             </thead>
@@ -173,15 +165,41 @@
                         <div class="mt-2">
                             {{ $items->links() }}
                         </div>
-
+                        
                         <div class="flex items-center justify-end">
                             <button type="submit"
                                 id="create_btn"
-                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-3">Create</button>
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-3 rounded focus:outline-none focus:shadow-outline">
+                                Create
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('inventory_form');
+            const submitButton = document.getElementById('create_btn');
+
+            submitButton.addEventListener('click', function(event) {
+                event.preventDefault(); // Prevent the default form submission
+
+                Swal.fire({
+                    title: 'Confirm Action',
+                    text: 'Save Inventory Report?',
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonText: 'Save',
+                    cancelButtonText: 'Cancel'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit(); // Submit the form if confirmed
+                    }
+                });
+            });
+        });
+    </script>
 </x-app-layout>
