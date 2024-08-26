@@ -71,11 +71,14 @@
                         <!-- loop item variants here -->
                         <div id="item_variants_container"></div>
                         
-                       
                         <div class="flex items-center justify-end">
                             <button type="submit"
+                                data-swal-trigger
                                 id="create_btn"
-                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create</button>
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                <x-swal title="Confirm Action" text="Save Maintenance Report?" icon="info" confirmButtonText="Save" cancelButtonText="Cancel" />
+                                Create
+                            </button>
                         </div>
                     </form>
                 </div>
