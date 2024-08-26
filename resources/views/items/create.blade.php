@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
-                    <form method="POST" action="{{ route('items.store') }}" enctype="multipart/form-data">
+                    <form id="create-item-form" method="POST" action="{{ route('items.store') }}" enctype="multipart/form-data">
                         @csrf
                         @method('POST')
                         <div class="mb-4">
@@ -37,3 +37,23 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    // Handle form submission
+    document.getElementById('create-item-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        Swal.fire({
+            title: 'Confirm Action',
+            text: 'Create Item?',
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.submit();
+            }
+        });
+    });
+</script>
