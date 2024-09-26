@@ -99,21 +99,21 @@
                                 @foreach ($variants as $variant)
                                     <tr class="bg-white">
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $variant->item->name }}
+                                            {{ $variant->item->name ?? '-' }}
                                             <br>
-                                            {{ $variant->item->description }}
+                                            {{ $variant->item->description ?? '-' }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $variant->variant_description}}
+                                            {{ $variant->variant_description ?? '-' }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $variant->brand}}
+                                            {{ $variant->brand ?? '-' }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $variant->equipment_label}}
+                                            {{ $variant->equipment_label ?? '-' }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $variant->serial_number}}
+                                            {{ $variant->serial_number ?? '-' }}
                                         </td>
                                 
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
@@ -126,7 +126,7 @@
                                             {{ $variant->last_calibration_date ? \Carbon\Carbon::parse($variant->last_calibration_date)->format('m-d-Y') : '-' }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $variant->status}}
+                                            {{ $variant->status ?? '-' }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             <a href="{{ route('variants.show', $variant->id) }}"
