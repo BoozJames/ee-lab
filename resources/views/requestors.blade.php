@@ -11,17 +11,78 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
             </div>
-            <button onclick="printContent()" class="btn btn-primary position-relative d-flex mx-1 my-1">Print</button>
 
+            @php
+                use Illuminate\Support\Facades\Log;
+
+                // Get the cart content
+                $cartContent = Cart::content();
+
+                // Manually check for requestors in the cart
+                $hasRequestors = false;
+                foreach ($cartContent as $cartItem) {
+                    if (isset($cartItem->options['requestor']) && $cartItem->options['requestor']) {
+                        $hasRequestors = true;
+                        break;
+                    }
+                }
+
+                // Log the cart content and the result
+                Log::info('Cart content:', $cartContent->toArray());
+                Log::info('Has requestors in cart:', ['hasRequestors' => $hasRequestors]);
+            @endphp
+
+            <!-- Always display the cancel button -->
             <button type="button" class="btn btn-secondary position-relative d-flex mx-1 my-1"
                 onclick="cancelAndRemoveCart()">
                 Cancel
             </button>
-            {{-- Checkout Button --}}
+
+            <!-- Show Print button only if $hasRequestors is true -->
+            @if ($hasRequestors)
+                <button onclick="handlePrintButton()" id="printButton"
+                    class="btn btn-primary position-relative d-flex mx-1 my-1">
+                    Print
+                </button>
+
+                <!-- Initially hidden Checkout button -->
+                <form action="{{ route('cart.checkout') }}" method="POST" id="checkoutForm" style="display: none;">
+                    @csrf
+                    <button type="submit" class="btn btn-success position-relative d-flex mx-1 my-1">
+                        Checkout
+                    </button>
+                </form>
+            @endif
+
+            <script>
+                // Function to handle the Print button click
+                function handlePrintButton() {
+                    // Your existing print logic
+                    printContent();
+
+                    // Show the Checkout button/form
+                    document.getElementById('checkoutForm').style.display = 'block';
+                }
+            </script>
+
+            {{-- <button onclick="printContent()" class="btn btn-primary position-relative d-flex mx-1 my-1"
+                style="{{ !$hasRequestors ? 'display: none;' : '' }}">
+                Print
+            </button>
+
+            <button type="button" class="btn btn-secondary position-relative d-flex mx-1 my-1"
+                onclick="cancelAndRemoveCart()" style="{{ !$hasRequestors ? 'display: none;' : '' }}">
+                Cancel
+            </button>
+
             <form action="{{ route('cart.checkout') }}" method="POST">
                 @csrf
-                <button type="submit" class="btn btn-success position-relative d-flex mx-1 my-1">Checkout</button>
-            </form>
+                <button type="submit" class="btn btn-success position-relative d-flex mx-1 my-1"
+                    style="{{ !$hasRequestors ? 'display: none;' : '' }}">
+                    Checkout
+                </button>
+            </form> --}}
+
         </div>
     </nav>
 
@@ -36,6 +97,8 @@
                             <p>No requestors found.</p>
                         </div>
                     @else
+                        {{-- <p>Has Requestors: {{ $hasRequestors ? 'True' : 'False' }}</p> --}}
+
                         <ul class="list-group">
                             @foreach ($requestors as $requestor)
                                 <li class="list-group-item">
