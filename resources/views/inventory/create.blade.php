@@ -22,6 +22,7 @@
                             <a href="{{ route('inventory.index') }}" class="mb-2 py-2 px-4 bg-gray-300 rounded">Back</a>
                         </div>
                     </nav>
+
                     <form id="inventory_form" method="POST" action="{{ route('inventory.store') }}">
                         @csrf
                         @method('POST')
@@ -89,7 +90,7 @@
 
                             <div class="mr-4 w-1/4">
                                 <label for="date_verified_by" class="block text-sm font-medium text-gray-700">Date Verified </label>
-                                <input  type="date" name="date_verified_by" id="date_verified_by"
+                                <input type="date" name="date_verified_by" id="date_verified_by"
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                             </div>
 
@@ -139,16 +140,16 @@
                                             </a>
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $variant->brand}}
+                                            {{ $variant->brand }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $variant->equipment_label}}
+                                            {{ $variant->equipment_label }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $variant->serial_number}}
+                                            {{ $variant->serial_number }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
-                                            {{ $variant->status}}
+                                            {{ $variant->status }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-900">
                                             @if ($variant->last_calibration_date)
@@ -165,7 +166,7 @@
                         <div class="mt-2">
                             {{ $items->links() }}
                         </div>
-                        
+
                         <div class="flex items-center justify-end">
                             <button type="submit"
                                 id="create_btn"
@@ -185,20 +186,26 @@
             const submitButton = document.getElementById('create_btn');
 
             submitButton.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent the default form submission
+                event.preventDefault(); // Prevent default submission
 
-                Swal.fire({
-                    title: 'Confirm Action',
-                    text: 'Save Inventory Report?',
-                    icon: 'info',
-                    showCancelButton: true,
-                    confirmButtonText: 'Save',
-                    cancelButtonText: 'Cancel'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        form.submit(); // Submit the form if confirmed
-                    }
-                });
+                // Check if form is valid
+                if (form.checkValidity()) {
+                    Swal.fire({
+                        title: 'Confirm Action',
+                        text: 'Save Inventory Report?',
+                        icon: 'info',
+                        showCancelButton: true,
+                        confirmButtonText: 'Save',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit(); // Submit form if confirmed
+                        }
+                    });
+                } else {
+                    // If form is not valid, trigger browser validation
+                    form.reportValidity();
+                }
             });
         });
     </script>
