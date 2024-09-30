@@ -18,7 +18,12 @@ class InventoryReportController extends Controller
 
     public function create()
     {
-        $items = ItemVariants::where('status', '!=', 'Condemned')->paginate(20);
+        $items = ItemVariants::where('status', '!=', 'Condemned')
+                ->whereHas('item', function ($query) {
+                    $query->whereNull('deleted_at'); // Assuming soft deletes are used
+                })
+                ->paginate(20);
+    
         return view('inventory.create', compact('items'));
     }
 
@@ -57,7 +62,12 @@ class InventoryReportController extends Controller
         ]);
 
         // Fetch data from the ItemVariants table and associate it with the newly created InventoryReport
-        $itemVariants = ItemVariants::where('status', '!=', 'Condemned')->get();
+        // $itemVariants = ItemVariants::where('status', '!=', 'Condemned')->get();
+        $itemVariants = ItemVariants::where('status', '!=', 'Condemned')
+                ->whereHas('item', function ($query) {
+                    $query->whereNull('deleted_at'); // Assuming soft deletes are used
+                })
+                ->get();
 
         // Create inventory report items
         foreach ($itemVariants as $itemVariant) {

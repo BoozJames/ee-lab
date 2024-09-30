@@ -173,10 +173,26 @@ class RequestsController extends Controller
         return redirect()->route('requests.index')->with('success', 'User deleted successfully.');
     }
 
-    public function showCreateForm()
+    public function showCreateForm(Request $request)
     {
-        // Retrieve all items with their variants
-        $items = Items::with('itemVariants')->get();
+        // Start building the query
+        $itemsQuery = Items::with('itemVariants')
+                        ->whereNull('deleted_at')  // Exclude soft deleted items
+                        ->orderBy('name');
+
+        // Apply search filters if the search input is present
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $itemsQuery->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%$search%")
+                    ->orWhereHas('itemVariants', function ($variantQuery) use ($search) {
+                        $variantQuery->where('name', 'like', "%$search%");
+                    });
+            });
+        }
+
+        // Retrieve the filtered items
+        $items = $itemsQuery->get();
 
         // Log the initial items count
         Log::info('Total Items Retrieved:', [$items->count()]);
