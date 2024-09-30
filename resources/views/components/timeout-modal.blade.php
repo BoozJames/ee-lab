@@ -57,7 +57,7 @@
                 $('#timeoutModal').on('hidden.bs.modal', function() {
                     stopCountdown();
                 });
-            }, 30000); // 30 seconds
+            }, 120000); // 30 seconds
         }
 
         // Call the resetTimer function on page load
