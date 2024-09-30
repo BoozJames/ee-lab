@@ -61,6 +61,19 @@
                     @component('components.alert-message')
                     @endcomponent
                 </div>
+
+                <div class="row mb-4">
+                    <div class="col text-center">
+                        <form method="GET" action="{{ route('create.request') }}" class="d-flex justify-content-center">
+                            <input type="text" name="search" placeholder="Search..."
+                                value="{{ request()->input('search') }}"
+                                class="form-control mx-1" style="width: 400px;">
+                            <button type="submit" class="btn btn-primary mx-1">Search</button>
+                            <a href="{{ route('create.request') }}" class="btn btn-warning text-white">Clear</a>
+                        </form>
+                    </div>
+                </div>
+
                 <div class="row row-cols-1 row-cols-md-4">
                     @foreach ($items as $item)
                         <div class="col mb-4">
