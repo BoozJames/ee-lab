@@ -207,7 +207,11 @@
                                                                     {{ $cartItem->options['student_details']['campus'] }}
                                                                 </p>
                                                                 <p><strong>Course:</strong>
-                                                                    {{ $cartItem->options['student_details']['courses'] }}
+                                                                    @if (is_array($cartItem->options['student_details']['courses']))
+                                                                        {{ implode(', ', array_map(function($c) { return is_array($c) ? ($c['name'] ?? '') : $c; }, $cartItem->options['student_details']['courses'])) }}
+                                                                    @else
+                                                                        {{ $cartItem->options['student_details']['courses'] }}
+                                                                    @endif
                                                                 </p>
                                                             @else
                                                                 N/A

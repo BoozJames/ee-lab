@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Items;
+use App\Models\Units;
+use App\Models\Categories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ItemsFactory extends Factory
@@ -22,11 +24,9 @@ class ItemsFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word,
-            'description' => $this->faker->sentence,
-            // 'unit_id' => mt_rand(1, 10), // assuming unit_id is an integer
-            // 'category_id' => mt_rand(1, 10), // assuming category_id is an integer
-            // 'image' => $this->faker->imageUrl(), // assuming image is a string field
+            'name' => $this->faker->unique()->word(),
+            'description' => $this->faker->sentence(),
+            'image' => $this->faker->imageUrl(640, 480, 'equipment', false),
         ];
     }
 }
